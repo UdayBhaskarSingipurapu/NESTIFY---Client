@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Hostel from "../../assets/Hostel.png";
 import Hostel1 from "../../assets/Hostel1.png";
 import Hostel2 from "../../assets/Hostel2.png";
@@ -37,11 +38,12 @@ function Home() {
   return (
     <div>
       {/* first section */}
-      <div className="flex items-center">
-        <div className="px-6  space-y-6 w-1/2">
-          <div className="font-bold text-6xl">
+      <div className="flex flex-col md:flex-row items-center gap-8 px-4 md:px-6 py-12 md:py-16">
+        
+        <div className="w-full md:w-1/2 space-y-6">
+          <h1 className="font-bold text-4xl md:text-6xl">
             Smart Hostel Management System
-          </div>
+          </h1>
           <div className="text-gray-500">
             <p>
               Streamline your hostel operations with our comprehensive
@@ -50,17 +52,21 @@ function Home() {
             </p>
           </div>
           <div>
-            <a
-              href="#"
-              className="bg-black text-1xl text-white border-2 border-black px-5 py-2 cursor-pointer hover:bg-gray-100 hover:text-black transition"
+            <Link
+              to="#"
+              className=" nav-link inline-block bg-black text-white border-2 border-black px-5 py-2 text-lg md:text-xl  hover:bg-gray-100 hover:text-black transition rounded-md"
             >
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
 
-        <div className="w-1/2 overflow-hidden">
-          <img src={Hostel} alt="image not found" className="h-auto w-full " />
+        <div className="w-full md:w-1/2">
+          <img
+            src={Hostel}
+            alt="Hostel Management"
+            className="w-full h-auto rounded-lg shadow-lg"
+          />
         </div>
       </div>
 
@@ -107,76 +113,82 @@ function Home() {
         </div>
       </div>
 
-      <div className="py-10 bg-white">
-        <div className="font-bold text-center text-4xl">Key Features</div>
-        <div className="text-center text-gray-700 py-3">
-          Everything you need to manage your hostel efficiently
-        </div>
+      {/* features */}
 
-        <div className="mt-6 flex flex place-content-between px-6">
-          <div className="flex flex-col gap-6">
-            <div className="flex gap-4 px-6">
-              <div className="flex items-center">
-                <img src={mealPlan} alt="" />
-              </div>
-              <div>
-                <div className="text-xl font-semibold text-gray-800">
-                  Meal Plan Management
+      <div className="py-10 bg-white px-4 md:px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="font-bold text-center text-3xl md:text-4xl">Key Features</h2>
+          <p className="text-center text-gray-700 py-3">
+            Everything you need to manage your hostel efficiently
+          </p>
+
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-8">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 flex items-center">
+                  <img src={mealPlan} alt="Meal Plan" className="w-12 h-12 object-contain" />
                 </div>
-                <div className="text-gray-700">
-                  Flexible meal plans with dietary preferences and scheduling
-                  options
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    Meal Plan Management
+                  </h3>
+                  <p className="text-gray-700 mt-1">
+                    Flexible meal plans with dietary preferences and scheduling options
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 flex items-center">
+                  <img src={smartNotifications} alt="Smart Notifications" className="w-12 h-12 object-contain" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    Smart Notifications
+                  </h3>
+                  <p className="text-gray-700 mt-1">
+                    Stay updated with personalized alerts and reminders
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="flex gap-4 px-6">
-              <div className="flex items-center">
-                <img src={smartNotifications} alt="" />
-              </div>
-              <div>
-                <div className="text-xl font-semibold text-gray-800">
-                  Smart Notifications
-                </div>
-                <div className="text-gray-700">
-                  Stay updated with personalized alerts and reminders
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div className="flex flex-col gap-6">
-            <div className=" flex gap-4 px-6">
-              <div className="flex items-center">
-                <img src={feedback} alt="" />
-              </div>
-              <div>
-                <div className="text-xl font-semibold text-gray-800">
-                  Feedback System
+            <div className="space-y-8">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 flex items-center">
+                  <img src={feedback} alt="Feedback System" className="w-12 h-12 object-contain" />
                 </div>
-                <div className="text-gray-700">
-                  Real-time feedback and rating system for continuous
-                  improvement
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    Feedback System
+                  </h3>
+                  <p className="text-gray-700 mt-1">
+                    Real-time feedback and rating system for continuous improvement
+                  </p>
                 </div>
               </div>
-            </div>
 
-            <div className=" flex gap-4 px-6">
-              <div className="flex items-center">
-                <img src={documentManagement} alt="" />
-              </div>
-              <div>
-                <div className="text-xl font-semibold text-gray-800">
-                  Document Management
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 flex items-center">
+                  <img src={documentManagement} alt="Document Management" className="w-12 h-12 object-contain" />
                 </div>
-                <div className="text-gray-700">
-                  Secure storage and easy access to important documents
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    Document Management
+                  </h3>
+                  <p className="text-gray-700 mt-1">
+                    Secure storage and easy access to important documents
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
+
     </div>
   );
 }
