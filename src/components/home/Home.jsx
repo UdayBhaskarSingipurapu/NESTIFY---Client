@@ -113,7 +113,7 @@ function Home() {
           Everything you need to manage your hostel efficiently
         </div>
 
-        <div className="mt-6 flex flex place-content-between px-6">
+        <div className="mt-6 flex place-content-between px-6">
           <div className="flex flex-col gap-6">
             <div className="flex gap-4 px-6">
               <div className="flex items-center">
