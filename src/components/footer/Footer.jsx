@@ -1,53 +1,95 @@
-import React from 'react'
+import React from "react";
 import twitterLogo from "../../assets/twitterLogo.png";
 import instaLogo from "../../assets/instaLogo.png";
 import fbLogo from "../../assets/fbLogo.png";
 
 function Footer() {
   return (
-    <div className="bg-gray-800 text-white p-15">
-      <div className="flex gap-50">
-        <div className="flex flex-col gap-10">
-          {/* <img src="" alt="" /> */}
-          <div className="text-2xl font-bold">Logo</div>
-          <div>Making hostel management smarter and more efficient </div>
-          <div className="flex gap-4">
-            <a href="">
-              <img src={twitterLogo} alt="" />
-            </a>
-            <a href="">
-              <img src={instaLogo} alt="" />
-            </a>
-            <a href="">
-              <img src={fbLogo} alt="" />
-            </a>
+    <footer class="text-white  bg-gray-900">
+      <div class="mx-auto w-full p-4 py-6 lg:py-8 lg:px-25">
+        {/* top container */}
+        <div class="md:flex md:justify-between">
+          {/* logo + quote + social links */}
+          <div className="flex flex-col gap-6 md:gap-10 mb-6">
+            {/* logo */}
+            <div >
+              <a href="" class="flex items-center">
+                <span class="self-center text-2xl font-semibold whitespace-nowrap">
+                  Logo
+                </span>
+              </a>
+            </div>
+            {/* quote */}
+            <div>
+              <p className="text-gray-500 font-medium">
+                "Making hostel management smarter and more efficient"
+              </p>
+            </div>
+            {/* social links */}
+            <div className="flex gap-4 items-center">
+              <a href="#"><img src={fbLogo}></img></a>
+              <a href="#"><img src={twitterLogo}/></a>
+              <a href="#"><img src={instaLogo}/></a>
+            </div>
+          </div>
+
+          {/* links */}
+          <div class="grid grid-cols-1 gap-8 sm:gap-6 sm:grid-cols-2">
+            <div>
+              <h2 class="mb-6 text-sm font-semibold uppercase">Solutions</h2>
+              <ul class="text-gray-500 font-medium">
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">
+                    Room Management
+                  </a>
+                </li>
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">
+                    Meal Plans
+                  </a>
+                </li>
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">
+                    Security
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h2 class="mb-6 text-sm font-semibold uppercase">Support</h2>
+              <ul class="text-gray-500  font-medium">
+                <li class="mb-4">
+                  <a href="#" class="hover:underline ">
+                    Help Center
+                  </a>
+                </li>
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">
+                    Contact Us
+                  </a>
+                </li>
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">
+                    Privacy
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-
-        <div className="flex gap-40">
-          <div className="flex flex-col gap-4">
-            <a href="">Solutions</a>
-            <a href="">Room Management</a>
-            <a href="">Meal Plans</a>
-            <a href="">Security</a>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <a href="">Support</a>
-            <a href="">Help Center</a>
-            <a href="">Contact Us</a>
-            <a href="">Privacy</a>
-          </div>
+        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <div class="flex justify-center">
+          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+            © 2025{" "}
+            <a href="#" class="hover:underline">
+              Hostle Management System™
+            </a>
+            . All Rights Reserved.
+          </span>
         </div>
       </div>
-
-      <div className="border-t-2 border-gray-700 mt-10"></div>
-
-      <div className="text-center mt-5 text-gray-500">
-        &copy;2024 Hostle Management System. All rights reserved.
-      </div>
-    </div>
+    </footer>
   );
 }
 
-export default Footer
+export default Footer;
