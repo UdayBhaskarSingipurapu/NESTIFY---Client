@@ -38,7 +38,7 @@ function Home() {
   return (
     <div>
       {/* first section */}
-      <div className="flex flex-col md:flex-row items-center gap-8 px-4 md:px-6 py-12 md:py-16">
+      <div className="flex pt-5 flex-col md:flex-row items-center gap-8 px-4 md:px-6 py-12 md:py-16">
         
         <div className="w-full md:w-1/2 space-y-6">
           <h1 className="font-bold text-4xl md:text-6xl">

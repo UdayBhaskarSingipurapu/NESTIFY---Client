@@ -3,6 +3,9 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import Home from "./components/home/Home";
+import Register from "./components/register/Register";
+import StudentHome from "./components/studenthome/StudentHome";
+
 
 
 
@@ -16,7 +19,16 @@ function App({children}) {
         {
           path: '',
           element:<Home/>
+        },
+        {
+          path: 'register',
+          element:<Register/>
+        },
+        {
+          path: 'studenthome',
+          element:<StudentHome/>
         }
+
       ]
     },
     
