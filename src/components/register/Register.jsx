@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";  
-
+import axios from 'axios'
 export default function AuthForm() {
   const [isSignIn, setIsSignIn] = useState(true);
   const { register, handleSubmit, watch } = useForm();
@@ -11,7 +11,9 @@ export default function AuthForm() {
     console.log(isSignIn ? "Sign In Data:" : "Sign Up Data:", data);
     
     if (isSignIn) {
-      
+      axios.post('http://localhost:5050/user/login', data).then((res) => {
+        console.log(res);
+      })
       navigate("/studenthome");  
     } else {
       setIsSignIn(true);

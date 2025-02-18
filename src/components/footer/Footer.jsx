@@ -6,7 +6,7 @@ import fbLogo from "../../assets/fbLogo.png";
 function Footer() {
   return (
     <footer class="text-white  bg-gray-900">
-      <div class="mx-auto w-full p-4 py-6 lg:py-8 lg:px-25">
+      <div class="mx-auto w-full p-4 py-6 lg:py-8 lg:px-25 max-w-[1700px]">
         {/* top container */}
         <div class="md:flex md:justify-between">
           {/* logo + quote + social links */}

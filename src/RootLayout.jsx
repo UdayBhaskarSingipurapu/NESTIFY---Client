@@ -6,7 +6,7 @@ function RootLayout() {
   return (
     <div>
           <Header />
-          <div style={{minHeight:'100vh'}}>
+          <div>
               <Outlet/>
             </div>
           <Footer/>
@@ -15,3 +15,5 @@ function RootLayout() {
 }
 
 export default RootLayout;
+
+// style={{minHeight:'100vh'}}
