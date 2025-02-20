@@ -3,8 +3,8 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import Home from "./components/home/Home";
-import Register from "./components/register/Register";
-import StudentHome from "./components/studenthome/StudentHome";
+import Register from "./components/register/Register"; 
+import  StudentHome from "./components/student-home/StudentHome";
 import UserHomePage from "./components/user-home-page/UserHomePage";
 
 
