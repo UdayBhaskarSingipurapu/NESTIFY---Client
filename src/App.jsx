@@ -2,10 +2,9 @@ import React from "react";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./RootLayout";
-import Home from "./components/home/Home";
-import Register from "./components/register/Register"; 
+import Home from "./components/home/Home"; 
 import  StudentHome from "./components/student-home/StudentHome";
-import UserHomePage from "./components/user-home-page/UserHomePage";
+import UserDashboard from "./components/user-dashboard/UserDashboard";
 import SignUp from "./components/sign-up/SignUp";
 import UserSignUp from "./components/sign-up/UserSignUp";
 import AdminSignUp from "./components/sign-up/AdminSignUp";
@@ -26,7 +25,7 @@ function App({children}) {
         },
         {
           path: "user-dashboard",
-          element: <UserHomePage />,
+          element: <UserDashboard />,
         },
         {
           path: "sign-up",
