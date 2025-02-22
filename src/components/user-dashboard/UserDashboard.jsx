@@ -23,8 +23,8 @@ const UserHomePage = () => {
           Welcome back, john!
         </h1>
         <p className="text-[#6B7280] text-sm">Room 304</p>
-        <div className="mt-4 grid lg:grid-cols-12 md:grid-cols-10 sm:grid-cols-2 gap-4 overflow-auto">
-          <div className="lg:col-span-3 md:col-span-5 sm:col-span-1 flex flex-wrap gap-4 bg-blue-100  p-4 rounded-md">
+        <div className="mt-4 grid lg:grid-cols-12 md:grid-cols-10 sm:grid-cols-2 gap-4 ">
+          <div className="lg:col-span-3 md:col-span-5 sm:col-span-1 flex  gap-4 bg-blue-100  p-4 rounded-md">
             <div className="flex justify-center items-center">
               <img
                 src={userTopContainerImag1}
@@ -34,7 +34,9 @@ const UserHomePage = () => {
             </div>
             <div>
               <p className="text-[#6B7280] font-semibold">Today's Meal Plan</p>
-              <p className="text-[#111827] font-bold text-lg">Monday(22-02-25)</p>
+              <p className="text-[#111827] font-bold text-lg">
+                Monday(22-02-25)
+              </p>
             </div>
           </div>
 
@@ -49,7 +51,7 @@ const UserHomePage = () => {
             <div>
               <p className="text-[#6B7280] font-semibold">Pending Fees</p>
               <p className="text-[#111827] font-bold text-lg flex items-center gap-1">
-                <FaRupeeSign className="inline text-[16px]"/> 1,200.00
+                <FaRupeeSign className="inline text-[16px]" /> 1,200.00
               </p>
             </div>
           </div>
@@ -67,20 +69,6 @@ const UserHomePage = () => {
                 Maintenance Requests
               </p>
               <p className="text-[#111827] font-bold text-lg">2 Active</p>
-            </div>
-          </div>
-
-          <div className="lg:col-span-3 md:col-span-5 sm:col-span-1 flex flex-wrap gap-4 bg-violet-100  p-4 rounded-md">
-            <div className="flex justify-center items-center">
-              <img
-                src={userTopContainerImag4}
-                alt=""
-                className="w-[15px] h-auto "
-              />
-            </div>
-            <div>
-              <p className="text-[#6B7280] font-semibold">Days Left in Term</p>
-              <p className="text-[#111827] font-bold text-lg">45 Days</p>
             </div>
           </div>
         </div>
@@ -168,7 +156,9 @@ const UserHomePage = () => {
                 />
               </div>
               <div>
-                <p className="text-[#6B7280] font-semibold">Maintenance History</p>
+                <p className="text-[#6B7280] font-semibold">
+                  Maintenance History
+                </p>
               </div>
             </div>
           </div>
@@ -177,23 +167,25 @@ const UserHomePage = () => {
         {/* room infromation */}
         <div className="bg-white rounded-md p-7 hidden lg:col-span-4 lg:flex lg:flex-col overflow-y-auto h-[310px]">
           <h1 className="text-[#111827] font-bold text-xl">Room Information</h1>
-          <div className="mt-4 flex flex-col gap-4">
-            <span className="flex justify-between text-[#6B7280] font-semibold">
+          <div className="mt-4 flex flex-col gap-2">
+            <span className="flex justify-between text-[#6B7280] font-semibold p-2 rounded-md bg-gray-100">
               <span className="">Room Number</span>
               <span className="text-[#111827] text-lg">304</span>
             </span>
-            <span className="flex justify-between text-[#6B7280] text-md font-semibold">
+            <span className="flex justify-between text-[#6B7280] text-md font-semibold p-2 rounded-md bg-gray-100">
               <span>Room Type</span>
               <span className="text-[#111827] text-lg">Double Sharing</span>
             </span>
-            <span className="flex justify-between text-[#6B7280] text-md font-semibold">
+            <span className="flex justify-between text-[#6B7280] text-md font-semibold p-2 rounded-md bg-gray-100">
               <span>Roommate</span>
               <span className="text-[#111827] text-lg">Michael Brown</span>
             </span>
+            <span className="flex justify-between text-[#6B7280] text-md font-semibold items-center p-2 rounded-md bg-gray-100">
+              <span>A/C</span>
+              <span className="text-[#111827] text-lg">No</span>
+            </span>
           </div>
         </div>
-
-
       </div>
     </div>
   );

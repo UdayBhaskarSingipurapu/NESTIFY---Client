@@ -8,6 +8,7 @@ import UserDashboard from "./components/user-dashboard/UserDashboard";
 import SignUp from "./components/sign-up/SignUp";
 import UserSignUp from "./components/sign-up/UserSignUp";
 import AdminSignUp from "./components/sign-up/AdminSignUp";
+import Settings from "./components/settings/Settings";
 
 function App({children}) {
   const browserRouter = createBrowserRouter([
@@ -26,6 +27,10 @@ function App({children}) {
         {
           path: "user-dashboard",
           element: <UserDashboard />,
+        },
+        {
+          path: "settings",
+          element: <Settings />,
         },
         {
           path: "sign-up",
