@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-const AdminSignUp = () => {
+const AdminLogin = () => {
   let {
     register,
     handleSubmit,
@@ -58,68 +58,6 @@ const AdminSignUp = () => {
             </p>
           )}
         </div>
-        {/* email */}
-        <div className="sm:w-[500px] w-full">
-          <label
-            htmlFor="email"
-            className="text-[#111827] text-lg font-semibold"
-          >
-            Email
-            <span className="text-[#ff0011] text-xl font-semibold">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-            {...register("email", { required: true })}
-            className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-          />
-          {/* validations for email */}
-          {errors.email?.type === "required" && (
-            <p className="text-red-500 font-semibold">This field is required</p>
-          )}
-        </div>
-        {/* phone */}
-        <div className="sm:w-[500px] w-full">
-          <label
-            htmlFor="phone"
-            className="text-[#111827] text-lg font-semibold"
-          >
-            Phone
-            <span className="text-[#ff0011] text-xl font-semibold">*</span>
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            placeholder="Enter your phone number"
-            {...register("phone", {
-              required: true,
-              minLength: 10,
-              maxLength: 10,
-              pattern: /^[0-9]*$/,
-            })}
-            className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-          />
-          {/* validations for phone */}
-          {errors.phone?.type === "required" && (
-            <p className="text-red-500 font-semibold">This field is required</p>
-          )}
-          {errors.phone?.type === "minLength" && (
-            <p className="text-red-500 font-semibold">
-              Phone number must be at least 10 digits
-            </p>
-          )}
-          {errors.phone?.type === "maxLength" && (
-            <p className="text-red-500 font-semibold">
-              Phone number must be atmost 10 digits
-            </p>
-          )}
-          {errors.phone?.type === "pattern" && (
-            <p className="text-red-500 font-semibold">
-              Phone number must contain only digits
-            </p>
-          )}
-        </div>
         {/* password */}
         <div className="sm:w-[500px] w-full">
           <label
@@ -156,35 +94,6 @@ const AdminSignUp = () => {
             </p>
           )}
         </div>
-        {/* profilePic */}
-        <div className="sm:w-[500px] w-full hover:cursor-pointer">
-          <label
-            className="text-[#111827] text-lg font-semibold "
-            htmlFor="profilePic"
-          >
-            Upload Profile Picture
-            <span className="text-[#ff0011] text-xl font-semibold">* </span>
-            <span className="text-[#6B7280] font-semibold">
-              (jpeg,png,gif,bmp)
-            </span>
-          </label>
-          <div className="border-2 border-dashed border-[#6B7280] p-6 w-full rounded-md hover:bg-gray-100 flex items-center justify-center gap-1">
-            <input
-              type="file"
-              id="profilePic"
-              {...register("profilePic", {
-                required: true,
-                pattern: /\.(jpe?g|png|gif|bmp)$/i,
-              })}
-              className="text-blue-700 font-semibold border-b border-blue-700 w-[85px] "
-            />
-            <span className="font-semibold">Or Drop Down</span>
-          </div>
-          {/* validations for profilePic */}
-          {errors.profilePic?.type === "required" && (
-            <p className="text-red-500 font-semibold">This field is required</p>
-          )}
-        </div>
         {/* Sign Up */}
         <button
           type="submit"
@@ -192,12 +101,12 @@ const AdminSignUp = () => {
         >
           Sign Up
         </button>
-        {/* Already have an account */}
+        {/* Dont have an account */}
         <div>
           <p className="text-[#111827]">
-            Already have an account?{" "}
-            <Link to="/log-in" className="hover:underline text-blue-900">
-              Login
+            Dont have an account?{" "}
+            <Link to="/sign-up" className="hover:underline text-blue-900">
+              Sign Up
             </Link>
           </p>
         </div>
@@ -220,4 +129,4 @@ const AdminSignUp = () => {
   );
 };
 
-export default AdminSignUp;
+export default AdminLogin;
