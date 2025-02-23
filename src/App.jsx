@@ -8,9 +8,6 @@ import StudentHome from "./components/studenthome/StudentHome";
 import UserHomePage from "./components/user-home-page/UserHomePage";
 
 
-
-
-
 function App({children}) {
   const browserRouter = createBrowserRouter([
     {
