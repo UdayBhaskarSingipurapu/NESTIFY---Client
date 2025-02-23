@@ -5,7 +5,7 @@ const SignUp = () => {
   const [isUserActive, setIsUserActive] = useState(true);
   return (
     <div className="min-h-screen flex justify-center bg-white flex-wrap">
-      <div className="mt-5 h-fit p-5 rounded-md w-300 min-w-[250px] sm:max-w-[600px]">
+      <div className="mt-5 h-fit p-5 rounded-md w-300 min-w-[250px] sm:max-w-[700px]">
         <h1 className="text-[#111827] text-2xl font-bold text-center">
           CREATE AN ACCOUNT
         </h1>
