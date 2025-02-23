@@ -2,38 +2,57 @@ import React from "react";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./RootLayout";
-import Home from "./components/home/Home";
-import Register from "./components/register/Register";
-import StudentHome from "./components/studenthome/StudentHome";
-import UserHomePage from "./components/user-home-page/UserHomePage";
-
+import Home from "./components/home/Home"; 
+import  StudentHome from "./components/student-home/StudentHome";
+import UserDashboard from "./components/user-dashboard/UserDashboard";
+import SignUp from "./components/sign-up/SignUp";
+import UserSignUp from "./components/sign-up/UserSignUp";
+import AdminSignUp from "./components/sign-up/AdminSignUp";
+import Settings from "./components/settings/Settings";
 
 function App({children}) {
   const browserRouter = createBrowserRouter([
     {
-      path: '',
-      element: <RootLayout />,
+      path: "",
+      element: <RootLayout/>,
       children: [
         {
-          path: '',
-          element:<Home/>
+          path: "",
+          element: <Home />,
         },
         {
-          path: 'register',
-          element:<Register/>
+          path: "studenthome",
+          element: <StudentHome />,
         },
         {
-          path: 'studenthome',
-          element:<StudentHome/>
+          path: "user-dashboard",
+          element: <UserDashboard />,
         },
         {
-          path: 'user-dashboard',
-          element:<UserHomePage/>
-        }
-      ]
+          path: "settings",
+          element: <Settings />,
+        },
+        {
+          path: "sign-up",
+          element: <SignUp/>,
+          children: [
+            {
+              path: "",
+              element: <UserSignUp />,
+            },
+            {
+              path: "user",
+              element: <UserSignUp />,
+            },
+            {
+              path: "admin",
+              element: <AdminSignUp />,
+            }
+          ]
+        },
+      ],
     },
-    
-  ])
+  ]);
   return <RouterProvider router={browserRouter}>
     {children}
   </RouterProvider>
