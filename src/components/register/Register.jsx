@@ -14,7 +14,7 @@ export default function AuthForm() {
       axios.post('http://localhost:5050/user/login', data).then((res) => {
         console.log(res);
       })
-      navigate("/studenthome");  
+      navigate("/user-home-page");  
     } else {
       setIsSignIn(true);
     }
