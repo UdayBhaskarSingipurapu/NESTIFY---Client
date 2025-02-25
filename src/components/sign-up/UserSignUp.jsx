@@ -2,6 +2,9 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
+import { toast, ToastContainer } from "react-toastify";
+import { userLoginContext } from "../../contexts/userLoginContext";
+import { useContext } from "react";
 
 const UserSignUp = () => {
   let {
@@ -11,13 +14,46 @@ const UserSignUp = () => {
     setValue,
   } = useForm();
   let navigate = useNavigate();
+  let { setError } = useContext(userLoginContext);
+
+  async function userSignupReq(userCred) {
+    try {
+      let res = await fetch("http://localhost:5050/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userCred),
+      });
+      // let res = await axios.post("http://localhost:5050/user/signup", userCred);
+      if (res.status === 200) {
+        if (data && data.message === "User registered successfully") {
+          toast.success(data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            draggable: true,
+          });
+          setTimeout(() => {
+            navigate("/log-in");
+          }, 2000);
+        } else {
+          setError("Unknown error");
+        }
+      } else {
+        setError(data.payload.message);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  }
 
   async function onSubmit(userData) {
-    console.log(userData);
+    userSignupReq(userData);
   }
-  console.log(errors);
+
   return (
     <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md">
+      <ToastContainer />
       <form
         action=""
         className="flex flex-col mt-5 gap-5 items-center"

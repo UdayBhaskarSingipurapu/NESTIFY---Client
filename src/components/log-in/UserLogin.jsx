@@ -2,8 +2,12 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
+import { userLoginContext } from "../../contexts/userLoginContext";
+import { useContext } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 const UserLogin = () => {
+  const { userLoginReq, login, user } = useContext(userLoginContext);
   let {
     register,
     handleSubmit,
@@ -13,11 +17,21 @@ const UserLogin = () => {
   let navigate = useNavigate();
 
   async function onSubmit(userData) {
-    console.log(userData);
+    userLoginReq(userData);
+    if (login) {
+      toast.success("user login successfully", {
+        position: "top-center",
+        autoClose: 2000,
+        draggable: true,
+      });
+      setTimeout(() => {
+        navigate("student-home");
+      }, 4000);
+    }
   }
-  console.log(errors);
   return (
     <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md">
+      {/* user Login form */}
       <form
         action=""
         className="flex flex-col mt-5 gap-5 items-center"
@@ -58,7 +72,6 @@ const UserLogin = () => {
             </p>
           )}
         </div>
-
         {/* password */}
         <div className="sm:w-[500px] w-full">
           <label
@@ -95,7 +108,6 @@ const UserLogin = () => {
             </p>
           )}
         </div>
-
         {/* submit */}
         <button
           type="submit"

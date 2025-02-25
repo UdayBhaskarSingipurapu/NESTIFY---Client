@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
+import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const AdminSignUp = () => {
@@ -12,10 +13,40 @@ const AdminSignUp = () => {
   } = useForm();
   let navigate = useNavigate();
 
-  async function onSubmit(adminData) {
-    console.log(adminData);
+  async function adminSignupReq(userCred) {
+    try {
+      let res = await fetch("http://localhost:5050/owner/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userCred),
+      });
+      if (res.status === 200) {
+        if (data && data.message === "admin registered successfully") {
+          toast.success(data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            draggable: true,
+          });
+          setTimeout(() => {
+            navigate("/log-in");
+          }, 2000);
+        } else {
+          setError("Unknown error");
+        }
+      } else {
+        setError(data.payload.message);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
   }
-  console.log(errors);
+
+  async function onSubmit(adminData) {
+    adminSignupReq(adminData);
+  }
+
   return (
     <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md">
       <form
