@@ -41,7 +41,7 @@ const AdminLogin = () => {
         {/* Admin Name */}
         <div className="sm:w-[500px] w-full">
           <label
-            htmlFor="adminname"
+            htmlFor="username"
             className="text-[#111827] text-lg font-semibold"
           >
             Admin Name
@@ -49,8 +49,8 @@ const AdminLogin = () => {
           </label>
           <input
             type="text"
-            id="adminname"
-            {...register("adminname", {
+            id="username"
+            {...register("username", {
               required: true,
               minLength: 3,
               maxLength: 20,
@@ -59,15 +59,15 @@ const AdminLogin = () => {
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
           {/* validations for userName */}
-          {errors.adminname?.type === "required" && (
+          {errors.username?.type === "required" && (
             <p className="text-red-500 font-semibold">This field is required</p>
           )}
-          {errors.adminname?.type === "minLength" && (
+          {errors.username?.type === "minLength" && (
             <p className="text-red-500 font-semibold">
               Username must be at least 3 characters
             </p>
           )}
-          {errors.adminname?.type === "maxLength" && (
+          {errors.username?.type === "maxLength" && (
             <p className="text-red-500 font-semibold">
               Username must be at most 20 characters
             </p>
