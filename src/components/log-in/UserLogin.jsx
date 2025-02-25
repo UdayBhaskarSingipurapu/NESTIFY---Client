@@ -22,7 +22,7 @@ const UserLogin = () => {
       toast.success("user login successfully", {
         position: "top-center",
         autoClose: 2000,
-        draggable: true,
+        draggable: true, 
       });
       setTimeout(() => {
         navigate("student-home");

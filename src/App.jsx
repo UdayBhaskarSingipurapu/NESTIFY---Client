@@ -12,6 +12,7 @@ import Settings from "./components/settings/Settings";
 import Login from "./components/log-in/Login";
 import UserLogin from "./components/log-in/UserLogin";
 import AdminLogIn from "./components/log-in/AdminLogin";
+import HostleListing from "./components/hostle-listing/HostleListing";
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -71,6 +72,10 @@ function App({ children }) {
             }
           ],
         },
+        {
+          path: "hostle-listing",
+          element: <HostleListing/>
+        }
       ],
     },
   ]);
