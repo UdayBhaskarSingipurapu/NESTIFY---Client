@@ -24,7 +24,7 @@ function App({ children }) {
           element: <Home />,
         },
         {
-          path: "studenthome",
+          path: "student-home",
           element: <StudentHome />,
         },
         {
