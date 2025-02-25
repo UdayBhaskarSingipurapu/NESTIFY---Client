@@ -25,7 +25,7 @@ const UserLogin = () => {
         draggable: true,
       });
       setTimeout(() => {
-        navigate("student-home");
+        navigate("/student-home");
       }, 4000);
     }
   }

@@ -4,6 +4,9 @@ import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { userLoginContext } from "../../contexts/userLoginContext";
+import { useContext } from "react";
+import axios from "axios";
 
 const AdminSignUp = () => {
   let {
@@ -12,18 +15,31 @@ const AdminSignUp = () => {
     formState: { errors },
   } = useForm();
   let navigate = useNavigate();
+  let { setError } = useContext(userLoginContext);
 
   async function adminSignupReq(userCred) {
+    console.log(userCred)
+    const formData = new FormData();
+
+    // Append text fields
+    formData.append("username", userCred.username);
+    formData.append("email", userCred.email);
+    formData.append("contact", userCred.contact);
+    formData.append("password", userCred.password);
+
+    // Append file. Make sure userCred.profileImage is a File object, not a FileList.
+    // If you're using react-hook-form, you can set the file like this:
+    console.log(userCred.profileImage[0]);
+    formData.append("profileImage", userCred.profileImage[0]);
+    console.log(formData)
     try {
-      let res = await fetch("http://localhost:5050/owner/signup", {
-        method: "POST",
+      let res = await axios.post("http://localhost:5050/owner/signup", formData, {
         headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userCred),
+          "Content-Type": "multipart/form-data",
+        }
       });
       if (res.status === 200) {
-        if (data && data.message === "admin registered successfully") {
+        if (res.data && res.data.message === "User registered successfully") {
           toast.success(data.message, {
             position: "top-center",
             autoClose: 2000,
@@ -39,7 +55,8 @@ const AdminSignUp = () => {
         setError(data.payload.message);
       }
     } catch (err) {
-      setError(err.message);
+      console.log(err);
+      setError(err.response.data.payload.message);
     }
   }
 
@@ -53,11 +70,12 @@ const AdminSignUp = () => {
         action=""
         className="flex flex-col mt-5 gap-5 items-center"
         onSubmit={handleSubmit(onSubmit)}
+        encType="multipart/form-data"
       >
         {/* Admin Name */}
         <div className="sm:w-[500px] w-full">
           <label
-            htmlFor="adminname"
+            htmlFor="username"
             className="text-[#111827] text-lg font-semibold"
           >
             Admin Name
@@ -65,8 +83,8 @@ const AdminSignUp = () => {
           </label>
           <input
             type="text"
-            id="adminname"
-            {...register("adminname", {
+            id="username"
+            {...register("username", {
               required: true,
               minLength: 3,
               maxLength: 20,
@@ -75,15 +93,15 @@ const AdminSignUp = () => {
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
           {/* validations for userName */}
-          {errors.adminname?.type === "required" && (
+          {errors.username?.type === "required" && (
             <p className="text-red-500 font-semibold">This field is required</p>
           )}
-          {errors.adminname?.type === "minLength" && (
+          {errors.username?.type === "minLength" && (
             <p className="text-red-500 font-semibold">
               Username must be at least 3 characters
             </p>
           )}
-          {errors.adminname?.type === "maxLength" && (
+          {errors.username?.type === "maxLength" && (
             <p className="text-red-500 font-semibold">
               Username must be at most 20 characters
             </p>
@@ -113,17 +131,17 @@ const AdminSignUp = () => {
         {/* phone */}
         <div className="sm:w-[500px] w-full">
           <label
-            htmlFor="phone"
+            htmlFor="contact"
             className="text-[#111827] text-lg font-semibold"
           >
-            Phone
+            Contact
             <span className="text-[#ff0011] text-xl font-semibold">*</span>
           </label>
           <input
             type="tel"
-            id="phone"
-            placeholder="Enter your phone number"
-            {...register("phone", {
+            id="contact"
+            placeholder="Enter your contact number"
+            {...register("contact", {
               required: true,
               minLength: 10,
               maxLength: 10,
@@ -131,23 +149,23 @@ const AdminSignUp = () => {
             })}
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
-          {/* validations for phone */}
-          {errors.phone?.type === "required" && (
+          {/* validations for contact */}
+          {errors.contact?.type === "required" && (
             <p className="text-red-500 font-semibold">This field is required</p>
           )}
-          {errors.phone?.type === "minLength" && (
+          {errors.contact?.type === "minLength" && (
             <p className="text-red-500 font-semibold">
-              Phone number must be at least 10 digits
+              contact number must be at least 10 digits
             </p>
           )}
-          {errors.phone?.type === "maxLength" && (
+          {errors.contact?.type === "maxLength" && (
             <p className="text-red-500 font-semibold">
-              Phone number must be atmost 10 digits
+              contact number must be atmost 10 digits
             </p>
           )}
-          {errors.phone?.type === "pattern" && (
+          {errors.contact?.type === "pattern" && (
             <p className="text-red-500 font-semibold">
-              Phone number must contain only digits
+              contact number must contain only digits
             </p>
           )}
         </div>
@@ -191,7 +209,7 @@ const AdminSignUp = () => {
         <div className="sm:w-[500px] w-full hover:cursor-pointer">
           <label
             className="text-[#111827] text-lg font-semibold "
-            htmlFor="profilePic"
+            htmlFor="profileImage"
           >
             Upload Profile Picture
             <span className="text-[#ff0011] text-xl font-semibold">* </span>
@@ -202,8 +220,8 @@ const AdminSignUp = () => {
           <div className="border-2 border-dashed border-[#6B7280] p-6 w-full rounded-md hover:bg-gray-100 flex items-center justify-center gap-1">
             <input
               type="file"
-              id="profilePic"
-              {...register("profilePic", {
+              id="profileImage"
+              {...register("profileImage", {
                 required: true,
                 pattern: /\.(jpe?g|png|gif|bmp)$/i,
               })}

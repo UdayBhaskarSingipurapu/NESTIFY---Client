@@ -1,5 +1,6 @@
 import { userLoginContext } from "./userLoginContext";
 import { useState } from "react";
+import axios from 'axios';
 
 function UserLoginStore({ children }) {
   //login Store
@@ -9,64 +10,50 @@ function UserLoginStore({ children }) {
   // let navigate = useNavigate();
 
   //make a login req
-  async function userLoginReq(userCred) {
+  async function userLoginReq(userCredentials) {
+    console.log(userCredentials)
     try {
-      let res = await fetch("http://localhost:5050/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userCred),
+      const response = await axios.post("http://localhost:5050/user/login", userCredentials, {
+        withCredentials: true, // Ensures cookies are included
       });
-      let data = await res.json();
-      if (res.status === 200) {
-        if (data && data.message === "User logged in successfully") {
-          setUser(data.payload);
-          sessionStorage.setItem("user", JSON.stringify(data.payload));
-          setLogin(true);
-          toast.success(data.message, {
-            position: "top-center",
-            autoClose: 2000,
-            draggable: true,
-          });
-        } else {
-          setError("Unknown error");
-        }
+
+      const { status, data } = response;
+      console.log("User login response:", data);
+
+      if (status === 200 && data.message === "User logged in successfully") {
+        setUser(data.payload);
+        sessionStorage.setItem("user", JSON.stringify(data.payload));
+        setLogin(true);
       } else {
-        setError(data.payload.message);
+        setError(data?.message || "Unknown error occurred");
       }
     } catch (err) {
-      setError(err.message);
+      console.error("Login error:", err);
+      setError(err.response?.data?.message || "An error occurred during login");
     }
   }
+  
 
   async function adminLoginReq(adminCred) {
+    console.log(adminCred)
     try {
-      let res = await fetch("http://localhost:5050/owner/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(adminCred),
+      const response = await axios.post("http://localhost:5050/owner/login", adminCred, {
+        withCredentials: true, 
       });
-      if (res.status === 200) {
-        if (data && data.message === "User logged in successfully") {
-          setUser(data.payload);
-          sessionStorage.setItem("user", JSON.stringify(data.payload));
-          setLogin(true);
-                    toast.success(data.message, {
-            position: "top-center",
-            autoClose: 2000,
-            draggable: true,
-          });
-        } else {
-          setError("Unknown error");
-        }
+
+      const { status, data } = response;
+      console.log("User login response:", data);
+
+      if (status === 200 && data.message === "User logged in successfully") {
+        setUser(data.payload);
+        sessionStorage.setItem("user", JSON.stringify(data.payload));
+        setLogin(true);
       } else {
-        setError(data.payload.message);
+        setError(data?.message || "Unknown error occurred");
       }
     } catch (err) {
-      setError(err.message);
+      console.error("Login error:", err);
+      setError(err.response?.data?.message || "An error occurred during login");
     }
   }
 
