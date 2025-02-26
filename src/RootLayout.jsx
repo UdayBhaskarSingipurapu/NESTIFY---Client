@@ -4,11 +4,11 @@ import {Outlet} from 'react-router-dom'
 
 function RootLayout() {
   return (
-    <div>
+    <div >
           <Header />
           <div>
               <Outlet/>
-            </div>
+          </div>
           <Footer/>
     </div>
   )

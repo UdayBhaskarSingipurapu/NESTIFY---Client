@@ -34,6 +34,10 @@ function App({ children }) {
           element: <UserDashboard />,
         },
         {
+          path: "admin_homepage",
+          element: <AdminHomePage />,
+        },
+        {
           path: "settings",
           element: <Settings />,
         },
