@@ -1,38 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Hostel from "../../assets/Hostel.png";
-import Hostel1 from "../../assets/Hostel1.png";
-import Hostel2 from "../../assets/Hostel2.png";
-import Hostel3 from "../../assets/Hostel3.png";
-import totroomslogo from "../../assets/totroomslogo.png";
 import mealPlan from "../../assets/mealPlan.png";
 import feedback from "../../assets/feedBack.png";
 import documentManagement from "../../assets/documentManagement.png";
 import smartNotifications from "../../assets/smartNotification.png";
-
-const hostels = [
-  {
-    id: 1,
-    name: "Sunrise Hostel",
-    description: "Modern facilities with 24/7 security and high-speed internet",
-    image: Hostel1,
-    roomsAvailable: 15,
-  },
-  {
-    id: 2,
-    name: "Central Park Hostel",
-    description: "Prime location with excellent amenities and meal plans",
-    image: Hostel2,
-    roomsAvailable: 8,
-  },
-  {
-    id: 3,
-    name: "Riverside Residence",
-    description: "Peaceful environment with premium facilities",
-    image: Hostel3,
-    roomsAvailable: 12,
-  },
-];
+import hostels from "../../data/hostelsData";
 
 function Home() {
   return (
@@ -80,40 +53,31 @@ function Home() {
           </div>
 
           {/* Card Grid Section*/}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-6 mt-6">
-            {hostels.map((hostel) => (
-              <div
-                key={hostel.id}
-                className="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl"
-              >
-                <img
-                  src={hostel.image}
-                  alt={hostel.name}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-4">
-                  <h2 className="text-xl font-semibold text-gray-800">
-                    {hostel.name}
-                  </h2>
-                  <p className="text-gray-600 mt-2">{hostel.description}</p>
-
-                  <div className="flex justify-between items-center gap-10">
-                    <div className="flex items-center gap-2 font-bold py-3">
-                      <img src={totroomslogo} alt="" className="w-6 h-6" />
-                      <div>{hostel.roomsAvailable} rooms available</div>
-                    </div>
-
-                    <div>
-                      <button className="mt-4 px-4 py-2 bg-black border-2 text-white rounded-lg hover:bg-gray-100 hover:text-black transition">
-                        View Details
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 p-8">
+        {hostels.map((hostel, index) => (
+          <div
+            key={index}
+            className="bg-white p-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg"
+          >
+            <img
+              src={hostel.image}
+              alt={hostel.name}
+              className="w-full h-40 object-cover rounded-md"
+            />
+            <h3 className="text-lg font-semibold mt-3">{hostel.name}</h3>
+            <p className="text-gray-600">{hostel.description}</p>
+            <p className="text-gray-600">{hostel.roomsAvailable}</p>
+            <p className="text-gray-700 font-bold mt-2">₹{hostel.price}/month</p>
+            <Link
+              to={`/hostel/${hostel.id}`}
+              className="block bg-black text-white mt-3 px-4 py-2 text-center rounded-md hover:bg-gray-700"
+            >
+              View Details
+            </Link>
           </div>
-        </div>
+        ))}
+      </div>
+    </div>
 
         {/* features */}
 
