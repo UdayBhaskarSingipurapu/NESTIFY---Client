@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { userLoginContext } from "../../contexts/userLoginContext";
+import { useContext } from "react";
+import { toast } from "react-toastify";
 
 const AdminLogin = () => {
   let {
@@ -10,14 +13,26 @@ const AdminLogin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { adminLoginReq, login, user } = useContext(userLoginContext);
   let navigate = useNavigate();
 
   async function onSubmit(adminData) {
-    console.log(adminData);
+    adminLoginReq(adminData);
+    if (login) {
+      toast.success("admin Login Successfully:)", {
+        position: "top-center",
+        autoClose: 2000,
+        draggable: true,
+      });
+      setTimeout(() => {
+        navigate("admin-dashboard");
+      }, 2000);
+    }
   }
   console.log(errors);
   return (
     <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md">
+      {/* admin Login form */}
       <form
         action=""
         className="flex flex-col mt-5 gap-5 items-center"
@@ -26,7 +41,7 @@ const AdminLogin = () => {
         {/* Admin Name */}
         <div className="sm:w-[500px] w-full">
           <label
-            htmlFor="adminname"
+            htmlFor="username"
             className="text-[#111827] text-lg font-semibold"
           >
             Admin Name
@@ -34,8 +49,8 @@ const AdminLogin = () => {
           </label>
           <input
             type="text"
-            id="adminname"
-            {...register("adminname", {
+            id="username"
+            {...register("username", {
               required: true,
               minLength: 3,
               maxLength: 20,
@@ -44,15 +59,15 @@ const AdminLogin = () => {
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
           {/* validations for userName */}
-          {errors.adminname?.type === "required" && (
+          {errors.username?.type === "required" && (
             <p className="text-red-500 font-semibold">This field is required</p>
           )}
-          {errors.adminname?.type === "minLength" && (
+          {errors.username?.type === "minLength" && (
             <p className="text-red-500 font-semibold">
               Username must be at least 3 characters
             </p>
           )}
-          {errors.adminname?.type === "maxLength" && (
+          {errors.username?.type === "maxLength" && (
             <p className="text-red-500 font-semibold">
               Username must be at most 20 characters
             </p>
