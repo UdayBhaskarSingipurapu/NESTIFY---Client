@@ -1,20 +1,49 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 import { set, useForm } from "react-hook-form";
 import RoomDetails from "./RoomDetails";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { userLoginContext } from "../../contexts/userLoginContext";
+import { useContext } from "react";
 
 const HostleListing = () => {
   const [hoslteId, setHoslteId] = useState("123");
   const [hostleDetailsSaved, setHostleDetailsSaved] = useState(false);
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  
   let navigate = useNavigate();
+
+  let {setError} = useContext(userLoginContext);
   let {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // async function postHostleDetails(hostleDetails) {
-  //   try {  
+
+
+  useEffect(() => {
+    if(hoslteId) {
+      navigate(`/admin_homepage`);
+    }
+  }, [hoslteId]);
+
+  async function postHostleDetails(hostleDetails) {
+    console.log(hostleDetails)
+    const formData = new FormData();
+
+    // Append text fields
+    formData.append("hostelname", hostleDetails.hostelname);
+    formData.append("doorNo", hostleDetails.hosteldno);
+    formData.append("street", hostleDetails.hostelstreet);
+    formData.append("city", hostleDetails.hostelcity);
+    formData.append("state", hostleDetails.hostelstate);
+
+    // Append file. Make sure hostleDetails.profileImage is a File object, not a Filelist.
+    // If you're using react-hook-form, you can set the file like this:
+    // console.log(hostleDetails.hostleimg[0]);
+    formData.append("hostelImage", hostleDetails.hostelimg[0]);
+    console.log(formData)
+    try {
       // let res = await fetch("http://localhost:5050/Addhostle", {
       //   method: "POST",
       //   headers: {
@@ -24,27 +53,26 @@ const HostleListing = () => {
       // });
       // let data = await res.json();
       // console.log(data);
-  //     let res = await axios.post(
-  //       "http://localhost:5050/createhostel",
-  //       hostleDetails
-  //     );
-  //     console.log(res);
-  //     if (res.status === 200) {
-  //       let data = res.data;
-  //       setHoslteId(data.payload);
-  //     } else {
-  //       // setError(data?.message || "Unknown error occurred");
-  //     }
-  //   } catch (err) {
-  //     // setError(err.response?.data?.message || "An error occurred during login");
-  //   }
-  // }
+      console.log(user);
+      let res = await axios.post(
+        `http://localhost:5050/hostel/createhostel/${user._id}`,
+        formData
+      );
+      console.log(res)
+      if (res.status === 200) {
+        let data = res.data;
+        console.log(data);
+        setHoslteId(data.payload._id);
+      } else {
+        setError(data?.message || "Unknown error occurred");
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "An error occurred during login");
+    }
+  }
   // Handle Hostle form submission
   function onSubmit(hostleDetails) {
-    // postHostleDetails(hostleDetails);
-    if(hoslteId !== null)
-      navigate(`id:${hoslteId}/room-details`);
-    // console.log(hostleDetails);
+    postHostleDetails(hostleDetails);
   }
 
   return (
@@ -75,7 +103,7 @@ const HostleListing = () => {
                   id="hostlename"
                   placeholder="Enter Hostle Name"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("hostlename")}
+                  {...register("hostelname")}
                   // value={input}
                   // onChange={(e) => {
                   //   if (!hostleDetailsSaved) {
@@ -98,7 +126,7 @@ const HostleListing = () => {
                   id="hostleaddressdno"
                   placeholder="D-No"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("hostledno")}
+                  {...register("hosteldno")}
                   {...(hostleDetailsSaved && { disabled: true })}
                 />
               </div>
@@ -115,7 +143,7 @@ const HostleListing = () => {
                   id="hostleaddressStreet"
                   placeholder="Street"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("hosltestreet")}
+                  {...register("hostelstreet")}
                   {...(hostleDetailsSaved && { disabled: true })}
                 />
               </div>
@@ -132,7 +160,7 @@ const HostleListing = () => {
                   id="hostleaddressCity"
                   placeholder="City"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("hostlecity")}
+                  {...register("hostelcity")}
                   {...(hostleDetailsSaved && { disabled: true })}
                 />
               </div>
@@ -149,7 +177,7 @@ const HostleListing = () => {
                   id="hostleaddressState"
                   placeholder="State"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("hostlestate")}
+                  {...register("hostelstate")}
                   {...(hostleDetailsSaved && { disabled: true })}
                 />
               </div>
@@ -167,7 +195,7 @@ const HostleListing = () => {
                     id="hostleimage"
                     accept="image/jpeg, image/png, image/gif, image/bmp, image/jpg"
                     className="rounded-md text-center bg-[#a2a5a9] text-white shadow-lg shadow-[#515356] px-3 cursor-pointer w-full"
-                    {...register("hostleimg")}
+                    {...register("hostelimg")}
                     {...(hostleDetailsSaved && { disabled: true })}
                   />
                 </div>
