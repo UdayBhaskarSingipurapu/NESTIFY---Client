@@ -14,6 +14,7 @@ import UserLogin from "./components/log-in/UserLogin";
 import AdminLogIn from "./components/log-in/AdminLogin";
 import HostleListing from "./components/hostle-listing/HostleListing";
 import RoomDetails from "./components/hostle-listing/RoomDetails";
+import AdminHomePage from "./components/admin_homepage/AdminHomePage"
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
