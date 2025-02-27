@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const HostleListing = () => {
-  const [hoslteId, setHoslteId] = useState(null);
+  const [hoslteId, setHoslteId] = useState("123");
   const [hostleDetailsSaved, setHostleDetailsSaved] = useState(false);
   let navigate = useNavigate();
   let {
@@ -13,8 +13,8 @@ const HostleListing = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  async function postHostleDetails(hostleDetails) {
-    try {
+  // async function postHostleDetails(hostleDetails) {
+  //   try {  
       // let res = await fetch("http://localhost:5050/Addhostle", {
       //   method: "POST",
       //   headers: {
@@ -24,25 +24,26 @@ const HostleListing = () => {
       // });
       // let data = await res.json();
       // console.log(data);
-      let res = await axios.post(
-        "http://localhost:5050/Addhostle",
-        hostleDetails
-      );
-      if (res.status === 200) {
-        let data = res.data;
-        setHoslteId(data.payload);
-      } else {
-        setError(data?.message || "Unknown error occurred");
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || "An error occurred during login");
-    }
-  }
+  //     let res = await axios.post(
+  //       "http://localhost:5050/createhostel",
+  //       hostleDetails
+  //     );
+  //     console.log(res);
+  //     if (res.status === 200) {
+  //       let data = res.data;
+  //       setHoslteId(data.payload);
+  //     } else {
+  //       // setError(data?.message || "Unknown error occurred");
+  //     }
+  //   } catch (err) {
+  //     // setError(err.response?.data?.message || "An error occurred during login");
+  //   }
+  // }
   // Handle Hostle form submission
   function onSubmit(hostleDetails) {
-    postHostleDetails(hostleDetails);
+    // postHostleDetails(hostleDetails);
     if(hoslteId !== null)
-      navigate(`id:${data.payload}/room-details`);
+      navigate(`id:${hoslteId}/room-details`);
     // console.log(hostleDetails);
   }
 
@@ -205,5 +206,5 @@ export default HostleListing;
 // Admin id -> sending
 
 //initial assumption -> all the rooms are like empty
-//initializations -> filled rooms = 0, roomates = []
+//initializations -> filled beds = 0, roomates = []
 //whey user sends the request and if accepted it "adds 1 to the filled rooms" and adds that particular student into the "roomates" array
