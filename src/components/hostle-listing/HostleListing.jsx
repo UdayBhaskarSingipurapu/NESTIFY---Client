@@ -7,7 +7,7 @@ import { userLoginContext } from "../../contexts/userLoginContext";
 import { useContext } from "react";
 
 const HostleListing = () => {
-  const [hoslteId, setHoslteId] = useState("123");
+  const [hoslteId, setHoslteId] = useState(null);
   const [hostleDetailsSaved, setHostleDetailsSaved] = useState(false);
   const user = JSON.parse(sessionStorage.getItem("user"));
   
@@ -23,7 +23,7 @@ const HostleListing = () => {
 
   useEffect(() => {
     if(hoslteId) {
-      navigate(`/admin_homepage`);
+      navigate(`/admin_homepage?hostleId=${hoslteId}`);
     }
   }, [hoslteId]);
 
@@ -64,10 +64,10 @@ const HostleListing = () => {
         console.log(data);
         setHoslteId(data.payload._id);
       } else {
-        setError(data?.message || "Unknown error occurred");
+        setError(res.data?.message || "Unknown error occurred");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "An error occurred during login");
+      setError(err.response?.data?.message || "An error occurred while saving");
     }
   }
   // Handle Hostle form submission

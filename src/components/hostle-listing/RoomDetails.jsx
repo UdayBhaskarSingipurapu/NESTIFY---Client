@@ -1,42 +1,82 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { userLoginContext } from "../../contexts/userLoginContext";
+import { useContext } from "react";
 
 const RoomDetails = () => {
   const [rooms, setRooms] = useState([]);
+  const [hoslteId, setHoslteId] = useState(null);
+  const [saved, setSaved] = useState(false);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(useLocation.search);
+  useEffect(() => {
+    setHoslteId(queryParams.get("hostleId"));
+  }, [hoslteId]);
+  // console.log("hi");
+  // console.log(hoslteId);
   let {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  let { setError } = useContext(userLoginContext);
 
   async function onSave(roomDetails) {
-    setRooms([...rooms, roomDetails]);
     console.log(roomDetails);
+    const formData = new FormData();
+    //Appending text fields
+    formData.append("roomNumber", roomDetails.roomnumber);
+    formData.append("roomCapacity", roomDetails.roomcapacity);
+    formData.append("airConditioned", roomDetails.ac);
+    formData.append("fees", roomDetails.fees);
+    setRooms([...rooms, formData]);
+    setSaved(true);
+    setTimeout(() => {
+      setSaved(false);
+    }, 1000);
   }
 
   async function onSubmit(rooms) {
-    let res = axios.post("http://localhost:5050/rooms/add", rooms);
+    // for (let i = 0; i < rooms.length; i++) {
+    //   // console.log(rooms[i].get("roomNumber")); to get particular field in the room data
+    //   for (let [key, value] of formData.entries()) { //traversing through every entry
+    //     console.log(key, value);
+    //   }
+    // }
+    try {
+      let res = axios.post(`http://localhost:5050/id:${hoslteId}/add`, rooms);
+      if (res.status === 200) {
+        let data = res.data;
+        console.log(data);
+        Navigate(`/admin_homepage`);
+      } else {
+        setError(res.data?.message || "unknown error occured");
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "An error occurred while saving");
+    }
   }
 
   function randomColor() {
     let colorList = [
-      "bg-blue-200",
-      "bg-yellow-200",
-      "bg-pink-200",
-      "bg-indigo-200",
-      "bg-teal-200",
-      "bg-orange-200",
-      "bg-purple-200",
-      "bg-cyan-200",
-      "bg-rose-200",
-      "bg-lime-200",
-      "bg-amber-200",
-      "bg-sky-200",
-      "bg-emerald-200",
-      "bg-fuchsia-200",
-      "bg-violet-200",
+      "bg-blue-100",
+      "bg-yellow-100",
+      "bg-pink-100",
+      "bg-indigo-100",
+      "bg-teal-100",
+      "bg-orange-100",
+      "bg-purple-100",
+      "bg-cyan-100",
+      "bg-rose-100",
+      "bg-lime-100",
+      "bg-amber-100",
+      "bg-sky-100",
+      "bg-emerald-100",
+      "bg-fuchsia-100",
+      "bg-violet-100",
     ];
     return colorList[Math.floor(Math.random() * colorList.length)];
   }
@@ -62,6 +102,7 @@ const RoomDetails = () => {
                 placeholder="Enter Room Number"
                 className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                 {...register("roomnumber")}
+                {...(saved && { value: "" })}
               />
             </div>
 
@@ -82,6 +123,7 @@ const RoomDetails = () => {
                 placeholder="Enter the number"
                 className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                 {...register("roomcapacity")}
+                {...(saved && { value: "" })}
               />
             </div>
 
@@ -99,6 +141,7 @@ const RoomDetails = () => {
                 placeholder="Yes/No"
                 className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                 {...register("ac")}
+                {...(saved && { value: "" })}
               />
             </div>
 
@@ -116,6 +159,7 @@ const RoomDetails = () => {
                 placeholder="Enter fee per month"
                 className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                 {...register("fees")}
+                {...(saved && { value: "" })}
               />
             </div>
           </div>
@@ -130,26 +174,37 @@ const RoomDetails = () => {
         {/* Rooms Display form */}
         {rooms.length > 0 ? (
           <div className="flex gap-4 flex-wrap sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-4 w-full">
-            {rooms.map((room) => {
+            {rooms.map((room, index) => {
               return (
                 <div
                   className={`flex flex-col gap-2 ${randomColor()} p-4 rounded-lg items-center justify-center w-full`}
+                  key={index}
                 >
-                  <span className="bg-white p-2 rounded-md w-full">
-                    <span>RoomNumber:</span>
-                    <span>{room.roomnumber}</span>
+                  <span className="bg-white p-2 rounded-md w-full flex justify-between">
+                    <span className="text-lg font-semibold">RoomNumber:</span>
+                    <span className="text-lg font-semibold">
+                      {room.get("roomNumber")}
+                    </span>
                   </span>
-                  <span className="bg-white p-2 rounded-md w-full">
-                    <span>Room Capacity:</span>
-                    <span>{room.roomcapacity}</span>
+                  <span className="bg-white p-2 rounded-md w-full flex justify-between">
+                    <span className="text-lg font-semibold">
+                      Room Capacity:
+                    </span>
+                    <span className="text-lg font-semibold">
+                      {room.get("roomCapacity")}
+                    </span>
                   </span>
-                  <span className="bg-white p-2 rounded-md w-full">
-                    <span>A/C:</span>
-                    <span>{room.ac}</span>
+                  <span className="bg-white p-2 rounded-md w-full flex justify-between">
+                    <span className="text-lg font-semibold">A/C:</span>
+                    <span className="text-lg font-semibold">
+                      {room.get("airConditioned")}
+                    </span>
                   </span>
-                  <span className="bg-white p-2 rounded-md w-full">
-                    <span>Fees:</span>
-                    <span>{room.fees}</span>
+                  <span className="bg-white p-2 rounded-md w-full flex justify-between">
+                    <span className="text-lg font-semibold">Fees:</span>
+                    <span className="text-lg font-semibold">
+                      {room.get("fees")}
+                    </span>
                   </span>
                 </div>
               );
@@ -160,9 +215,14 @@ const RoomDetails = () => {
             No rooms added up to now
           </div>
         )}
-        <button onClick={() => {
-          onSubmit(rooms);
-        }} className="m-auto bg-green-400 rounded-md mt-4 px-8 py-4 w-fit">Submit</button>
+        <button
+          onClick={() => {
+            onSubmit(rooms);
+          }}
+          className="m-auto bg-green-400 rounded-md mt-4 px-8 py-4 w-fit"
+        >
+          Submit
+        </button>
       </div>
     </div>
   );
