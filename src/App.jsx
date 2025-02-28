@@ -90,6 +90,10 @@ function App({ children }) {
         {
           path:"hostle-details",
           element:<UserRoomDetails/>
+        },
+        {
+          path: ":id/room-details",
+          element: <RoomDetails/>
         }
       ],
     },

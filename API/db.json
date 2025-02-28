@@ -1,0 +1,16 @@
+{
+  "hostels": [
+    {
+      "id": "f43b",
+      "hostelname": "sdf",
+      "hosteldno": "wf",
+      "hostelstreet": "2-77,",
+      "hostelcity": "kakulapadu",
+      "hostelstate": "Andhra Pradesh",
+      "hostelimg": {}
+    }
+  ],
+  "rooms": [],
+  "admin": [],
+  "student": []
+}
