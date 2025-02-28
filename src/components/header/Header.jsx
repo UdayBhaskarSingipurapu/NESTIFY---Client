@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, LogIn, Home, Info, Mail } from "lucide-react";
+import { Menu, X, LogIn, Home, Info, Mail, LogOut } from "lucide-react";
+import { userLoginContext } from "../../contexts/userLoginContext";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { login, logout } = useContext(userLoginContext);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -40,13 +42,23 @@ function Header() {
           </div>
 
           <div className="hidden md:block">
-            <Link
-              to="/sign-up/user"
-              className="nav-link bg-black text-white border-2 border-black px-4 py-2 rounded-md cursor-pointer hover:bg-gray-100 hover:text-black transition flex items-center gap-2"
-            >
-              <LogIn className="h-4 w-4" />
-              Sign Up
-            </Link>
+            {!login ? (
+              <Link
+                to="/sign-up/user"
+                className="nav-link bg-black text-white border-2 border-black px-4 py-2 rounded-md cursor-pointer hover:bg-gray-100 hover:text-black transition flex items-center gap-2"
+              >
+                <LogIn className="h-4 w-4" />
+                Sign Up
+              </Link>
+            ) : (
+              <button
+                onClick={logout}
+                className="nav-link bg-black text-white border-2 border-black px-4 py-2 rounded-md cursor-pointer hover:bg-gray-100 hover:text-black transition flex items-center gap-2"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </button>
+            )}
           </div>
 
           <button
@@ -90,14 +102,24 @@ function Header() {
               <Mail className="h-5 w-5" />
               Contact
             </Link>
-            <Link
-              to="/sign-up/user"
-              className="nav-link flex items-center gap-2 bg-black text-white p-2 rounded-md hover:bg-gray-800 transition"
-              onClick={toggleMenu}
-            >
-              <LogIn className="h-5 w-5" />
-              Sign Up
-            </Link>
+            {!login ? (
+              <Link
+                to="/sign-up/user"
+                className="nav-link flex items-center gap-2 bg-black text-white p-2 rounded-md hover:bg-gray-800 transition"
+                onClick={toggleMenu}
+              >
+                <LogIn className="h-5 w-5" />
+                Sign Up
+              </Link>
+            ) : (
+              <button
+                onClick={logout}
+                className="nav-link flex items-center gap-2 bg-black text-white p-2 rounded-md hover:bg-gray-800 transition"
+              >
+                <LogOut className="h-5 w-5" />
+                Logout
+              </button>
+            )}
           </div>
         </div>
       )}

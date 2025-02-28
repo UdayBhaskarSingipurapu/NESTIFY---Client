@@ -1,19 +1,23 @@
-import Header from "./components/header/Header"
-import Footer from "./components/footer/Footer"
-import {Outlet} from 'react-router-dom'
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
+import Sidebar from "./components/sidebar/Sidebar"; // Import the Sidebar component
+import { Outlet } from 'react-router-dom';
+import { useContext } from 'react';
+import { userLoginContext } from './contexts/userLoginContext';
 
 function RootLayout() {
+  const { login } = useContext(userLoginContext);
+
   return (
-    <div >
-          <Header />
-          <div>
-              <Outlet/>
-          </div>
-          <Footer/>
+    <div>
+      {!login && <Header />}
+      {login && <Sidebar />}
+      <div>
+        <Outlet />
+      </div>
+      <Footer />
     </div>
-  )
+  );
 }
 
 export default RootLayout;
-
-// style={{minHeight:'100vh'}}

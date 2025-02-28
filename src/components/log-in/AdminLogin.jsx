@@ -114,7 +114,7 @@ const AdminLogin = () => {
           type="submit"
           className="sm:w-[500px] w-full p-3z rounded-md font-semibold text-white bg-[#111827] hover:bg-gray-800 h-12"
         >
-          Sign Up
+          Sign In
         </button>
         {/* Dont have an account */}
         <div>
