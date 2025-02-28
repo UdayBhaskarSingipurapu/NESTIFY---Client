@@ -17,16 +17,14 @@ const UserLogin = () => {
   let navigate = useNavigate();
 
   async function onSubmit(userData) {
-    userLoginReq(userData);
+    await userLoginReq(userData);
     if (login) {
       toast.success("user login successfully", {
         position: "top-center",
         autoClose: 2000,
         draggable: true, 
       });
-      setTimeout(() => {
-        navigate("/student-home");
-      }, 4000);
+      navigate("/student-home");
     }
   }
   return (

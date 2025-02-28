@@ -13,9 +13,7 @@ function UserLoginStore({ children }) {
   async function userLoginReq(userCredentials) {
     console.log(userCredentials)
     try {
-      const response = await axios.post("http://localhost:5050/user/login", userCredentials, {
-        withCredentials: true, // Ensures cookies are included
-      });
+      const response = await axios.post("http://localhost:5050/user/login", userCredentials);
 
       const { status, data } = response;
       console.log("User login response:", data);
