@@ -25,7 +25,7 @@ const AdminLogin = () => {
         draggable: true,
       });
       setTimeout(() => {
-        navigate("admin-dashboard");
+        navigate("/admin_homepage");
       }, 2000);
     }
   }
