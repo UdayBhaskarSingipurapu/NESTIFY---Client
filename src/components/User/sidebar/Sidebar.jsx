@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LayoutDashboard, User, Settings, LogOut, Home, Menu } from "lucide-react";
 import { userLoginContext } from "../../../contexts/userLoginContext";
@@ -8,6 +8,10 @@ const Sidebar = () => {
   const { logout } = useContext(userLoginContext);
   const navigate = useNavigate();
   const [isSidebarVisible, setSidebarVisible] = useState(false);
+
+  useEffect(() => {
+    navigate("/student-home");
+  }, [navigate]);
 
   const handleLogout = () => {
     logout();

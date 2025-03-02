@@ -3,7 +3,7 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import Home from "./components/home/Home";
-import StudentHome from "./components/User/student-home/StudentHome";
+import StudentHome from "./components/student-home/StudentHome";
 import UserDashboard from "./components/User/user-dashboard/UserDashboard";
 import SignUp from "./components/sign-up/SignUp";
 import UserSignUp from "./components/sign-up/UserSignUp";
@@ -16,7 +16,7 @@ import HostleListing from "./components/hostle-listing/HostleListing";
 import RoomDetails from "./components/hostle-listing/RoomDetails";
 import AdminHomePage from "./components/admin_homepage/AdminHomePage"
 import UserRoomDetails from "./components/User/user-room-details/UserRoomDetails";
-import Samplehostel from "./components/samplehostel/Samplehostel";
+
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -93,8 +93,8 @@ function App({ children }) {
           element:<UserRoomDetails/>
         },
         {
-          path: "samplehostel",
-          element:<Samplehostel/>
+          path: ":id/room-details",
+          element:<RoomDetails/>
         },
       ],
     },

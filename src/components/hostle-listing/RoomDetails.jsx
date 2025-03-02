@@ -11,12 +11,10 @@ const RoomDetails = () => {
   const [hoslteId, setHoslteId] = useState(null);
   const [saved, setSaved] = useState(false);
   const location = useLocation();
-  const queryParams = new URLSearchParams(useLocation.search);
+
   useEffect(() => {
-    setHoslteId(queryParams.get("hostleId"));
+    setHoslteId(location.state.hostleId);
   }, [hoslteId]);
-  // console.log("hi");
-  // console.log(hoslteId);
   let {
     register,
     handleSubmit,

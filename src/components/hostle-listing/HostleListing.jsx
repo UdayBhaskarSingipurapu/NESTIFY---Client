@@ -23,13 +23,20 @@ const HostleListing = () => {
 
   useEffect(() => {
     if(hoslteId) {
-      navigate(`/admin_homepage?hostleId=${hoslteId}`);
+      navigate(`${hoslteId}/room-details`, { state: { hostleId: hoslteId } }); 
     }
   }, [hoslteId]);
 
   async function postHostleDetails(hostleDetails) {
-    console.log(hostleDetails)
+    console.log(hostleDetails);
     const formData = new FormData();
+    // let res = await fetch("http://localhost:3000/hostels", { 
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(hostleDetails),
+    // });
 
     // Append text fields
     formData.append("hostelname", hostleDetails.hostelname);
@@ -42,23 +49,14 @@ const HostleListing = () => {
     // If you're using react-hook-form, you can set the file like this:
     // console.log(hostleDetails.hostleimg[0]);
     formData.append("hostelImage", hostleDetails.hostelimg[0]);
-    console.log(formData)
+    console.log(formData);
     try {
-      // let res = await fetch("http://localhost:5050/Addhostle", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(hostleDetails),
-      // });
-      // let data = await res.json();
-      // console.log(data);
-      console.log(user);
+      console.log(user); 
       let res = await axios.post(
         `http://localhost:5050/hostel/createhostel/${user._id}`,
         formData
       );
-      console.log(res)
+      console.log(res);
       if (res.status === 200) {
         let data = res.data;
         console.log(data);

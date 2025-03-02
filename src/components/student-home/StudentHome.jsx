@@ -1,6 +1,7 @@
 import react,{ useState } from "react";
 import { Link } from "react-router-dom";
-import hostels from "../../../data/hostelsData";
+import hostels from "../../data/hostelsData";
+
 
 const StudentHome = () => {
   const [query, setQuery] = useState("");
