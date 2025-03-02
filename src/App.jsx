@@ -3,8 +3,8 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import Home from "./components/home/Home";
-import StudentHome from "./components/student-home/StudentHome";
-import UserDashboard from "./components/user-dashboard/UserDashboard";
+import StudentHome from "./components/User/student-home/StudentHome";
+import UserDashboard from "./components/User/user-dashboard/UserDashboard";
 import SignUp from "./components/sign-up/SignUp";
 import UserSignUp from "./components/sign-up/UserSignUp";
 import AdminSignUp from "./components/sign-up/AdminSignUp";
@@ -14,9 +14,9 @@ import UserLogin from "./components/log-in/UserLogin";
 import AdminLogIn from "./components/log-in/AdminLogin";
 import HostleListing from "./components/hostle-listing/HostleListing";
 import RoomDetails from "./components/hostle-listing/RoomDetails";
-import AdminHomePage from "./components/admin_homepage/AdminHomePage";
-import Hostel1 from "./components/hostel1/Hostel1";
-import Sidebar from "./components/sidebar/Sidebar";
+import AdminHomePage from "./components/admin_homepage/AdminHomePage"
+import UserRoomDetails from "./components/User/user-room-details/UserRoomDetails";
+import Samplehostel from "./components/samplehostel/Samplehostel";
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -87,14 +87,14 @@ function App({ children }) {
         {
           path: "room-details",
           element: <RoomDetails/>
+        }, 
+        {
+          path:"hostle-details",
+          element:<UserRoomDetails/>
         },
         {
-          path: "hostel1",
-          element:<Hostel1/>
-        },
-        {
-          path: "sidebar",
-          element: <Sidebar/>
+          path: "samplehostel",
+          element:<Samplehostel/>
         },
       ],
     },

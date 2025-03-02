@@ -7,7 +7,7 @@ import { MdOutlineShield } from "react-icons/md";
 
 const Settings = () => {
   return (
-    <div className="bg-gray-200 p-7">
+    <div className="bg-gray-200 p-7 md:ml-48">
       <div className="max-w-[1700px] m-auto h-full overflow-auto">
         <h1 className="text-2xl font-bold text-[#111827]">Settings</h1>
 

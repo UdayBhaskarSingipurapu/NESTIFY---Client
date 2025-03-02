@@ -23,7 +23,7 @@ const HostleListing = () => {
 
   useEffect(() => {
     if(hoslteId) {
-      navigate(`/admin_homepage`);
+      navigate(`/admin_homepage?hostleId=${hoslteId}`);
     }
   }, [hoslteId]);
 
@@ -64,10 +64,10 @@ const HostleListing = () => {
         console.log(data);
         setHoslteId(data.payload._id);
       } else {
-        setError(data?.message || "Unknown error occurred");
+        setError(res.data?.message || "Unknown error occurred");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "An error occurred during login");
+      setError(err.response?.data?.message || "An error occurred while saving");
     }
   }
   // Handle Hostle form submission
@@ -234,5 +234,5 @@ export default HostleListing;
 // Admin id -> sending
 
 //initial assumption -> all the rooms are like empty
-//initializations -> filled rooms = 0, roomates = []
+//initializations -> filled beds = 0, roomates = []
 //whey user sends the request and if accepted it "adds 1 to the filled rooms" and adds that particular student into the "roomates" array

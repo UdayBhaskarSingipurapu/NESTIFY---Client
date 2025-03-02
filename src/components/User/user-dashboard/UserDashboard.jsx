@@ -1,22 +1,22 @@
 import React from "react";
-import userTopContainerImag1 from "../../assets/userTopContainerImag1.png";
-import userTopContainerImag2 from "../../assets/userTopContainerImag2.png";
-import userTopContainerImag3 from "../../assets/userTopContainerImag3.png";
-import userTopContainerImag4 from "../../assets/userTopContainerImag4.png";
-import userBottonContainerImage7 from "../../assets/userBottonContainerImage7.png";
-import userBottonContainerImage8 from "../../assets/userBottonContainerImage8.png";
-import userBottonContainerImage9 from "../../assets/userBottonContainerImage9.png";
-import userBottomContainerImage1 from "../../assets/userBottomContainerImage1.png";
-import userBottomContainerImage2 from "../../assets/userBottomContainerImage2.png";
-import userBottomContainerImage3 from "../../assets/userBottomContainerImage3.png";
-import userBottomContainerImage4 from "../../assets/userBottomContainerImage4.png";
-import userBottomContainerImage5 from "../../assets/userBottomContainerImage5.png";
-import userBottomContainerImage6 from "../../assets/userBottomContainerImage6.png";
+import userTopContainerImag1 from "../../../assets/userBottomContainerImage1.png";
+import userTopContainerImag2 from "../../../assets/userTopContainerImag2.png";
+import userTopContainerImag3 from "../../../assets/userTopContainerImag3.png";
+import userTopContainerImag4 from "../../../assets/userTopContainerImag4.png";
+import userBottonContainerImage7 from "../../../assets/userBottonContainerImage7.png";
+import userBottonContainerImage8 from "../../../assets/userBottonContainerImage8.png";
+import userBottonContainerImage9 from "../../../assets/userBottonContainerImage9.png";
+import userBottomContainerImage1 from "../../../assets/userBottomContainerImage1.png";
+import userBottomContainerImage2 from "../../../assets/userBottomContainerImage2.png";
+import userBottomContainerImage3 from "../../../assets/userBottomContainerImage3.png";
+import userBottomContainerImage4 from "../../../assets/userBottomContainerImage4.png";
+import userBottomContainerImage5 from "../../../assets/userBottomContainerImage5.png";
+import userBottomContainerImage6 from "../../../assets/userBottomContainerImage6.png";
 import { FaRupeeSign } from "react-icons/fa";
 
 const UserHomePage = () => {
   return (
-    <div className="bg-gray-200 p-7">
+    <div className="bg-gray-200 p-7 md:ml-48">
       {/* top-container */}
       <div className="bg-white w-full p-7 rounded-md max-w-[1700px] m-auto h-full overflow-auto">
         <h1 className="text-[#111827] font-bold text-2xl">
