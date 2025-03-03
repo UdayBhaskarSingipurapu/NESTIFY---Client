@@ -40,7 +40,7 @@ const AdminSignUp = () => {
       });
       if (res.status === 200) {
         if (res.data && res.data.message === "User registered successfully") {
-          toast.success(data.message, {
+          toast.success(res.data.message, {
             position: "top-center",
             autoClose: 2000,
             draggable: true,
