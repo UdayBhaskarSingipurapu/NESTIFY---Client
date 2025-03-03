@@ -13,6 +13,8 @@ import Login from "./components/log-in/Login";
 import UserLogin from "./components/log-in/UserLogin";
 import AdminLogIn from "./components/log-in/AdminLogin";
 import AdminHomePage from "./components/admin_homepage/AdminHomePage";
+import MaintenanceForm from "./components/maintenance-form/MaintenanceForm";
+import FeedbackForm from "./components/feedback-form/FeedbackForm";
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -73,9 +75,17 @@ function App({ children }) {
             {
               path: "admin",
               element: <AdminLogIn />,
-            }
+            },
           ],
         },
+        {
+          path: "maintenance-form",
+          element: <MaintenanceForm />,
+        },
+        {
+          path: "feedback-form",
+          element: <FeedbackForm />,
+        }
       ],
     },
   ]);
