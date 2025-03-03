@@ -2,7 +2,7 @@ import React from "react";
 
 const UserRoomDetails = () => {
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-gray-100 p-6 gap-6">
+    <div className="min-h-screen flex flex-col md:flex-row bg-gray-100 p-6 gap-6 md:ml-48">
       
       {/* Left half with Hostel Image */}
       <div className="w-full md:w-1/2 flex justify-center items-center">

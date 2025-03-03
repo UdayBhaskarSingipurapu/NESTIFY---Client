@@ -2,6 +2,7 @@ import { userLoginContext } from "./userLoginContext";
 import { useState } from "react";
 import axios from 'axios';
 
+
 function UserLoginStore({ children }) {
   //login Store
   let [login, setLogin] = useState(false);
@@ -71,6 +72,7 @@ function UserLoginStore({ children }) {
         adminLoginReq,
         Error,
         setError,
+        logout, //added
       }}
     >
       {children}
