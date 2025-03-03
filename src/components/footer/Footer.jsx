@@ -1,11 +1,15 @@
-import React from "react";
+import React,{useContext} from "react";
 import twitterLogo from "../../assets/twitterLogo.png";
 import instaLogo from "../../assets/instaLogo.png";
 import fbLogo from "../../assets/fbLogo.png";
+import { userLoginContext } from "../../contexts/userLoginContext";
 
 function Footer() {
+
+  const { login } = useContext(userLoginContext);
+
   return (
-    <footer className="text-white  bg-gray-900">
+    <footer className={`text-white bg-gray-900  ${login ? "md:ml-48" : ""}`}>
       <div className="mx-auto w-full p-4 py-6 lg:py-8 lg:px-25 max-w-[1700px]">
         {/* top container */}
         <div className="md:flex md:justify-between">
