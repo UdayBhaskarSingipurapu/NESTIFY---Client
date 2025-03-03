@@ -16,7 +16,8 @@ import HostleListing from "./components/hostle-listing/HostleListing";
 import RoomDetails from "./components/hostle-listing/RoomDetails";
 import AdminHomePage from "./components/admin_homepage/AdminHomePage"
 import UserRoomDetails from "./components/User/user-room-details/UserRoomDetails";
-
+import Samplehostel from "./components/samplehostel/Samplehostel"
+import MealPlan from "./components/User/mealplan/MealPlan";
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -96,6 +97,18 @@ function App({ children }) {
           path: ":id/room-details",
           element:<RoomDetails/>
         },
+        {
+          path: "samplehostel",
+          element:<Samplehostel/>
+        },
+        {
+          path: "user-room-details",
+          element:<UserRoomDetails/>
+        },
+        {
+          path: "mealplan",
+          element:<MealPlan/>
+        }
       ],
     },
   ]);
