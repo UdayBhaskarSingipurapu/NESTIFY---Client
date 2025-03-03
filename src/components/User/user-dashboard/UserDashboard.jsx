@@ -1,22 +1,26 @@
 import React from "react";
-import userTopContainerImag1 from "../../assets/userTopContainerImag1.png";
-import userTopContainerImag2 from "../../assets/userTopContainerImag2.png";
-import userTopContainerImag3 from "../../assets/userTopContainerImag3.png";
-import userTopContainerImag4 from "../../assets/userTopContainerImag4.png";
-import userBottonContainerImage7 from "../../assets/userBottonContainerImage7.png";
-import userBottonContainerImage8 from "../../assets/userBottonContainerImage8.png";
-import userBottonContainerImage9 from "../../assets/userBottonContainerImage9.png";
-import userBottomContainerImage1 from "../../assets/userBottomContainerImage1.png";
-import userBottomContainerImage2 from "../../assets/userBottomContainerImage2.png";
-import userBottomContainerImage3 from "../../assets/userBottomContainerImage3.png";
-import userBottomContainerImage4 from "../../assets/userBottomContainerImage4.png";
-import userBottomContainerImage5 from "../../assets/userBottomContainerImage5.png";
-import userBottomContainerImage6 from "../../assets/userBottomContainerImage6.png";
+import { useNavigate } from "react-router-dom";
+import userTopContainerImag1 from "../../../assets/userBottomContainerImage1.png";
+import userTopContainerImag2 from "../../../assets/userTopContainerImag2.png";
+import userTopContainerImag3 from "../../../assets/userTopContainerImag3.png";
+import userTopContainerImag4 from "../../../assets/userTopContainerImag4.png";
+import userBottonContainerImage7 from "../../../assets/userBottonContainerImage7.png";
+import userBottonContainerImage8 from "../../../assets/userBottonContainerImage8.png";
+import userBottonContainerImage9 from "../../../assets/userBottonContainerImage9.png";
+import userBottomContainerImage1 from "../../../assets/userBottomContainerImage1.png";
+import userBottomContainerImage2 from "../../../assets/userBottomContainerImage2.png";
+import userBottomContainerImage3 from "../../../assets/userBottomContainerImage3.png";
+import userBottomContainerImage4 from "../../../assets/userBottomContainerImage4.png";
+import userBottomContainerImage5 from "../../../assets/userBottomContainerImage5.png";
+import userBottomContainerImage6 from "../../../assets/userBottomContainerImage6.png";
 import { FaRupeeSign } from "react-icons/fa";
 
 const UserHomePage = () => {
+
+  const navigate = useNavigate();
+
   return (
-    <div className="bg-gray-200 p-7">
+    <div className="bg-gray-200 p-7 md:ml-48">
       {/* top-container */}
       <div className="bg-white w-full p-7 rounded-md max-w-[1700px] m-auto h-full overflow-auto">
         <h1 className="text-[#111827] font-bold text-2xl">
@@ -24,7 +28,10 @@ const UserHomePage = () => {
         </h1>
         <p className="text-[#6B7280] text-sm">Room 304</p>
         <div className="mt-4 grid lg:grid-cols-12 md:grid-cols-10 sm:grid-cols-2 gap-4 ">
-          <div className="lg:col-span-3 md:col-span-5 sm:col-span-1 flex  gap-4 bg-blue-100  p-4 rounded-md">
+          
+          <div className="lg:col-span-3 md:col-span-5 sm:col-span-1 flex  gap-4 bg-blue-100  p-4 rounded-md cursor-pointer"
+          onClick={() => navigate("/mealplan")}
+          >
             <div className="flex justify-center items-center">
               <img
                 src={userTopContainerImag1}
@@ -108,7 +115,9 @@ const UserHomePage = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-4 md:col-span-5 sm:col-span-1 flex flex-col items-center justify-center flex-wrap gap-3 bg-yellow-100  p-4 rounded-md">
+            <div className="lg:col-span-4 md:col-span-5 sm:col-span-1 flex flex-col items-center justify-center flex-wrap gap-3 bg-yellow-100  p-4 rounded-md cursor-pointer"
+            onClick={() => navigate("/mealplan")}
+            >
               <div className="flex justify-center items-center">
                 <img
                   src={userBottomContainerImage3}

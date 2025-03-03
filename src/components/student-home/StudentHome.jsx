@@ -1,6 +1,7 @@
-import { useState } from "react";
+import react,{ useState } from "react";
 import { Link } from "react-router-dom";
 import hostels from "../../data/hostelsData";
+
 
 const StudentHome = () => {
   const [query, setQuery] = useState("");
@@ -20,7 +21,7 @@ const StudentHome = () => {
   };
 
   return (
-    <div className="p-8 bg-gray-100">
+    <div className="p-8 bg-gray-100 md:ml-48">
       <div className="flex flex-col md:flex-row items-center gap-4 p-4 bg-white shadow-md rounded-xl">
         <input
           type="text"
@@ -72,7 +73,7 @@ const StudentHome = () => {
             <p className="text-gray-600">{hostel.roomsAvailable}</p>
             <p className="text-gray-700 font-bold mt-2">₹{hostel.price}/month</p>
             <Link
-              to={`/hostel/${hostel.id}`}
+              to="/samplehostel"
               className="block bg-black text-white mt-3 px-4 py-2 text-center rounded-md hover:bg-gray-700"
             >
               View Details

@@ -17,16 +17,14 @@ const UserLogin = () => {
   let navigate = useNavigate();
 
   async function onSubmit(userData) {
-    userLoginReq(userData);
+    await userLoginReq(userData);
     if (login) {
       toast.success("user login successfully", {
         position: "top-center",
         autoClose: 2000,
-        draggable: true,
+        draggable: true, 
       });
-      setTimeout(() => {
-        navigate("/student-home");
-      }, 4000);
+      navigate("/student-home");
     }
   }
   return (
@@ -113,7 +111,7 @@ const UserLogin = () => {
           type="submit"
           className="sm:w-[500px] w-full p-3 rounded-md font-semibold text-white bg-[#111827] hover:bg-gray-800 h-12"
         >
-          Sign Up
+          Sign In
         </button>
         {/* dont have an accont */}
         <div>

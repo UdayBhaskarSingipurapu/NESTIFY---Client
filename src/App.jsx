@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import Home from "./components/home/Home";
 import StudentHome from "./components/student-home/StudentHome";
-import UserDashboard from "./components/user-dashboard/UserDashboard";
+import UserDashboard from "./components/User/user-dashboard/UserDashboard";
 import SignUp from "./components/sign-up/SignUp";
 import UserSignUp from "./components/sign-up/UserSignUp";
 import AdminSignUp from "./components/sign-up/AdminSignUp";
@@ -12,7 +12,12 @@ import Settings from "./components/settings/Settings";
 import Login from "./components/log-in/Login";
 import UserLogin from "./components/log-in/UserLogin";
 import AdminLogIn from "./components/log-in/AdminLogin";
-import AdminHomePage from "./components/admin_homepage/AdminHomePage";
+import HostleListing from "./components/hostle-listing/HostleListing";
+import RoomDetails from "./components/hostle-listing/RoomDetails";
+import AdminHomePage from "./components/admin_homepage/AdminHomePage"
+import UserRoomDetails from "./components/User/user-room-details/UserRoomDetails";
+import Samplehostel from "./components/samplehostel/Samplehostel"
+import MealPlan from "./components/User/mealplan/MealPlan";
 import MaintenanceForm from "./components/maintenance-form/MaintenanceForm";
 import FeedbackForm from "./components/feedback-form/FeedbackForm";
 
@@ -29,6 +34,14 @@ function App({ children }) {
         {
           path: "student-home",
           element: <StudentHome />,
+        },
+        {
+          path: "maintenance-form",
+          element: <MaintenanceForm />,
+        },
+        {
+          path: "feedback-form",
+          element: <FeedbackForm />,
         },
         {
           path: "user-dashboard",
@@ -79,12 +92,32 @@ function App({ children }) {
           ],
         },
         {
-          path: "maintenance-form",
-          element: <MaintenanceForm />,
+          path: "hostle-listing",
+          element: <HostleListing/>
         },
         {
-          path: "feedback-form",
-          element: <FeedbackForm />,
+          path: "room-details",
+          element: <RoomDetails/>
+        }, 
+        {
+          path:"hostle-details",
+          element:<UserRoomDetails/>
+        },
+        {
+          path: ":id/room-details",
+          element:<RoomDetails/>
+        },
+        {
+          path: "samplehostel",
+          element:<Samplehostel/>
+        },
+        {
+          path: "user-room-details",
+          element:<UserRoomDetails/>
+        },
+        {
+          path: "mealplan",
+          element:<MealPlan/>
         }
       ],
     },
