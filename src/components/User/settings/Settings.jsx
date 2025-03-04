@@ -47,7 +47,7 @@ const Settings = () => {
                 </p>
               </div>
               <Link
-                to="edit-personal-information"
+                to="/edit-form"
                 className="text-blue-500 cursor-pointer"
               >
                 Edit
