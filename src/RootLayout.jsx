@@ -7,11 +7,12 @@ import { userLoginContext } from './contexts/userLoginContext';
 
 function RootLayout() {
   const { login } = useContext(userLoginContext);
-
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  // console.log(user)
   return (
     <div>
-      {!login && <Header />}
-      {login && <Sidebar />}
+      {!user && <Header />}
+      {user && <Sidebar />}
       <div>
         <Outlet />
       </div>
