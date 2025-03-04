@@ -8,7 +8,7 @@ import UserDashboard from "./components/User/user-dashboard/UserDashboard";
 import SignUp from "./components/sign-up/SignUp";
 import UserSignUp from "./components/sign-up/UserSignUp";
 import AdminSignUp from "./components/sign-up/AdminSignUp";
-import Settings from "./components/settings/Settings";
+import Settings from "./components/User/settings/Settings";
 import Login from "./components/log-in/Login";
 import UserLogin from "./components/log-in/UserLogin";
 import AdminLogIn from "./components/log-in/AdminLogin";
@@ -18,6 +18,10 @@ import AdminHomePage from "./components/admin_homepage/AdminHomePage"
 import UserRoomDetails from "./components/User/user-room-details/UserRoomDetails";
 import Samplehostel from "./components/samplehostel/Samplehostel"
 import MealPlan from "./components/User/mealplan/MealPlan";
+import MaintenanceForm from "./components/User/user-dashboard/MaintenanceForm";
+import FeedbackForm from "./components/User/user-dashboard/feedback-form/FeedbackForm";
+import EditForm from "./components/User/settings/EditForm";
+
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -32,6 +36,14 @@ function App({ children }) {
         {
           path: "student-home",
           element: <StudentHome />,
+        },
+        {
+          path: "maintenance-form",
+          element: <MaintenanceForm />,
+        },
+        {
+          path: "feedback-form",
+          element: <FeedbackForm />,
         },
         {
           path: "user-dashboard",
@@ -78,20 +90,20 @@ function App({ children }) {
             {
               path: "admin",
               element: <AdminLogIn />,
-            }
+            },
           ],
         },
         {
           path: "hostle-listing",
-          element: <HostleListing/>
+          element: <HostleListing />,
         },
         {
           path: "room-details",
-          element: <RoomDetails/>
-        }, 
+          element: <RoomDetails />,
+        },
         {
-          path:"hostle-details",
-          element:<UserRoomDetails/>
+          path: "hostle-details",
+          element: <UserRoomDetails />,
         },
         {
           path: ":id/room-details",
@@ -108,6 +120,18 @@ function App({ children }) {
         {
           path: "mealplan",
           element:<MealPlan/>
+        },
+        {
+          path: "room-details",
+          element: <RoomDetails />,
+        },
+        {
+          path: "sample-hostel",
+          element: <Samplehostel/>,
+        },
+        {
+          path: "edit-form",
+          element: <EditForm/>
         }
       ],
     },
