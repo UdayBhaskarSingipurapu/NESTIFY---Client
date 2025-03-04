@@ -13,15 +13,21 @@ import userBottomContainerImage4 from "../../../assets/userBottomContainerImage4
 import userBottomContainerImage5 from "../../../assets/userBottomContainerImage5.png";
 import userBottomContainerImage6 from "../../../assets/userBottomContainerImage6.png";
 import { FaRupeeSign } from "react-icons/fa";
+import userProfile from "../../../assets/userProfile.jpg";
+import MaintanaceForm from "./MaintanaceForm";
+import FeedbackForm from "./FeedbackForm";
 
 const UserHomePage = () => {
   return (
     <div className="bg-gray-200 p-7 md:ml-48">
       {/* top-container */}
       <div className="bg-white w-full p-7 rounded-md max-w-[1700px] m-auto h-full overflow-auto">
-        <h1 className="text-[#111827] font-bold text-2xl">
-          Welcome back, john!
-        </h1>
+        <div className="flex gap-2.5 items-center">
+          <h1 className="text-[#111827] font-bold text-2xl">
+            Welcome back, john!
+          </h1>
+          <img src={userProfile} alt="" className="w-10 h-full rounded-full" />
+        </div>
         <p className="text-[#6B7280] text-sm">Room 304</p>
         <div className="mt-4 grid lg:grid-cols-12 md:grid-cols-10 sm:grid-cols-2 gap-4 ">
           <div className="lg:col-span-3 md:col-span-5 sm:col-span-1 flex  gap-4 bg-blue-100  p-4 rounded-md">
@@ -77,7 +83,7 @@ const UserHomePage = () => {
       {/* bottom-container */}
       <div className="bg-gray-200 mt-7 grid grid-cols-12 grid-rows-1 max-w-[1700px] m-auto gap-7 overflow-auto">
         {/* quick actions */}
-        <div className="bg-white rounded-md p-7 lg:col-span-8 col-span-12">
+        <div className="bg-white rounded-md p-7 lg:col-span-7 col-span-12">
           <h1 className="text-[#111827] font-bold text-xl">Quick Actions</h1>
           <div className="mt-4 grid lg:grid-cols-12 md:grid-cols-10 sm:grid-cols-2 grid-cols-1 gap-4">
             <div className="lg:col-span-4 md:col-span-5 sm:col-span-1 flex flex-col items-center justify-center flex-wrap gap-3 bg-blue-100  p-4 rounded-md">
@@ -165,7 +171,7 @@ const UserHomePage = () => {
         </div>
 
         {/* room infromation */}
-        <div className="bg-white rounded-md p-7 hidden lg:col-span-4 lg:flex lg:flex-col overflow-y-auto h-[310px]">
+        <div className="bg-white rounded-md p-7 lg:col-span-5 col-span-12 lg:flex lg:flex-col overflow-auto h-[330px]">
           <h1 className="text-[#111827] font-bold text-xl">Room Information</h1>
           <div className="mt-4 flex flex-col gap-2">
             <span className="flex justify-between text-[#6B7280] font-semibold p-2 rounded-md bg-gray-100">
@@ -173,18 +179,57 @@ const UserHomePage = () => {
               <span className="text-[#111827] text-lg">304</span>
             </span>
             <span className="flex justify-between text-[#6B7280] text-md font-semibold p-2 rounded-md bg-gray-100">
-              <span>Room Type</span>
-              <span className="text-[#111827] text-lg">Double Sharing</span>
+              <span>Room Capacity</span>
+              <span className="text-[#111827] text-lg">2 Beds</span>
             </span>
             <span className="flex justify-between text-[#6B7280] text-md font-semibold p-2 rounded-md bg-gray-100">
-              <span>Roommate</span>
+              <span>Roommates</span>
               <span className="text-[#111827] text-lg">Michael Brown</span>
             </span>
             <span className="flex justify-between text-[#6B7280] text-md font-semibold items-center p-2 rounded-md bg-gray-100">
               <span>A/C</span>
               <span className="text-[#111827] text-lg">No</span>
             </span>
+            <span className="flex justify-between text-[#6B7280] text-md font-semibold items-center p-2 rounded-md bg-gray-100">
+              <span>Fees</span>
+              <span className="text-[#111827] text-lg">
+                <FaRupeeSign className="text-[#111827] w-2.5 inline mb-1 mr-1" />
+                4500
+              </span>
+            </span>
           </div>
+        </div>
+
+        {/* payment History */}
+        <div className="bg-white rounded-md p-7 lg:col-span-7 col-span-12 h-[330px]">
+          <h1 className="text-[#111827] font-bold text-xl">Payment History</h1>
+          <div className="flex items-center justify-center h-full">
+            <p className="text-[#6B7280] font-semibold text-lg">
+              No Payment History
+            </p>
+          </div>
+        </div>
+
+        {/* Maintanace History */}
+        <div className="bg-white rounded-md p-7 lg:col-span-5 col-span-12 lg:flex lg:flex-col overflow-auto h-[330px]">
+          <h1 className="text-[#111827] font-bold text-xl">Maintanance History</h1>
+          <div className="flex items-center justify-center h-full">
+            <p className="text-[#6B7280] font-semibold text-lg">
+              No Maintanance History
+            </p>
+          </div>
+        </div>
+
+        {/* maintainace form */}
+        <div className="bg-white rounded-md p-7 lg:col-span-7 col-span-12 h-[330px]">
+          <h1 className="text-[#111827] font-bold text-xl">Maintanance Form</h1>
+          <MaintanaceForm />
+        </div>
+
+        {/* Feedback from */}
+        <div className="bg-white rounded-md p-7 lg:col-span-5 col-span-12 lg:flex lg:flex-col overflow-auto h-[330px]">
+          <h1 className="text-[#111827] font-bold text-xl">Feedback Form</h1>
+          <FeedbackForm />
         </div>
       </div>
     </div>

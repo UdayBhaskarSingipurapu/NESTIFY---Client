@@ -8,7 +8,7 @@ import UserDashboard from "./components/User/user-dashboard/UserDashboard";
 import SignUp from "./components/sign-up/SignUp";
 import UserSignUp from "./components/sign-up/UserSignUp";
 import AdminSignUp from "./components/sign-up/AdminSignUp";
-import Settings from "./components/settings/Settings";
+import Settings from "./components/User/settings/Settings";
 import Login from "./components/log-in/Login";
 import UserLogin from "./components/log-in/UserLogin";
 import AdminLogIn from "./components/log-in/AdminLogin";
@@ -16,6 +16,8 @@ import HostleListing from "./components/hostle-listing/HostleListing";
 import RoomDetails from "./components/hostle-listing/RoomDetails";
 import AdminHomePage from "./components/admin_homepage/AdminHomePage"
 import UserRoomDetails from "./components/User/user-room-details/UserRoomDetails";
+import Samplehostel from "./components/samplehostel/Samplehostel";
+import EditForm from "./components/User/settings/EditForm";
 
 
 function App({ children }) {
@@ -77,25 +79,33 @@ function App({ children }) {
             {
               path: "admin",
               element: <AdminLogIn />,
-            }
+            },
           ],
         },
         {
           path: "hostle-listing",
-          element: <HostleListing/>
+          element: <HostleListing />,
         },
         {
           path: "room-details",
-          element: <RoomDetails/>
-        }, 
+          element: <RoomDetails />,
+        },
         {
-          path:"hostle-details",
-          element:<UserRoomDetails/>
+          path: "hostle-details",
+          element: <UserRoomDetails />,
         },
         {
           path: ":id/room-details",
-          element:<RoomDetails/>
+          element: <RoomDetails />,
         },
+        {
+          path: "sample-hostel",
+          element: <Samplehostel/>,
+        },
+        {
+          path: "edit-form",
+          element: <EditForm/>
+        }
       ],
     },
   ]);
