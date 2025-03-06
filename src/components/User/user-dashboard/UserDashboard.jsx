@@ -16,7 +16,7 @@ import userBottomContainerImage6 from "../../../assets/userBottomContainerImage6
 import { FaRupeeSign } from "react-icons/fa";
 import userProfile from "../../../assets/userProfile.jpg";
 import MaintanaceForm from "./MaintenanceForm";
-import FeedbackForm from "./feedback-form/FeedbackForm";
+import FeedbackForm from "./FeedbackForm";
 
 const UserHomePage = () => {
 

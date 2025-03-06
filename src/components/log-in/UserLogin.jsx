@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { userLoginContext } from "../../contexts/userLoginContext";
 import { useContext } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import { FaChampagneGlasses } from "react-icons/fa6";
 
 const UserLogin = () => {
   const { userLoginReq, login, user } = useContext(userLoginContext);
@@ -22,7 +23,7 @@ const UserLogin = () => {
       toast.success("user login successfully", {
         position: "top-center",
         autoClose: 2000,
-        draggable: true, 
+        draggable: true,
       });
       navigate("/student-home");
     }
@@ -47,28 +48,10 @@ const UserLogin = () => {
           <input
             type="text"
             id="username"
-            {...register("username", {
-              required: true,
-              minLength: 3,
-              maxLength: 20,
-            })}
+            {...register("username", { required: true })}
             placeholder="Enter your username"
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
-          {/* validations for userName */}
-          {errors.username?.type === "required" && (
-            <p className="text-red-500 font-semibold">This field is required</p>
-          )}
-          {errors.username?.type === "minLength" && (
-            <p className="text-red-500 font-semibold">
-              Username must be at least 3 characters
-            </p>
-          )}
-          {errors.username?.type === "maxLength" && (
-            <p className="text-red-500 font-semibold">
-              Username must be at most 20 characters
-            </p>
-          )}
         </div>
         {/* password */}
         <div className="sm:w-[500px] w-full">
@@ -82,29 +65,9 @@ const UserLogin = () => {
           <input
             type="password"
             placeholder="Enter your password"
-            {...register("password", {
-              required: true,
-              minLength: 8,
-              pattern:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            })}
+            {...register("password", { required: true })}
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
-          {/* validations for password */}
-          {errors.password?.type === "required" && (
-            <p className="text-red-500 font-semibold">This field is required</p>
-          )}
-          {errors.password?.type === "minLength" && (
-            <p className="text-red-500 font-semibold">
-              Password must be at least 8 characters
-            </p>
-          )}
-          {errors.password?.type === "pattern" && (
-            <p className="text-red-500 font-semibold">
-              Password must contain at least one uppercase letter, one lowercase
-              letter, one digit, and one special character
-            </p>
-          )}
         </div>
         {/* submit */}
         <button

@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import { set, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { userLoginContext } from "../../../contexts/userLoginContext";
 import { ToastContainer } from "react-toastify";
+import axios from "axios";
 
 const EditForm = () => {
   let {
@@ -13,6 +14,7 @@ const EditForm = () => {
   } = useForm();
   let navigate = useNavigate();
   let { user, setError, Error } = useContext(userLoginContext);
+  console.log(user);
 
   async function userEditReq(userCred) {
     console.log(userCred);
@@ -62,11 +64,11 @@ const EditForm = () => {
   async function onSave(userData) {
     userEditReq(userData);
   }
-  console.log(errors);
+  // console.log(errors);
   return (
-    <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md">
+    <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md md:ml-41">
       <ToastContainer />
-      {Error != null && <p className="text-red-500 font-semibold">{Error}</p>}
+      {Error != null && <p className="text-red-500 font-semibold text-xl text-center">{Error}</p>}
       <form
         action=""
         className="flex flex-col mt-5 gap-5 items-center"
@@ -91,7 +93,7 @@ const EditForm = () => {
               maxLength: 20,
             })}
             placeholder="Enter your username"
-            // value={setValue("username", user.username)}
+            value={setValue("username", user.username)}
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
           {/* validations for userName */}
@@ -123,7 +125,7 @@ const EditForm = () => {
             id="email"
             placeholder="Enter your email"
             {...register("email", { required: true })}
-            // value={setValue("email", user.email)}
+            value={setValue("email", user.email)}
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
           {/* validations for email */}
@@ -150,7 +152,7 @@ const EditForm = () => {
               maxLength: 10,
               pattern: /^[0-9]*$/,
             })}
-            // value={setValue("contact", user.contact)}
+            value={setValue("contact", user.contact)}
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
           {/* validations for phone */}
@@ -173,43 +175,6 @@ const EditForm = () => {
             </p>
           )}
         </div>
-        {/* password */}
-        <div className="sm:w-[500px] w-full">
-          <label
-            htmlFor="password"
-            className="text-[#111827] text-lg font-semibold"
-          >
-            Password
-            <span className="text-[#ff0011] text-xl font-semibold">*</span>
-          </label>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            {...register("password", {
-              required: true,
-              minLength: 8,
-              pattern:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            })}
-            // value={setValue("password", user.password)}
-            className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-          />
-          {/* validations for password */}
-          {errors.password?.type === "required" && (
-            <p className="text-red-500 font-semibold">This field is required</p>
-          )}
-          {errors.password?.type === "minLength" && (
-            <p className="text-red-500 font-semibold">
-              Password must be at least 8 characters
-            </p>
-          )}
-          {errors.password?.type === "pattern" && (
-            <p className="text-red-500 font-semibold">
-              Password must contain at least one uppercase letter, one lowercase
-              letter, one digit, and one special character
-            </p>
-          )}
-        </div>
         {/* parent/gardian name */}
         <div className="sm:w-[500px] w-full">
           <label
@@ -229,7 +194,7 @@ const EditForm = () => {
               minLength: 3,
               maxLength: 20,
             })}
-            // value={setValue("parentName", user.parentName)}
+            value={setValue("parentName", user.parentName)}
             disabled
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
@@ -253,37 +218,10 @@ const EditForm = () => {
               maxLength: 10,
               pattern: /^[0-9]*$/,
             })}
-            // value={setValue("parentContact", user.parentContact)}
+            value={setValue("parentContact", user.parentContact)}
             disabled
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
-        </div>
-        {/* profilePic */}
-        <div className="sm:w-[500px] w-full ">
-          <label
-            className="text-[#111827] text-lg font-semibold "
-            htmlFor="profileImage"
-          >
-            Upload Profile Picture
-            <span className="text-[#ff0011] text-xl font-semibold">* </span>
-            <span className="text-[#6B7280] font-semibold">
-              (jpeg,png,gif,bmp,jpg)
-            </span>
-          </label>
-          <div className="border-2 border-dashed border-[#6B7280] p-6 w-full rounded-md hover:bg-gray-100 flex items-center justify-center gap-1">
-            <input
-              type="file"
-              id="profileImage"
-              accept="image/jpeg, image/png, image/gif, image/bmp, image/jpg"
-              {...register("profileImage", { required: true })}
-              disabled
-            />
-            <span className="font-semibold">Or Drop Down</span>
-          </div>
-          {/* validations for profilePic */}
-          {errors.profilePic?.type === "required" && (
-            <p className="text-red-500 font-semibold">This field is required</p>
-          )}
         </div>
         {/* submit */}
         <button
@@ -298,3 +236,81 @@ const EditForm = () => {
 };
 
 export default EditForm;
+
+
+
+
+        // {/* password */}
+        // <div className="sm:w-[500px] w-full">
+        //   <label
+        //     htmlFor="password"
+        //     className="text-[#111827] text-lg font-semibold"
+        //   >
+        //     Password
+        //     <span className="text-[#ff0011] text-xl font-semibold">*</span>
+        //   </label>
+        //   <input
+        //     type="password"
+        //     placeholder="Enter your password"
+        //     {...register("password", {
+        //       required: true,
+        //       minLength: 8,
+        //       pattern:
+        //         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        //     })}
+        //     value={setValue("password", user.password)}
+        //     className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
+        //   />
+        //   {/* validations for password */}
+        //   {errors.password?.type === "required" && (
+        //     <p className="text-red-500 font-semibold">This field is required</p>
+        //   )}
+        //   {errors.password?.type === "minLength" && (
+        //     <p className="text-red-500 font-semibold">
+        //       Password must be at least 8 characters
+        //     </p>
+        //   )}
+        //   {errors.password?.type === "pattern" && (
+        //     <p className="text-red-500 font-semibold">
+        //       Password must contain at least one uppercase letter, one lowercase
+        //       letter, one digit, and one special character
+        //     </p>
+        //   )}
+        // </div>
+
+
+
+
+                // {
+                //   /* profilePic */
+                // }
+                // <div className="sm:w-[500px] w-full ">
+                //   <label
+                //     className="text-[#111827] text-lg font-semibold "
+                //     htmlFor="profileImage"
+                //   >
+                //     Upload Profile Picture
+                //     <span className="text-[#ff0011] text-xl font-semibold">
+                //       *{" "}
+                //     </span>
+                //     <span className="text-[#6B7280] font-semibold">
+                //       (jpeg,png,gif,bmp,jpg)
+                //     </span>
+                //   </label>
+                //   <div className="border-2 border-dashed border-[#6B7280] p-6 w-full rounded-md hover:bg-gray-100 flex items-center justify-center gap-1">
+                //     <input
+                //       type="file"
+                //       id="profileImage"
+                //       accept="image/jpeg, image/png, image/gif, image/bmp, image/jpg"
+                //       {...register("profileImage", { required: true })}
+                //       disabled
+                //     />
+                //     <span className="font-semibold">Or Drop Down</span>
+                //   </div>
+                //   {/* validations for profilePic */}
+                //   {errors.profilePic?.type === "required" && (
+                //     <p className="text-red-500 font-semibold">
+                //       This field is required
+                //     </p>
+                //   )}
+                // </div>;

@@ -230,7 +230,7 @@ const AdminSignUp = () => {
             <span className="font-semibold">Or Drop Down</span>
           </div>
           {/* validations for profilePic */}
-          {errors.profilePic?.type === "required" && (
+          {errors.profileImage?.type === "required" && (
             <p className="text-red-500 font-semibold">This field is required</p>
           )}
         </div>

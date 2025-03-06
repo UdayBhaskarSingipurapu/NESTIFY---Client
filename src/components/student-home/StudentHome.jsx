@@ -1,23 +1,50 @@
-import react,{ useState } from "react";
+import react, { useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import hostels from "../../data/hostelsData";
+import axios from "axios";
 
+const initialState = {};
+
+function inputReducer(state, action) {
+  switch(action.type) {
+    case "set-rating": {
+      return state;
+    }
+    case "set-comment": {
+      return {...state, comment:action.payload};
+    }
+    case "clear-form": {
+      return {comment:""};
+    }
+    default: {
+      return state;
+    }
+  }
+}
 
 const StudentHome = () => {
+
+  const [inputState, inputDispatch] = useReducer(inputReducer, initialState);
+  
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
   const [availability, setAvailability] = useState("");
-  const [websiteReviews, setWebsiteReviews] = useState([]);
-  const [newWebsiteReview, setNewWebsiteReview] = useState("");
+
+  // console.log(inputState);
 
   const handleSearch = () => {
     console.log({ query, location, availability });
   };
 
-  const handleWebsiteReviewSubmit = () => {
-    if (newWebsiteReview.trim() === "") return;
-    setWebsiteReviews([...websiteReviews, newWebsiteReview]);
-    setNewWebsiteReview("");
+  const handleWebsiteReviewSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputState.comment);
+    // if (newWebsiteReview.trim() === "") return;
+    const res = axios.post(`http://localhost:5050/newAppReview/new`, {
+      review: inputState.comment,
+    });
+    inputDispatch({ type: "clear-form" });
+    console.log(res);
   };
 
   return (
@@ -71,7 +98,9 @@ const StudentHome = () => {
             <h3 className="text-lg font-semibold mt-3">{hostel.name}</h3>
             <p className="text-gray-600">{hostel.description}</p>
             <p className="text-gray-600">{hostel.roomsAvailable}</p>
-            <p className="text-gray-700 font-bold mt-2">₹{hostel.price}/month</p>
+            <p className="text-gray-700 font-bold mt-2">
+              ₹{hostel.price}/month
+            </p>
             <Link
               to="/samplehostel"
               className="block bg-black text-white mt-3 px-4 py-2 text-center rounded-md hover:bg-gray-700"
@@ -82,31 +111,30 @@ const StudentHome = () => {
         ))}
       </div>
       {/* Website Reviews Section */}
-      <div className="mt-10 p-6 bg-white shadow-md rounded-xl">
-        <h2 className="text-xl font-semibold mb-4">Website Reviews</h2>
-        <div className="max-h-40 overflow-y-auto bg-gray-100 p-2 rounded-md">
-          {websiteReviews.length === 0 ? (
-            <p className="text-gray-500">No reviews yet. Be the first to review!</p>
-          ) : (
-            websiteReviews.map((review, i) => (
-              <p key={i} className="text-sm text-gray-700">- {review}</p>
-            ))
-          )}
+      <form action="" onSubmit={handleWebsiteReviewSubmit}>
+        <div className="mt-10 p-6 bg-white shadow-md rounded-xl">
+          <h2 className="text-xl font-semibold mb-4">Website Reviews</h2>
+          {/* star rating component */}
+          <input
+            type="text"
+            placeholder="Write a website review..."
+            value={inputState.comment}
+            onChange={(e) =>
+              inputDispatch({
+                type: "set-comment",
+                payload: e.target.value,
+              })
+            }
+            className="border border-gray-500 p-2 rounded-md w-full mt-2"
+          />
+          <button
+            type="submit"
+            className="bg-black text-white px-3 py-1 rounded-md mt-2 hover:bg-gray-500"
+          >
+            Submit Review
+          </button>
         </div>
-        <input
-          type="text"
-          placeholder="Write a website review..."
-          value={newWebsiteReview}
-          onChange={(e) => setNewWebsiteReview(e.target.value)}
-          className="border border-gray-500 p-2 rounded-md w-full mt-2"
-        />
-        <button
-          onClick={handleWebsiteReviewSubmit}
-          className="bg-black text-white px-3 py-1 rounded-md mt-2 hover:bg-gray-500"
-        >
-          Submit Review
-        </button>
-      </div>
+      </form>
     </div>
   );
 };

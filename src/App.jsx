@@ -19,7 +19,7 @@ import UserRoomDetails from "./components/User/user-room-details/UserRoomDetails
 import Samplehostel from "./components/samplehostel/Samplehostel"
 import MealPlan from "./components/User/mealplan/MealPlan";
 import MaintenanceForm from "./components/User/user-dashboard/MaintenanceForm";
-import FeedbackForm from "./components/User/user-dashboard/feedback-form/FeedbackForm";
+import FeedbackForm from "./components/User/user-dashboard/FeedbackForm";
 import EditForm from "./components/User/settings/EditForm";
 
 

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import { userLoginContext } from "../../contexts/userLoginContext";
 import { useContext } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 const UserSignUp = () => {
   let {
@@ -33,14 +33,17 @@ const UserSignUp = () => {
     // If you're using react-hook-form, you can set the file like this:
     console.log(userCred.profileImage[0]);
     formData.append("profileImage", userCred.profileImage[0]);
-    console.log(formData)
+    console.log(formData);
     try {
-      
-      let res = await axios.post("http://localhost:5050/user/signup", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      let res = await axios.post(
+        "http://localhost:5050/user/signup",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       if (res.status === 200) {
         if (res.data && res.data.message === "User registered successfully") {
           toast.success(res.data.message, {
@@ -58,7 +61,7 @@ const UserSignUp = () => {
         setError(data.payload.message);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setError(err.message);
     }
   }
@@ -154,20 +157,20 @@ const UserSignUp = () => {
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
           {/* validations for phone */}
-          {errors.phone?.type === "required" && (
+          {errors.contact?.type === "required" && (
             <p className="text-red-500 font-semibold">This field is required</p>
           )}
-          {errors.phone?.type === "minLength" && (
+          {errors.contact?.type === "minLength" && (
             <p className="text-red-500 font-semibold">
               Phone number must be at least 10 digits
             </p>
           )}
-          {errors.phone?.type === "maxLength" && (
+          {errors.contact?.type === "maxLength" && (
             <p className="text-red-500 font-semibold">
               Phone number must be atmost 10 digits
             </p>
           )}
-          {errors.phone?.type === "pattern" && (
+          {errors.contact?.type === "pattern" && (
             <p className="text-red-500 font-semibold">
               Phone number must contain only digits
             </p>
@@ -231,15 +234,15 @@ const UserSignUp = () => {
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
           {/* validations for parent/gardian name */}
-          {errors.parentusername?.type === "required" && (
+          {errors.parentName?.type === "required" && (
             <p className="text-red-500 font-semibold">This field is required</p>
           )}
-          {errors.parentusername?.type === "minLength" && (
+          {errors.parentName?.type === "minLength" && (
             <p className="text-red-500 font-semibold">
               Parent/gardian name must be at least 3 characters
             </p>
           )}
-          {errors.parentusername?.type === "maxLength" && (
+          {errors.parentName?.type === "maxLength" && (
             <p className="text-red-500 font-semibold">
               Parent/gardian name must be atmost 20 characters
             </p>
@@ -267,15 +270,15 @@ const UserSignUp = () => {
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
           {/* validations for parent/gardian phone */}
-          {errors.phone?.type === "required" && (
+          {errors.parentContact?.type === "required" && (
             <p className="text-red-500 font-semibold">This field is required</p>
           )}
-          {errors.phone?.type === "minLength" && (
+          {errors.parentContact?.type === "minLength" && (
             <p className="text-red-500 font-semibold">
               Phone number must be at least 10 digits
             </p>
           )}
-          {errors.phone?.type === "maxLength" && (
+          {errors.parentContact?.type === "maxLength" && (
             <p className="text-red-500 font-semibold">
               Phone number must be atmost 10 digits
             </p>
@@ -308,7 +311,7 @@ const UserSignUp = () => {
             <span className="font-semibold">Or Drop Down</span>
           </div>
           {/* validations for profilePic */}
-          {errors.profilePic?.type === "required" && (
+          {errors.profileImage?.type === "required" && (
             <p className="text-red-500 font-semibold">This field is required</p>
           )}
         </div>
@@ -334,19 +337,17 @@ const UserSignUp = () => {
           <p className="text-center flex items-center mb-2 text-gray-500">or</p>
           <div className="h-1 bg-gray-300 w-1/2"></div>
         </div>
-        
       </form>
       <form action="http://localhost:5050/auth/google">
         {/* continue with google */}
         <button
           type="submit"
-          className="sm:w-[400px] w-full p-3 rounded-md font-semibold text-[#111827] border-1 border-[#111827] hover:bg-gray-100 h-12 flex items-center justify-center gap-2"
+          className="sm:w-[400px] w-full p-3 rounded-md font-semibold text-[#111827] border-1 border-[#111827] hover:bg-gray-100 h-12 flex items-center justify-center gap-2 m-auto"
         >
           <FcGoogle className="mt-1 w-5 h-5" />
           Continue with Google
         </button>
       </form>
-
     </div>
   );
 };

@@ -29,10 +29,7 @@ const Settings = () => {
                   Change your profile picture
                 </p>
               </div>
-              <Link
-                to="edit-profile-picture"
-                className="text-blue-500 cursor-pointer"
-              >
+              <Link to="/edit-form" className="text-blue-500 cursor-pointer">
                 Edit
               </Link>
             </div>
@@ -46,10 +43,7 @@ const Settings = () => {
                   Update your personal details
                 </p>
               </div>
-              <Link
-                to="edit-personal-information"
-                className="text-blue-500 cursor-pointer"
-              >
+              <Link to="/edit-form" className="text-blue-500 cursor-pointer">
                 Edit
               </Link>
             </div>
@@ -72,44 +66,13 @@ const Settings = () => {
                   Update your password
                 </p>
               </div>
-              <Link to="editpassword" className="text-blue-500 cursor-pointer">
+              <Link to="/edit-form" className="text-blue-500 cursor-pointer">
                 Edit
               </Link>
             </div>
           </section>
         </div>
 
-        {/* Appearance */}
-        <div className="bg-white rounded-md mt-4">
-          <section className="p-4 flex items-center gap-2">
-            <IoMoonOutline className="text-xl" />
-            <h2 className="text-[#111827] text-xl font-semibold">Appearance</h2>
-          </section>
-          <section className="p-8 border-t border-[#dcddde] flex flex-col gap-4">
-            <div className="flex flex-wrap items-center justify-between p-2 rounded-md hover:bg-gray-200">
-              <div>
-                <p className="text-[#111827] text-lg font-semibold">Theme</p>
-                <p className="text-[#6B7280] text-sm font-semibold">
-                  Choose light or dark mode
-                </p>
-              </div>
-              <Link to="edit-theme" className="text-blue-500 cursor-pointer">
-                Edit
-              </Link>
-            </div>
-            <div className="flex flex-wrap items-center justify-between p-2 rounded-md hover:bg-gray-200">
-              <div>
-                <p className="text-[#111827] text-lg font-semibold">Language</p>
-                <p className="text-[#6B7280] text-sm font-semibold">
-                  Select your preferred language
-                </p>
-              </div>
-              <Link to="edit-language" className="text-blue-500 cursor-pointer">
-                Edit
-              </Link>
-            </div>
-          </section>
-        </div>
 
         {/* Privacy settings */}
         <div className="bg-white rounded-md mt-4">
@@ -130,7 +93,7 @@ const Settings = () => {
                 </p>
               </div>
               <Link
-                to="View-privacy-policy"
+                to="#"
                 className="text-blue-500 cursor-pointer"
               >
                 view
