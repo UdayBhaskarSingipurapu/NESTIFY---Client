@@ -33,11 +33,11 @@ function Header() {
               About
             </Link>
             <Link
-              to="/contact"
+              to="/contacts"
               className="nav-link flex items-center gap-2 hover:text-black hover:underline"
             >
               <Mail className="h-4 w-4" />
-              Contact
+              Contacts
             </Link>
           </div>
 

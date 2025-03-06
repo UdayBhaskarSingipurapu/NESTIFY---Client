@@ -21,6 +21,8 @@ import MealPlan from "./components/User/mealplan/MealPlan";
 import MaintenanceForm from "./components/User/user-dashboard/MaintenanceForm";
 import FeedbackForm from "./components/User/user-dashboard/FeedbackForm";
 import EditForm from "./components/User/settings/EditForm";
+import About from "./components/about/About";
+import Contacts from "./components/contacts/Contacts";
 
 
 function App({ children }) {
@@ -56,6 +58,14 @@ function App({ children }) {
         {
           path: "settings",
           element: <Settings />,
+        },
+        {
+          path: "about",
+          element:<About/>,
+        },
+        {
+          path: "contact",
+          element:<Contacts/>,
         },
         {
           path: "sign-up",

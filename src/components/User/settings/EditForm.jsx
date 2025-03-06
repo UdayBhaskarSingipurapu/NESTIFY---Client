@@ -94,6 +94,7 @@ const EditForm = () => {
             })}
             placeholder="Enter your username"
             value={setValue("username", user.username)}
+            value={setValue("username", user.username)}
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
           {/* validations for userName */}
@@ -126,6 +127,7 @@ const EditForm = () => {
             placeholder="Enter your email"
             {...register("email", { required: true })}
             value={setValue("email", user.email)}
+            value={setValue("email", user.email)}
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
           {/* validations for email */}
@@ -152,6 +154,7 @@ const EditForm = () => {
               maxLength: 10,
               pattern: /^[0-9]*$/,
             })}
+            value={setValue("contact", user.contact)}
             value={setValue("contact", user.contact)}
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
@@ -195,6 +198,7 @@ const EditForm = () => {
               maxLength: 20,
             })}
             value={setValue("parentName", user.parentName)}
+            value={setValue("parentName", user.parentName)}
             disabled
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
@@ -218,6 +222,7 @@ const EditForm = () => {
               maxLength: 10,
               pattern: /^[0-9]*$/,
             })}
+            value={setValue("parentContact", user.parentContact)}
             value={setValue("parentContact", user.parentContact)}
             disabled
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"

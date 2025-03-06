@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import userTopContainerImag1 from "../../../assets/userBottomContainerImage1.png";
 import userTopContainerImag2 from "../../../assets/userTopContainerImag2.png";
@@ -18,9 +18,21 @@ import userProfile from "../../../assets/userProfile.jpg";
 import MaintanaceForm from "./MaintenanceForm";
 import FeedbackForm from "./FeedbackForm";
 
-const UserHomePage = () => {
 
+
+const UserHomePage = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState([]);
+  useEffect(() => {
+    const loggedInUser = sessionStorage.getItem("user");
+    console.log(JSON.parse(loggedInUser));
+    if(!loggedInUser){
+      navigate('/log-in');
+    }
+    else {
+      setUser(JSON.parse(loggedInUser)); 
+    }
+  }, []);
 
   return (
     <div className="bg-gray-200 p-7 md:ml-48">
@@ -28,9 +40,9 @@ const UserHomePage = () => {
       <div className="bg-white w-full p-7 rounded-md max-w-[1700px] m-auto h-full overflow-auto">
         <div className="flex gap-2.5 items-center">
           <h1 className="text-[#111827] font-bold text-2xl">
-            Welcome back, john!
+            Welcome back, {user.username}!
           </h1>
-          <img src={userProfile} alt="" className="w-10 h-full rounded-full" />
+          <img src={user.profileImage?.url} alt="" className="w-10 h-full rounded-full" />
         </div>
         <p className="text-[#6B7280] text-sm">Room 304</p>
         <div className="mt-4 grid lg:grid-cols-12 md:grid-cols-10 sm:grid-cols-2 gap-4 ">

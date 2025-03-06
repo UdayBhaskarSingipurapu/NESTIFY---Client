@@ -19,7 +19,7 @@ const Samplehostel = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-8 mb-8">
       <h2 className="text-2xl font-bold text-gray-800">{hostel.hostelname}</h2>
       <p className="text-gray-600">
         {hostel.addressLine.doorNo}, {hostel.addressLine.street}, {hostel.addressLine.city}, {hostel.addressLine.state}
