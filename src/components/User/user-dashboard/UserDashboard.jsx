@@ -39,10 +39,10 @@ const UserHomePage = () => {
       {/* top-container */}
       <div className="bg-white w-full p-7 rounded-md max-w-[1700px] m-auto h-full overflow-auto">
         <div className="flex gap-2.5 items-center">
-          <h1 className="text-[#111827] font-bold text-2xl">
+          <h1 className="text-[#111827] font-bold text-3xl">
             Welcome back, {user.username}!
           </h1>
-          <img src={user.profileImage?.url} alt="" className="w-10 h-full rounded-full" />
+          <img src={user.profileImage?.url} alt="" className="w-14 h-full rounded-full" />
         </div>
         <p className="text-[#6B7280] text-sm">Room 304</p>
         <div className="mt-4 grid lg:grid-cols-12 md:grid-cols-10 sm:grid-cols-2 gap-4 ">
