@@ -71,6 +71,7 @@ function UserLoginStore({ children }) {
         user,
         userLoginReq,
         adminLoginReq,
+        setUser,
         Error,
         setError,
         logout, //added
