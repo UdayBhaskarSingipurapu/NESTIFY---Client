@@ -22,7 +22,8 @@ import MaintenanceForm from "./components/User/user-dashboard/MaintenanceForm";
 import FeedbackForm from "./components/User/user-dashboard/FeedbackForm";
 import EditForm from "./components/User/settings/EditForm";
 import About from "./components/about/About";
-import Contacts from "./components/contacts/Contacts";
+import Contact from "./components/contact/Contact";
+
 
 
 function App({ children }) {
@@ -65,7 +66,7 @@ function App({ children }) {
         },
         {
           path: "contact",
-          element:<Contacts/>,
+          element:<Contact/>,
         },
         {
           path: "sign-up",

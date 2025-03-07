@@ -33,7 +33,7 @@ function Header() {
               About
             </Link>
             <Link
-              to="/contacts"
+              to="/contact"
               className="nav-link flex items-center gap-2 hover:text-black hover:underline"
             >
               <Mail className="h-4 w-4" />

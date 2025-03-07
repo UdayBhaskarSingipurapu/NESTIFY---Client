@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Contacts() {
+function Contact() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
       <div className="max-w-3xl bg-white shadow-lg rounded-lg p-8">
@@ -25,20 +25,10 @@ function Contacts() {
           </div>
         </div>
 
-        <div className="mt-6">
-          <h2 className="text-2xl font-semibold text-gray-700 mb-3">Send Us a Message</h2>
-          <form className="space-y-4">
-            <input type="text" placeholder="Your Name" className="w-full p-3 border rounded-lg" />
-            <input type="email" placeholder="Your Email" className="w-full p-3 border rounded-lg" />
-            <textarea placeholder="Your Message" className="w-full p-3 border rounded-lg h-32"></textarea>
-            <button type="submit" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
-              Send Message
-            </button>
-          </form>
-        </div>
+      
       </div>
     </div>
   );
 }
 
-export default Contacts;
+export default Contact;

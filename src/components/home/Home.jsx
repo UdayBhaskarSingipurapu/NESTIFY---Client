@@ -70,6 +70,7 @@ function Home() {
             <p className="text-gray-700 font-bold mt-2">₹{hostel.price}/month</p>
             <Link
               to="/samplehostel"
+              state={{hostel}}
               className="block bg-black text-white mt-3 px-4 py-2 text-center rounded-md hover:bg-gray-700"
             >
               View Details

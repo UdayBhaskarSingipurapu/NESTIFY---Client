@@ -25,7 +25,6 @@ function inputReducer(state, action) {
 const StudentHome = () => {
 
   const [inputState, inputDispatch] = useReducer(inputReducer, initialState);
-  
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
   const [availability, setAvailability] = useState("");
@@ -103,6 +102,7 @@ const StudentHome = () => {
             </p>
             <Link
               to="/samplehostel"
+              state={{hostel}}
               className="block bg-black text-white mt-3 px-4 py-2 text-center rounded-md hover:bg-gray-700"
             >
               View Details
