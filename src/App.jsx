@@ -25,6 +25,7 @@ import About from "./components/about/About";
 import Contact from "./components/contact/Contact";
 import EditProfilePic from "./components/User/settings/EditProfilePic";
 import EditPassword from "./components/User/settings/EditPassword";
+import NotFound from "./NotFound";
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -151,6 +152,10 @@ function App({ children }) {
         {
           path: "edit-password",
           element: <EditPassword />,
+        },
+        {
+          path: '*',
+          element: <NotFound/>
         }
       ],
     },
