@@ -23,6 +23,18 @@ import FeedbackForm from "./FeedbackForm";
 const UserHomePage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
+  const [todayDate, setTodayDate] = useState(" ");
+
+  const getFormattedDate = () => {
+    const date = new Date();
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const day = days[date.getDay()];
+    const dd = String(date.getDate()).padStart(2, "0");
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const yy = String(date.getFullYear()).slice(-2);
+    return `${day} (${dd}-${mm}-${yy})`;
+  };
+
   useEffect(() => {
     const loggedInUser = sessionStorage.getItem("user");
     console.log(JSON.parse(loggedInUser));
@@ -32,6 +44,8 @@ const UserHomePage = () => {
     else {
       setUser(JSON.parse(loggedInUser)); 
     }
+
+    setTodayDate(getFormattedDate());
   }, []);
 
   return (
@@ -60,7 +74,7 @@ const UserHomePage = () => {
             <div>
               <p className="text-[#6B7280] font-semibold">Today's Meal Plan</p>
               <p className="text-[#111827] font-bold text-lg">
-                Monday(22-02-25)
+                {todayDate}
               </p>
             </div>
           </div>
