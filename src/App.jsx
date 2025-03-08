@@ -14,17 +14,17 @@ import UserLogin from "./components/log-in/UserLogin";
 import AdminLogIn from "./components/log-in/AdminLogin";
 import HostleListing from "./components/hostle-listing/HostleListing";
 import RoomDetails from "./components/hostle-listing/RoomDetails";
-import AdminHomePage from "./components/admin_homepage/AdminHomePage"
+import AdminHomePage from "./components/admin_homepage/AdminHomePage";
 import UserRoomDetails from "./components/User/user-room-details/UserRoomDetails";
-import Samplehostel from "./components/samplehostel/Samplehostel"
+import Samplehostel from "./components/samplehostel/Samplehostel";
 import MealPlan from "./components/User/mealplan/MealPlan";
 import MaintenanceForm from "./components/User/user-dashboard/MaintenanceForm";
 import FeedbackForm from "./components/User/user-dashboard/FeedbackForm";
 import EditForm from "./components/User/settings/EditForm";
 import About from "./components/about/About";
 import Contact from "./components/contact/Contact";
-
-
+import EditProfilePic from "./components/User/settings/EditProfilePic";
+import EditPassword from "./components/User/settings/EditPassword";
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -62,11 +62,11 @@ function App({ children }) {
         },
         {
           path: "about",
-          element:<About/>,
+          element: <About />,
         },
         {
           path: "contact",
-          element:<Contact/>,
+          element: <Contact />,
         },
         {
           path: "sign-up",
@@ -118,19 +118,19 @@ function App({ children }) {
         },
         {
           path: ":id/room-details",
-          element:<RoomDetails/>
+          element: <RoomDetails />,
         },
         {
           path: "samplehostel",
-          element:<Samplehostel/>
+          element: <Samplehostel />,
         },
         {
           path: "user-room-details",
-          element:<UserRoomDetails/>
+          element: <UserRoomDetails />,
         },
         {
           path: "mealplan",
-          element:<MealPlan/>
+          element: <MealPlan />,
         },
         {
           path: "room-details",
@@ -138,11 +138,19 @@ function App({ children }) {
         },
         {
           path: "sample-hostel",
-          element: <Samplehostel/>,
+          element: <Samplehostel />,
         },
         {
           path: "edit-form",
-          element: <EditForm/>
+          element: <EditForm />,
+        },
+        {
+          path: "edit-profilePic",
+          element: <EditProfilePic />,
+        },
+        {
+          path: "edit-password",
+          element: <EditPassword />,
         }
       ],
     },
