@@ -59,16 +59,16 @@ const UserHomePage = () => {
     <div className="bg-gray-200 p-7 md:ml-48">
       {/* top-container */}
       <div className="bg-white w-full p-7 rounded-md max-w-[1700px] m-auto h-full overflow-auto">
-        <div className="flex gap-2.5 items-center">
+        <div className="flex gap-2.5 items-center justify-between">
           <h1 className="text-[#111827] font-bold text-3xl">
             Welcome back, {user.username}!
           </h1>
           <img src={user.profileImage?.url} alt="" className="w-14 h-full rounded-full" />
         </div>
         <p className="text-[#6B7280] text-sm">Room 304</p>
-        <div className="mt-4 grid lg:grid-cols-12 md:grid-cols-10 sm:grid-cols-2 gap-4 ">
+        <div className="mt-4 grid lg:grid-cols-12 md:grid-cols-2 sm:grid-cols-2 gap-4 ">
           
-          <div className="lg:col-span-3 md:col-span-5 sm:col-span-1 flex  gap-4 bg-blue-100  p-4 rounded-md cursor-pointer"
+          <div className="lg:col-span-4 md:col-span-1 sm:col-span-1 flex  gap-4 bg-blue-100  p-4 rounded-md cursor-pointer"
           onClick={() => navigate("/mealplan")}
           >
             <div className="flex justify-center items-center">
@@ -86,7 +86,7 @@ const UserHomePage = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-3 md:col-span-5 sm:col-span-1 flex flex-wrap gap-4 bg-red-100  p-4 rounded-md">
+          <div className="lg:col-span-4 md:col-span-1 sm:col-span-1 flex flex-wrap gap-4 bg-red-100  p-4 rounded-md">
             <div className="flex justify-center items-center">
               <img
                 src={userTopContainerImag2}
@@ -102,7 +102,7 @@ const UserHomePage = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-3 md:col-span-5 sm:col-span-1 flex flex-wrap gap-4 bg-green-100  p-4 rounded-md">
+          <div className="lg:col-span-4 md:col-span-1 sm:col-span-1 flex flex-wrap gap-4 bg-green-100  p-4 rounded-md">
             <div className="flex justify-center items-center">
               <img
                 src={userTopContainerImag3}

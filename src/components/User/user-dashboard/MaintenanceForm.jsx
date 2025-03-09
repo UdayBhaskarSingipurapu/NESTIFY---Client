@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useReducer } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const initialState = {};
 
 function maintenanceReducer(state, action) {
   switch (action.type) {
     case "set-title": {
-      return { ...state, title: action.payload };
+      return { ...state, issueTitle: action.payload };
     }
     case "set-description": {
-      return { ...state, description: action.payload };
+      return { ...state, issueDescription: action.payload };
     }
     case "clear-form": {
-      return {title:"", description:""};
+      return { issueTitle: "", issueDescription: "" };
     }
     default: {
       return state;
@@ -22,25 +23,84 @@ function maintenanceReducer(state, action) {
 }
 
 const MaintenanceForm = () => {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    setUser(JSON.parse(sessionStorage.getItem("user")));
+  }, []);
   const [state, MaintanaceDispatch] = useReducer(
     maintenanceReducer,
     initialState
   );
 
+  console.log(user);
+
+  async function userMaintainanceReq(state) {
+    try {
+      axios
+        .post(
+          `http://localhost:5050/hostel/maintainance/${user._id}/new`,
+          state
+        )
+        .then((obj) => {
+          console.log(obj);
+          let res = obj.response;
+          console.log(res);
+          const { message} = res.data;
+          showSuccessToast(message);
+        })
+        .catch((err) => {
+          console.log(err);
+          let res = err.response;
+          console.log(res);
+          const { message } = res.data;
+          showErrorToast(message);
+        });
+    } catch (err) {
+      console.log(err);
+      let res = err.response;
+      console.log(res);
+      const { message } = res.data;
+      showErrorToast(message);
+    }
+  }
+
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000, // Closes after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
   function handleSubmit(e) {
-    input.
     e.preventDefault();
-    // let res = axios.post(
-    //   `http://localhost:5050/hostel/${id}/maintenance/new`, //id is id of hostel
-    //   state
-    // );
     console.log(state);
-    MaintanaceDispatch({type:"clear-form"})
+    userMaintainanceReq(state);
+    MaintanaceDispatch({ type: "clear-form" });
   }
 
   return (
     <div>
       <div className="bg-grey-200 rounded-lg p-10 w-full max-w-2xl m-auto ">
+        <ToastContainer/>
         <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
           {/* Title Input */}
           <div>
@@ -61,7 +121,7 @@ const MaintenanceForm = () => {
                   payload: e.target.value,
                 })
               }
-              value={state.title}
+              value={state.issueTitle}
             />
           </div>
 
@@ -84,7 +144,7 @@ const MaintenanceForm = () => {
                   payload: e.target.value,
                 })
               }
-              value={state.description}
+              value={state.issueDescription}
             ></textarea>
           </div>
 
@@ -97,20 +157,6 @@ const MaintenanceForm = () => {
           </button>
         </form>
       </div>
-
-      {/* Display the request */}
-      {state.title && (
-        <h1 className="text-2xl text-black-400 overflow-clip">
-          <span className="font-semibold text-red-400 mr-2">Title:</span>
-          {state.title}
-        </h1>
-      )}
-      {state.description && (
-        <h1 className="text-2xl text-black-400 mt-4 overflow-clip">
-          <span className="font-semibold text-red-400 mr-2">Description:</span>
-          {state.description}
-        </h1>
-      )}
     </div>
   );
 };
