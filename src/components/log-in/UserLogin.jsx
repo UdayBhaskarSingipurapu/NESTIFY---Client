@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { userLoginContext } from "../../contexts/userLoginContext";
-import { useContext } from "react";
+import { useContext ,useEffect} from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { FaChampagneGlasses } from "react-icons/fa6";
 
@@ -15,7 +15,13 @@ const UserLogin = () => {
     formState: { errors },
     setValue,
   } = useForm();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (login) {
+      navigate("/student-home");
+    }
+  }, [login, navigate]);
 
   async function onSubmit(userData) {
     await userLoginReq(userData);
