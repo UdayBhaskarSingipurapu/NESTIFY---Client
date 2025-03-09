@@ -29,7 +29,7 @@ const Settings = () => {
                   Change your profile picture
                 </p>
               </div>
-              <Link to="/edit-form" className="text-blue-500 cursor-pointer">
+              <Link to="/edit-profilePic" className="text-blue-500 cursor-pointer">
                 Edit
               </Link>
             </div>
@@ -66,7 +66,7 @@ const Settings = () => {
                   Update your password
                 </p>
               </div>
-              <Link to="/edit-form" className="text-blue-500 cursor-pointer">
+              <Link to="/edit-password" className="text-blue-500 cursor-pointer">
                 Edit
               </Link>
             </div>
