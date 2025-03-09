@@ -2,6 +2,7 @@ import react, { useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import hostels from "../../data/hostelsData";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const initialState = {};
 
@@ -11,10 +12,10 @@ function inputReducer(state, action) {
       return state;
     }
     case "set-comment": {
-      return {...state, comment:action.payload};
+      return { ...state, review: action.payload };
     }
     case "clear-form": {
-      return {comment:""};
+      return { review: "" };
     }
     default: {
       return state;
@@ -35,19 +36,71 @@ const StudentHome = () => {
     console.log({ query, location, availability });
   };
 
+  async function userFeedbackReq(state) {
+    console.log(state);
+    try {
+      axios
+        .post(`http://localhost:5050/newAppReview/new`, state)
+        .then((obj) => {
+          console.log(obj);
+          let res = obj.response;
+          console.log(res);
+          const { message } = res.data;
+          showSuccessToast(message);
+        })
+        .catch((err) => {
+          console.log(err);
+          let res = err.response;
+          console.log(res);
+          const { message } = res.data;
+          showErrorToast(message);
+        });
+    } catch (err) {
+      console.log(err);
+      let res = err.response;
+      console.log(res);
+      const { message } = res.data;
+      showErrorToast(message);
+    }
+  }
+
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000, // Closes after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
   const handleWebsiteReviewSubmit = (e) => {
     e.preventDefault();
     console.log(inputState.comment);
-    // if (newWebsiteReview.trim() === "") return;
-    const res = axios.post(`http://localhost:5050/newAppReview/new`, {
-      review: inputState.comment,
-    });
+    userFeedbackReq(inputState);
     inputDispatch({ type: "clear-form" });
-    console.log(res);
   };
 
   return (
     <div className="p-8 bg-gray-100 md:ml-48">
+      <ToastContainer/>
+      {/* Search Section*/}
       <div className="flex flex-col md:flex-row items-center gap-4 p-4 bg-white shadow-md rounded-xl">
         <input
           type="text"
@@ -100,7 +153,7 @@ const StudentHome = () => {
             
             <Link
               to="/samplehostel"
-              state={{hostel}}
+              state={{ hostel }}
               className="block bg-black text-white mt-3 px-4 py-2 text-center rounded-md hover:bg-gray-700"
             >
               View Details
@@ -116,7 +169,7 @@ const StudentHome = () => {
           <input
             type="text"
             placeholder="Write a website review..."
-            value={inputState.comment}
+            value={inputState.review}
             onChange={(e) =>
               inputDispatch({
                 type: "set-comment",
