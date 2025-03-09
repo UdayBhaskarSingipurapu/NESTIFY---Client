@@ -54,16 +54,21 @@ const HostleListing = () => {
       console.log(user); 
       let res = await axios.post(
         `http://localhost:5050/hostel/createhostel/${user._id}`,
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       console.log(res);
-      if (res.status === 200) {
-        let data = res.data;
-        console.log(data);
-        setHoslteId(data.payload._id);
-      } else {
-        setError(res.data?.message || "Unknown error occurred");
-      }
+      // if (res.status === 200) {
+      //   let data = res.data;
+      //   console.log(data);
+      //   setHoslteId(data.payload._id);
+      // } else {
+      //   setError(res.data?.message || "Unknown error occurred");
+      // }
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred while saving");
     }
