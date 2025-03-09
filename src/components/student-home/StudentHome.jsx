@@ -96,10 +96,8 @@ const StudentHome = () => {
             />
             <h3 className="text-lg font-semibold mt-3">{hostel.name}</h3>
             <p className="text-gray-600">{hostel.description}</p>
-            <p className="text-gray-600">{hostel.roomsAvailable}</p>
-            <p className="text-gray-700 font-bold mt-2">
-              ₹{hostel.price}/month
-            </p>
+            <p className="text-gray-600 font-semibold">{hostel.roomsAvailable} rooms available</p>
+            
             <Link
               to="/samplehostel"
               state={{hostel}}
