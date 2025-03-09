@@ -9,9 +9,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [isSidebarVisible, setSidebarVisible] = useState(false);
 
-  useEffect(() => {
-    navigate("/student-home");
-  }, [navigate]);
+  
 
   const handleLogout = () => {
     logout();
