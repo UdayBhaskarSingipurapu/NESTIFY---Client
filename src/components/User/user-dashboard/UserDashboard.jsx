@@ -24,6 +24,8 @@ const UserHomePage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [todayDate, setTodayDate] = useState(" ");
+  const [roomBooked, setRoomBooked] = useState(false);
+  const [bookedRoom, setBookedRoom] = useState(null);
 
   const getFormattedDate = () => {
     const date = new Date();
@@ -46,7 +48,12 @@ const UserHomePage = () => {
     }
 
     setTodayDate(getFormattedDate());
-  }, []);
+    const bookedRoomData = sessionStorage.getItem("bookedRoom");
+    if (bookedRoomData) {
+      setBookedRoom(JSON.parse(bookedRoomData));
+      setRoomBooked(true); 
+    }
+  }, [navigate]);
 
   return (
     <div className="bg-gray-200 p-7 md:ml-48">
@@ -205,35 +212,47 @@ const UserHomePage = () => {
           </div>
         </div>
 
-        {/* room infromation */}
+        {/* Room Information or Book Room Button */}
         <div className="bg-white rounded-md p-7 lg:col-span-5 col-span-12 lg:flex lg:flex-col overflow-auto h-[330px]">
           <h1 className="text-[#111827] font-bold text-xl">Room Information</h1>
-          <div className="mt-4 flex flex-col gap-2">
-            <span className="flex justify-between text-[#6B7280] font-semibold p-2 rounded-md bg-gray-100">
-              <span className="">Room Number</span>
-              <span className="text-[#111827] text-lg">304</span>
-            </span>
-            <span className="flex justify-between text-[#6B7280] text-md font-semibold p-2 rounded-md bg-gray-100">
-              <span>Room Capacity</span>
-              <span className="text-[#111827] text-lg">2 Beds</span>
-            </span>
-            <span className="flex justify-between text-[#6B7280] text-md font-semibold p-2 rounded-md bg-gray-100">
-              <span>Roommates</span>
-              <span className="text-[#111827] text-lg">Michael Brown</span>
-            </span>
-            <span className="flex justify-between text-[#6B7280] text-md font-semibold items-center p-2 rounded-md bg-gray-100">
-              <span>A/C</span>
-              <span className="text-[#111827] text-lg">No</span>
-            </span>
-            <span className="flex justify-between text-[#6B7280] text-md font-semibold items-center p-2 rounded-md bg-gray-100">
-              <span>Fees</span>
-              <span className="text-[#111827] text-lg">
-                <FaRupeeSign className="text-[#111827] w-2.5 inline mb-1 mr-1" />
-                4500
+          {roomBooked && bookedRoom ? (
+            <div className="mt-4 flex flex-col gap-2">
+              <span className="flex justify-between text-[#6B7280] font-semibold p-2 rounded-md bg-gray-100">
+                <span className="">Room Number</span>
+                <span className="text-[#111827] text-lg">{bookedRoom.roomNumber}</span>
               </span>
-            </span>
-          </div>
+              <span className="flex justify-between text-[#6B7280] text-md font-semibold p-2 rounded-md bg-gray-100">
+                <span>Room Capacity</span>
+                <span className="text-[#111827] text-lg">{bookedRoom.roomCapacity} Beds</span>
+              </span>
+              <span className="flex justify-between text-[#6B7280] text-md font-semibold p-2 rounded-md bg-gray-100">
+                <span>Roommates</span>
+                <span className="text-[#111827] text-lg">{bookedRoom.roommate}</span>
+              </span>
+              <span className="flex justify-between text-[#6B7280] text-md font-semibold items-center p-2 rounded-md bg-gray-100">
+                <span>A/C</span>
+                <span className="text-[#111827] text-lg">{bookedRoom.ac ? "Yes" : "No"}</span>
+              </span>
+              <span className="flex justify-between text-[#6B7280] text-md font-semibold items-center p-2 rounded-md bg-gray-100">
+                <span>Fees</span>
+                <span className="text-[#111827] text-lg">
+                  <FaRupeeSign className="text-[#111827] w-2.5 inline mb-1 mr-1" />
+                  {bookedRoom.feePerMonth}
+                </span>
+              </span>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <button
+                onClick={() => navigate("/book-room")} // Redirect to book room page
+                className="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-700 transition-colors"
+              >
+                Book Room
+              </button>
+            </div>
+          )}
         </div>
+
 
         {/* payment History */}
         <div className="bg-white rounded-md p-7 lg:col-span-7 col-span-12 h-[330px]">
