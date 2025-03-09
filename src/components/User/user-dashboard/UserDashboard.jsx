@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import userTopContainerImag1 from "../../../assets/userBottomContainerImage1.png";
 import userTopContainerImag2 from "../../../assets/userTopContainerImag2.png";
@@ -17,22 +17,25 @@ import { FaRupeeSign } from "react-icons/fa";
 import userProfile from "../../../assets/userProfile.jpg";
 import MaintanaceForm from "./MaintenanceForm";
 import FeedbackForm from "./FeedbackForm";
+import UserLoginStore from "../../../contexts/UserLoginStore";
+import { userLoginContext } from "../../../contexts/userLoginContext";
+
 
 
 
 const UserHomePage = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState([]);
-  useEffect(() => {
-    const loggedInUser = sessionStorage.getItem("user");
-    console.log(JSON.parse(loggedInUser));
-    if(!loggedInUser){
-      navigate('/log-in');
-    }
-    else {
-      setUser(JSON.parse(loggedInUser)); 
-    }
-  }, []);
+  const {user, error, setError} = useContext(userLoginContext);
+  // useEffect(() => {
+  //   const loggedInUser = sessionStorage.getItem("user");
+  //   console.log(JSON.parse(loggedInUser));
+  //   if(!loggedInUser){
+  //     navigate('/log-in');
+  //   }
+  //   else {
+  //     setUser(JSON.parse(loggedInUser)); 
+  //   }
+  // }, []);
 
   return (
     <div className="bg-gray-200 p-7 md:ml-48">
@@ -40,7 +43,7 @@ const UserHomePage = () => {
       <div className="bg-white w-full p-7 rounded-md max-w-[1700px] m-auto h-full overflow-auto">
         <div className="flex gap-2.5 items-center">
           <h1 className="text-[#111827] font-bold text-3xl">
-            Welcome back, {user.username}!
+            Welcome back, {user?.username}!
           </h1>
           <img src={user.profileImage?.url} alt="" className="w-14 h-full rounded-full" />
         </div>
