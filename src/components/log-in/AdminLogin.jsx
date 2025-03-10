@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,12 @@ const AdminLogin = () => {
   } = useForm();
   const { adminLoginReq, login, user } = useContext(userLoginContext);
   let navigate = useNavigate();
+
+  useEffect(() => {
+    if (login) {
+      navigate("/admin/dashboard");
+    }
+  }, [login, navigate]);
 
   async function onSubmit(adminData) {
     adminLoginReq(adminData);
@@ -58,20 +64,6 @@ const AdminLogin = () => {
             placeholder="Enter your username"
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
-          {/* validations for userName */}
-          {errors.username?.type === "required" && (
-            <p className="text-red-500 font-semibold">This field is required</p>
-          )}
-          {errors.username?.type === "minLength" && (
-            <p className="text-red-500 font-semibold">
-              Username must be at least 3 characters
-            </p>
-          )}
-          {errors.username?.type === "maxLength" && (
-            <p className="text-red-500 font-semibold">
-              Username must be at most 20 characters
-            </p>
-          )}
         </div>
         {/* password */}
         <div className="sm:w-[500px] w-full">
@@ -93,21 +85,6 @@ const AdminLogin = () => {
             })}
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
-          {/* validations for password */}
-          {errors.password?.type === "required" && (
-            <p className="text-red-500 font-semibold">This field is required</p>
-          )}
-          {errors.password?.type === "minLength" && (
-            <p className="text-red-500 font-semibold">
-              Password must be at least 8 characters
-            </p>
-          )}
-          {errors.password?.type === "pattern" && (
-            <p className="text-red-500 font-semibold">
-              Password must contain at least one uppercase letter, one lowercase
-              letter, one digit, and one special character
-            </p>
-          )}
         </div>
         {/* Sign Up */}
         <button

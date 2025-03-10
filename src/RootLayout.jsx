@@ -27,7 +27,7 @@ function RootLayout() {
     <div>
       {!user && <Header />}
       {user && <Sidebar />}
-      <div>
+      <div className="min-h-screen">
         {
           isAllowed ? <Outlet /> : <div className="flex justify-center items-center h-screen"><h1 className="text-4xl font-bold">You are not allowed to access this page</h1></div>
         }
