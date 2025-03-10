@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, LogIn, Home, Info, Mail, LogOut } from "lucide-react";
 import { userLoginContext } from "../../contexts/userLoginContext";
+import Nlogo from "../../assets/Nlogo.png";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +16,11 @@ function Header() {
     <>
       <nav className="fixed top-0 left-0 w-full h-16 bg-white shadow-md z-50 flex items-center px-4 md:px-6">
         <div className="flex items-center justify-between w-full">
-          <div className="text-lg font-bold">Logo</div>
+         <div className="flex items-center font-bold">
+            <img src={Nlogo} alt="Logo" className="w-9 h-9" />
+            <span className="ml-2">Nestify</span>
+          </div>
+          
 
           <div className="hidden md:flex gap-7">
             <Link
