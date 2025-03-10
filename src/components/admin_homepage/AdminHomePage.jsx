@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import userTopContainerImag1 from "../../assets/userTopContainerImag1.png";
 import userTopContainerImag2 from "../../assets/userTopContainerImag2.png";
 import userTopContainerImag3 from "../../assets/userTopContainerImag3.png";
@@ -12,6 +13,7 @@ import userBottomContainerImage3 from "../../assets/userBottomContainerImage3.pn
 import userBottomContainerImage4 from "../../assets/userBottomContainerImage4.png";
 import userBottomContainerImage5 from "../../assets/userBottomContainerImage5.png";
 import userBottomContainerImage6 from "../../assets/userBottomContainerImage6.png";
+
 
 const AdminHomePage = () => {
   return (
@@ -134,7 +136,7 @@ const AdminHomePage = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-4 md:col-span-5 sm:col-span-1 flex flex-col items-center justify-center flex-wrap gap-3 bg-pink-100  p-4 rounded-md">
+            <div className="lg:col-span-4 md:col-span-5 sm:col-span-1 flex flex-col items-center justify-center flex-wrap gap-3 bg-pink-100  p-4 rounded-md ">
               <div className="flex justify-center items-center">
                 <img
                   src={userBottomContainerImage4}
@@ -143,8 +145,13 @@ const AdminHomePage = () => {
                 />
               </div>
               <div>
-                <p className="text-[#6B7280] font-semibold">Staff Management</p>
+                <Link to="/staff">
+                  <div>
+                    <p className="text-[#6B7280] font-semibold">Staff Management</p>
+                  </div>
+                </Link>
               </div>
+              
             </div>
 
             <div className="lg:col-span-4 md:col-span-5 sm:col-span-1 flex flex-col items-center justify-center flex-wrap gap-3 bg-violet-100  p-4 rounded-md">

@@ -26,6 +26,7 @@ import Contact from "./components/contact/Contact";
 import EditProfilePic from "./components/User/settings/EditProfilePic";
 import EditPassword from "./components/User/settings/EditPassword";
 import NotFound from "./NotFound";
+import Staff from "./components/staff/Staff";
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -156,7 +157,12 @@ function App({ children }) {
         {
           path: '*',
           element: <NotFound/>
-        }
+        },
+        {
+          path: "staff",
+          element: <Staff />,
+          
+        },
       ],
     },
   ]);
