@@ -12,9 +12,9 @@ const RoomDetails = () => {
   const [saved, setSaved] = useState(false);
   const location = useLocation();
 
-  useEffect(() => {
-    setHoslteId(location.state.hostleId);
-  }, [hoslteId]);
+  // useEffect(() => {
+  //   setHoslteId(location.state.hostleId);
+  // }, [hoslteId]);
   let {
     register,
     handleSubmit,
@@ -24,13 +24,7 @@ const RoomDetails = () => {
 
   async function onSave(roomDetails) {
     console.log(roomDetails);
-    const formData = new FormData();
-    //Appending text fields
-    formData.append("roomNumber", roomDetails.roomnumber);
-    formData.append("roomCapacity", roomDetails.roomcapacity);
-    formData.append("airConditioned", roomDetails.ac);
-    formData.append("fees", roomDetails.fees);
-    setRooms([...rooms, formData]);
+    setRooms([...rooms, roomDetails]);
     setSaved(true);
     setTimeout(() => {
       setSaved(false);
@@ -38,18 +32,14 @@ const RoomDetails = () => {
   }
 
   async function onSubmit(rooms) {
-    // for (let i = 0; i < rooms.length; i++) {
-    //   // console.log(rooms[i].get("roomNumber")); to get particular field in the room data
-    //   for (let [key, value] of formData.entries()) { //traversing through every entry
-    //     console.log(key, value);
-    //   }
-    // }
+    console.log("on submit");
+    console.log(rooms);
     try {
-      let res = axios.post(`http://localhost:5050/id:${hoslteId}/add`, rooms);
+      let res = axios.post(`http://localhost:5050/room/id:${hoslteId}/add`, rooms);
       if (res.status === 200) {
         let data = res.data;
         console.log(data);
-        Navigate(`/admin_homepage`);
+        Navigate("admin/settings/edit-hostleDetails");
       } else {
         setError(res.data?.message || "unknown error occured");
       }
@@ -80,7 +70,7 @@ const RoomDetails = () => {
   }
 
   return (
-    <div className="bg-gray-200 p-7">
+    <div className="bg-gray-200 p-7 min-h-screen">
       <div className="bg-white p-7  rounded-md max">
         <h1 className="text-[#111827] text-3xl font-bold">Room Details</h1>
         {/* Room Deails From */}
@@ -181,7 +171,7 @@ const RoomDetails = () => {
                   <span className="bg-white p-2 rounded-md w-full flex justify-between">
                     <span className="text-lg font-semibold">RoomNumber:</span>
                     <span className="text-lg font-semibold">
-                      {room.get("roomNumber")}
+                      {room.roomNumber}
                     </span>
                   </span>
                   <span className="bg-white p-2 rounded-md w-full flex justify-between">
@@ -189,19 +179,19 @@ const RoomDetails = () => {
                       Room Capacity:
                     </span>
                     <span className="text-lg font-semibold">
-                      {room.get("roomCapacity")}
+                      {room.roomCapacity}
                     </span>
                   </span>
                   <span className="bg-white p-2 rounded-md w-full flex justify-between">
                     <span className="text-lg font-semibold">A/C:</span>
                     <span className="text-lg font-semibold">
-                      {room.get("airConditioned")}
+                      {room.airConditioned}
                     </span>
                   </span>
                   <span className="bg-white p-2 rounded-md w-full flex justify-between">
                     <span className="text-lg font-semibold">Fees:</span>
                     <span className="text-lg font-semibold">
-                      {room.get("fees")}
+                      {room.fees}
                     </span>
                   </span>
                 </div>

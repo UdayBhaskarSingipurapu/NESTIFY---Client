@@ -15,12 +15,10 @@ import userBottomContainerImage6 from "../../assets/userBottomContainerImage6.pn
 
 const AdminHomePage = () => {
   return (
-    <div className="bg-gray-200 p-7">
+    <div className="bg-gray-200 p-7 flex flex-wrap">
       {/* top-container */}
-      <div className="bg-white w-full p-7 rounded-md max-w-[1700px] m-auto overflow-y-auto h-[260px] sm:overflow-visible sm:h-full">
-        <h1 className="text-[#111827] font-bold text-2xl">
-          Admin Dashboard
-        </h1>
+      <div className="bg-white w-full p-7 rounded-md max-w-[1700px] m-auto overflow-y-auto h-[260px] sm:overflow-visible sm:h-full md:ml-48">
+        <h1 className="text-[#111827] font-bold text-2xl">Admin Dashboard</h1>
         <p className="text-[#6B7280] text-sm">Hostel Management System</p>
         <div className="mt-4 grid lg:grid-cols-12 md:grid-cols-10 sm:grid-cols-2 gap-4">
           <div className="lg:col-span-3 md:col-span-5 sm:col-span-1 flex flex-wrap gap-4 bg-blue-100  p-4 rounded-md">
@@ -60,9 +58,7 @@ const AdminHomePage = () => {
               />
             </div>
             <div>
-              <p className="text-[#6B7280] font-semibold">
-                Pending Requests
-              </p>
+              <p className="text-[#6B7280] font-semibold">Pending Requests</p>
               <p className="text-[#111827] font-bold text-lg">12</p>
             </div>
           </div>
@@ -84,10 +80,12 @@ const AdminHomePage = () => {
       </div>
 
       {/* bottom-container */}
-      <div className="bg-gray-200 mt-7 grid grid-cols-12 grid-rows-2 max-w-[1700px] m-auto gap-7 overflow-y-auto">
+      <div className="bg-gray-200 mt-7 grid grid-cols-12 grid-rows-2 max-w-[1700px] m-auto gap-7 overflow-y-auto md:ml-48">
         {/* quick actions */}
         <div className="bg-white rounded-md p-7 lg:col-span-8 col-span-12 overflow-y-auto h-[300px]">
-          <h1 className="text-[#111827] font-bold text-xl">Administrative Actions</h1>
+          <h1 className="text-[#111827] font-bold text-xl">
+            Administrative Actions
+          </h1>
           <div className="mt-4 grid lg:grid-cols-12 md:grid-cols-10 sm:grid-cols-2 grid-cols-1 gap-4">
             <div className="lg:col-span-4 md:col-span-5 sm:col-span-1 flex flex-col items-center justify-center flex-wrap gap-3 bg-blue-100  p-4 rounded-md">
               <div className="flex justify-center items-center">
@@ -98,9 +96,7 @@ const AdminHomePage = () => {
                 />
               </div>
               <div>
-                <p className="text-[#6B7280] font-semibold">
-                  Manage Students
-                </p>
+                <p className="text-[#6B7280] font-semibold">Manage Students</p>
               </div>
             </div>
 
@@ -113,9 +109,7 @@ const AdminHomePage = () => {
                 />
               </div>
               <div>
-                <p className="text-[#6B7280] font-semibold">
-                  Room Allocation
-                </p>
+                <p className="text-[#6B7280] font-semibold">Room Allocation</p>
               </div>
             </div>
 
@@ -128,9 +122,7 @@ const AdminHomePage = () => {
                 />
               </div>
               <div>
-                <p className="text-[#6B7280] font-semibold">
-                  Finance
-                </p>
+                <p className="text-[#6B7280] font-semibold">Finance</p>
               </div>
             </div>
 
@@ -156,9 +148,7 @@ const AdminHomePage = () => {
                 />
               </div>
               <div>
-                <p className="text-[#6B7280] font-semibold">
-                  Reports
-                </p>
+                <p className="text-[#6B7280] font-semibold">Reports</p>
               </div>
             </div>
 
@@ -171,17 +161,17 @@ const AdminHomePage = () => {
                 />
               </div>
               <div>
-                <p className="text-[#6B7280] font-semibold">
-                  Settings
-                </p>
+                <p className="text-[#6B7280] font-semibold">Settings</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Hostel Details */} 
+        {/* Hostel Details */}
         <div className="bg-white rounded-md p-7 hidden lg:col-span-4 lg:flex lg:flex-col overflow-y-auto h-[300px]">
-          <h1 className="text-[#111827] font-bold text-xl">Hostel Statistics</h1>
+          <h1 className="text-[#111827] font-bold text-xl">
+            Hostel Statistics
+          </h1>
           <div className="mt-4 flex flex-col gap-6">
             <span className="flex justify-between text-[#6B7280] font-semibold">
               <span className="">Total Rooms</span>
