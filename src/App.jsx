@@ -26,7 +26,6 @@ import Contact from "./components/contact/Contact";
 import EditProfilePic from "./components/User/settings/EditProfilePic";
 import EditPassword from "./components/User/settings/EditPassword";
 import NotFound from "./NotFound";
-import Staff from "./components/staff/Staff";
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -54,9 +53,30 @@ function App({ children }) {
           path: "user-dashboard",
           element: <UserDashboard />,
         },
+        //admin
         {
-          path: "admin_homepage",
+          path: "/admin/dashboard",
           element: <AdminHomePage />,
+        },
+        {
+          path: "/admin/settings",
+          element: <AdminSettings />,
+        },
+        {
+          path: "/admin/settings/edit-profilePic",
+          element: <EditAdminProfilePic />,
+        },
+        {
+          path: "/admin/settings/edit-password",
+          element: <EditAdminPassword />,
+        },
+        {
+          path: "/admin/settings/edit-hostleDetails",
+          element: <EditAdminHostle />,
+        },
+        {
+          path: "/admin/settings/edit-personalDetails",
+          element: <EditAdminPersonalDetails />,
         },
         {
           path: "settings",
@@ -107,11 +127,11 @@ function App({ children }) {
           ],
         },
         {
-          path: "hostle-listing",
+          path: "admin/hostel-listing",
           element: <HostleListing />,
         },
         {
-          path: "room-details",
+          path: "admin/room-details",
           element: <RoomDetails />,
         },
         {
@@ -157,12 +177,7 @@ function App({ children }) {
         {
           path: '*',
           element: <NotFound/>
-        },
-        {
-          path: "staff",
-          element: <Staff />,
-          
-        },
+        }
       ],
     },
   ]);

@@ -54,7 +54,12 @@ const HostleListing = () => {
       console.log(user); 
       let res = await axios.post(
         `http://localhost:5050/hostel/createhostel/${user._id}`,
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       console.log(res);
       if (res.status === 200) {
@@ -74,8 +79,8 @@ const HostleListing = () => {
   }
 
   return (
-    <div className="bg-gray-200 p-7">
-      <div className="m-auto sm:grid sm:grid-cols-1 max-w-[1700px] flex flex-wrap flex-cols w-full">
+    <div className="bg-gray-200 p-7 flex min-h-screen">
+      <div className="m-auto sm:grid sm:grid-cols-1 max-w-[1700px] flex flex-wrap flex-cols w-full md:ml-48">
         {/* Hostle Listing form*/}
         <form action="" onSubmit={handleSubmit(onSubmit)}>
           {/* Hostle Details */}
