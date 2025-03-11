@@ -9,28 +9,32 @@ import { useContext } from "react";
 const HostleListing = () => {
   const [hoslteId, setHoslteId] = useState(null);
   const [hostleDetailsSaved, setHostleDetailsSaved] = useState(false);
-  const user = JSON.parse(sessionStorage.getItem("user"));
-  
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    setUser(JSON.parse(sessionStorage.getItem("user")));
+  }, []);
+  console.log(user);
+
   let navigate = useNavigate();
 
-  let {setError} = useContext(userLoginContext);
+  let { setError } = useContext(userLoginContext);
   let {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-
-  useEffect(() => {
-    if(hoslteId) {
-      navigate(`${hoslteId}/room-details`, { state: { hostleId: hoslteId } }); 
-    }
-  }, [hoslteId]);
+  // useEffect(() => {
+  //   if (hoslteId) {
+  //     navigate(`${currentHostel.}/room-details`, { state: { hostleId: hoslteId } });
+  //   }
+  // }, [hoslteId]);
 
   async function postHostleDetails(hostleDetails) {
     console.log(hostleDetails);
     const formData = new FormData();
-    // let res = await fetch("http://localhost:3000/hostels", { 
+    // let res = await fetch("http://localhost:3000/hostels", {
     //   method: "POST",
     //   headers: {
     //     "Content-Type": "application/json",
@@ -51,7 +55,7 @@ const HostleListing = () => {
     formData.append("hostelImage", hostleDetails.hostelimg[0]);
     console.log(formData);
     try {
-      console.log(user); 
+      console.log(user);
       let res = await axios.post(
         `http://localhost:5050/hostel/createhostel/${user._id}`,
         formData,
@@ -107,12 +111,6 @@ const HostleListing = () => {
                   placeholder="Enter Hostle Name"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("hostelname")}
-                  // value={input}
-                  // onChange={(e) => {
-                  //   if (!hostleDetailsSaved) {
-                  //     setInput(e.target.value);
-                  //   }
-                  // }}
                   {...(hostleDetailsSaved && { disabled: true })}
                 />
               </div>
