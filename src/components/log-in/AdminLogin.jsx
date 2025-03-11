@@ -24,7 +24,18 @@ const AdminLogin = () => {
 
   async function onSubmit(adminData) {
     adminLoginReq(adminData);
+    if (login) {
+      toast.success("admin Login Successfully:)", {
+        position: "top-center",
+        autoClose: 2000,
+        draggable: true,
+      });
+      setTimeout(() => {
+        navigate("/admin_homepage");
+      }, 2000);
+    }
   }
+  console.log(errors);
   return (
     <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md">
       {/* admin Login form */}

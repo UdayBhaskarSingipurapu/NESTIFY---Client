@@ -8,15 +8,13 @@ import { useContext } from "react";
 
 const RoomDetails = () => {
   const [rooms, setRooms] = useState([]);
+  const [hoslteId, setHoslteId] = useState(null);
   const [saved, setSaved] = useState(false);
   const location = useLocation();
-  const [user, setUser] = useState(null);
-  const [currentHostelId, setCurrentHostleId] = useState(null);
 
-  useEffect(() => {
-    setCurrentHostle(JSON.parse(sessionStorage.getItem("currentHostle")));  
-  }, []);
-
+  // useEffect(() => {
+  //   setHoslteId(location.state.hostleId);
+  // }, [hoslteId]);
   let {
     register,
     handleSubmit,
@@ -37,7 +35,10 @@ const RoomDetails = () => {
     console.log("on submit");
     console.log(rooms);
     try {
-      let res = axios.post(`http://localhost:5050/room/${currentHostel._id}/add`, rooms);
+      let res = axios.post(
+        `http://localhost:5050/room/id:${hoslteId}/add`,
+        rooms
+      );
       if (res.status === 200) {
         let data = res.data;
         console.log(data);
@@ -72,8 +73,8 @@ const RoomDetails = () => {
   }
 
   return (
-    <div className="bg-gray-200 p-7 min-h-screen md:ml-48">
-      <div className="bg-white p-7  rounded-md mt-15">
+    <div className="bg-gray-200 p-7 min-h-screen">
+      <div className="bg-white p-7  rounded-md max">
         <h1 className="text-[#111827] text-3xl font-bold">Room Details</h1>
         {/* Room Deails From */}
         <form action="" onSubmit={handleSubmit(onSave)}>
@@ -91,7 +92,7 @@ const RoomDetails = () => {
                 id="roomnumber"
                 placeholder="Enter Room Number"
                 className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                {...register("roomNumber")}
+                {...register("roomnumber")}
                 {...(saved && { value: "" })}
               />
             </div>
@@ -112,7 +113,7 @@ const RoomDetails = () => {
                 id="roomcapacity"
                 placeholder="Enter the number"
                 className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                {...register("roomCapacity")}
+                {...register("roomcapacity")}
                 {...(saved && { value: "" })}
               />
             </div>
@@ -130,7 +131,7 @@ const RoomDetails = () => {
                 id="ac"
                 placeholder="Yes/No"
                 className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                {...register("airConditioned")}
+                {...register("ac")}
                 {...(saved && { value: "" })}
               />
             </div>

@@ -26,12 +26,11 @@ import Contact from "./components/contact/Contact";
 import EditProfilePic from "./components/User/settings/EditProfilePic";
 import EditPassword from "./components/User/settings/EditPassword";
 import NotFound from "./NotFound";
-import AdminSettings from './components/admin/settings/AdminSettings'
+import AdminSettings from "./components/admin/settings/AdminSettings";
 import EditAdminHostle from "./components/admin/settings/EditAdminHostle";
 import EditAdminPassword from "./components/admin/settings/EditAdminPassword";
 import EditAdminPersonalDetails from "./components/admin/settings/EditAdminPersonalDetails";
 import EditAdminProfilePic from "./components/admin/settings/EditAdminProfilePic";
-import Staff from "./components/staff/Staff"
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -181,13 +180,9 @@ function App({ children }) {
           element: <EditPassword />,
         },
         {
-          path: '*',
-          element: <NotFound/>
+          path: "*",
+          element: <NotFound />,
         },
-        {
-          path: "staff",
-          element:<Staff/>,
-        }
       ],
     },
   ]);

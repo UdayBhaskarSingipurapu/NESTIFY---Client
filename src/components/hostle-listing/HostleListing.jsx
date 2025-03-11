@@ -9,12 +9,7 @@ import { useContext } from "react";
 const HostleListing = () => {
   const [hoslteId, setHoslteId] = useState(null);
   const [hostleDetailsSaved, setHostleDetailsSaved] = useState(false);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    setUser(JSON.parse(sessionStorage.getItem("user")));
-  }, []);
-  console.log(user);
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   let navigate = useNavigate();
 
@@ -25,11 +20,11 @@ const HostleListing = () => {
     formState: { errors },
   } = useForm();
 
-  // useEffect(() => {
-  //   if (hoslteId) {
-  //     navigate(`${currentHostel.}/room-details`, { state: { hostleId: hoslteId } });
-  //   }
-  // }, [hoslteId]);
+  useEffect(() => {
+    if (hoslteId) {
+      navigate(`${hoslteId}/room-details`, { state: { hostleId: hoslteId } });
+    }
+  }, [hoslteId]);
 
   async function postHostleDetails(hostleDetails) {
     console.log(hostleDetails);
@@ -111,6 +106,12 @@ const HostleListing = () => {
                   placeholder="Enter Hostle Name"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("hostelname")}
+                  // value={input}
+                  // onChange={(e) => {
+                  //   if (!hostleDetailsSaved) {
+                  //     setInput(e.target.value);
+                  //   }
+                  // }}
                   {...(hostleDetailsSaved && { disabled: true })}
                 />
               </div>
