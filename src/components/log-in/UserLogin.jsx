@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { userLoginContext } from "../../contexts/userLoginContext";
-import { useContext ,useEffect} from "react";
+import { useContext, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { FaChampagneGlasses } from "react-icons/fa6";
 
@@ -48,7 +48,7 @@ const UserLogin = () => {
             htmlFor="username"
             className="text-[#111827] text-lg font-semibold"
           >
-            User Name
+            Student User Name
             <span className="text-[#ff0011] text-xl font-semibold">*</span>
           </label>
           <input

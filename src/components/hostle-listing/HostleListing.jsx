@@ -5,11 +5,21 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { userLoginContext } from "../../contexts/userLoginContext";
 import { useContext } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 const HostleListing = () => {
-  const [hoslteId, setHoslteId] = useState(null);
-  const [hostleDetailsSaved, setHostleDetailsSaved] = useState(false);
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  // const [hoslteId, setHoslteId] = useState(null);
+  const [user, setUser] = useState(null);
+
+  // console.log(JSON.parse(sessionStorage.getItem("currHosIdx"))); //currHosIdx
+  // console.log(JSON.parse(sessionStorage.getItem("currentHostel"))); //currenthostel
+
+  //This component 
+
+  useEffect(() => {
+    setUser(JSON.parse(sessionStorage.getItem("user")));
+  }, []);
+  // console.log(user);
 
   let navigate = useNavigate();
 
@@ -20,22 +30,9 @@ const HostleListing = () => {
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    if (hoslteId) {
-      navigate(`${hoslteId}/room-details`, { state: { hostleId: hoslteId } });
-    }
-  }, [hoslteId]);
-
   async function postHostleDetails(hostleDetails) {
     console.log(hostleDetails);
     const formData = new FormData();
-    // let res = await fetch("http://localhost:3000/hostels", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(hostleDetails),
-    // });
 
     // Append text fields
     formData.append("hostelname", hostleDetails.hostelname);
@@ -50,7 +47,6 @@ const HostleListing = () => {
     formData.append("hostelImage", hostleDetails.hostelimg[0]);
     console.log(formData);
     try {
-      console.log(user);
       let res = await axios.post(
         `http://localhost:5050/hostel/createhostel/${user._id}`,
         formData,
@@ -60,16 +56,22 @@ const HostleListing = () => {
           },
         }
       );
-      console.log(res);
+      console.log("res", res);
       if (res.status === 200) {
         let data = res.data;
-        console.log(data);
-        setHoslteId(data.payload._id);
+        console.log("data", data);
+        sessionStorage.setItem("user", JSON.stringify(data.payload.owner));
+        sessionStorage.setItem("hostels", JSON.stringify(data.payload.hostels));
+        showSuccessToast(data.message);
+        // showSuccessToast("To add room detials check out settings");
+        setTimeout(() => {
+          navigate("/admin/dashboard");
+        }, 4000);
       } else {
-        setError(res.data?.message || "Unknown error occurred");
+        showErrorToast(res.data?.message || "Unknown error occurred");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "An error occurred while saving");
+      showErrorToast(err.response?.data?.message || "An error occurred while saving");
     }
   }
   // Handle Hostle form submission
@@ -77,21 +79,44 @@ const HostleListing = () => {
     postHostleDetails(hostleDetails);
   }
 
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000, // Closes after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
   return (
     <div className="bg-gray-200 p-7 flex min-h-screen">
-      <div className="m-auto sm:grid sm:grid-cols-1 max-w-[1700px] flex flex-wrap flex-cols w-full md:ml-48">
+      <ToastContainer />
+      <div className="m-auto max-w-[1700px] flex flex-wrap flex-cols border-2 border-[#e0e0e0] rounded-md shadow-xl">
         {/* Hostle Listing form*/}
         <form action="" onSubmit={handleSubmit(onSubmit)}>
           {/* Hostle Details */}
-          <div
-            className={`${
-              hostleDetailsSaved ? "bg-gray-400" : "bg-white"
-            } p-7 rounded-md`}
-          >
+          <div className="p-7 rounded-md bg-white">
             <h1 className="text-[#111827] text-3xl font-bold">
               Hostle Details
             </h1>
-            <div className="sm:grid sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 flex flex-wrap gap-3 mt-4">
+            <div className="sm:grid sm:grid-cols-1 sm:gap-10 lg:grid-cols-2 flex flex-wrap gap-6 mt-4">
               {/* Hostle name */}
               <div className="w-full">
                 <label
@@ -106,13 +131,6 @@ const HostleListing = () => {
                   placeholder="Enter Hostle Name"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("hostelname")}
-                  // value={input}
-                  // onChange={(e) => {
-                  //   if (!hostleDetailsSaved) {
-                  //     setInput(e.target.value);
-                  //   }
-                  // }}
-                  {...(hostleDetailsSaved && { disabled: true })}
                 />
               </div>
               {/* Hostle address - Dno */}
@@ -129,7 +147,6 @@ const HostleListing = () => {
                   placeholder="D-No"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("hosteldno")}
-                  {...(hostleDetailsSaved && { disabled: true })}
                 />
               </div>
               {/* Hostle address - Street */}
@@ -146,7 +163,6 @@ const HostleListing = () => {
                   placeholder="Street"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("hostelstreet")}
-                  {...(hostleDetailsSaved && { disabled: true })}
                 />
               </div>
               {/* Hostle address - city */}
@@ -163,7 +179,6 @@ const HostleListing = () => {
                   placeholder="City"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("hostelcity")}
-                  {...(hostleDetailsSaved && { disabled: true })}
                 />
               </div>
               {/* Hostle address - state */}
@@ -180,7 +195,6 @@ const HostleListing = () => {
                   placeholder="State"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("hostelstate")}
-                  {...(hostleDetailsSaved && { disabled: true })}
                 />
               </div>
               {/* Hostle image ->  */}
@@ -198,7 +212,6 @@ const HostleListing = () => {
                     accept="image/jpeg, image/png, image/gif, image/bmp, image/jpg"
                     className="rounded-md text-center bg-[#a2a5a9] text-white shadow-lg shadow-[#515356] px-3 cursor-pointer w-full"
                     {...register("hostelimg")}
-                    {...(hostleDetailsSaved && { disabled: true })}
                   />
                 </div>
               </div>
@@ -211,20 +224,8 @@ const HostleListing = () => {
               Save
             </button>
             <div className="w-full flex items-center justify-center"></div>
-            {/* Edit button*/}
-            {/* <span
-              className="ml-6 px-4 py-2 text-xl rounded-lg bg-red-700 text-white hover:bg-red-500 cursor-pointer"
-              onClick={() => {
-                setHostleDetailsSaved(false);
-              }}
-            >
-              Edit
-            </span> */}
           </div>
         </form>
-        {/* Room Details Entry form */}
-        {/* <RoomDetails /> */}
-        {/* <span className="mt-4 px-12 py-4 text-xl rounded-lg bg-green-600 text-white hover:bg-green-500 cursor-pointer w-fit m-auto" >SUBMIT</span> */}
       </div>
     </div>
   );
