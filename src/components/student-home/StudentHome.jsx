@@ -5,25 +5,28 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import './Rating.css'
 
-const initialState = {};
+const initialState = {
+  //added
+  review: "",
+  rating: "",
+};
 
 function inputReducer(state, action) {
   switch (action.type) {
     case "set-rating": {
-      return { ...state, rating: action.payload }; // ✅ Update rating properly
+      return { ...state, rating: action.payload };
     }
     case "set-comment": {
-      return { ...state, review: action.payload }; // ✅ Ensure 'review' key exists
+      return { ...state, review: action.payload };
     }
     case "clear-form": {
-      return { review: "", rating: "" }; // ✅ Clear both review & rating
+      return { review: "", rating: "" };
     }
     default: {
       return state;
     }
   }
 }
-
 
 const StudentHome = () => {
   const [inputState, inputDispatch] = useReducer(inputReducer, initialState);
@@ -37,14 +40,14 @@ const StudentHome = () => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get("http://localhost:5050/newAppReview/all");
-        console.log(response)
-        setReviews(response.data?.payload); 
+        console.log(response);
+        setReviews(response.data?.payload || []); // ✅ Ensure reviews is an array(added)
       } catch (error) {
         console.error("Error fetching reviews:", error);
       }
     };
     fetchReviews();
-  }, []); 
+  }, []);
 
   // Filter hostels based on search criteria
   const filterHostels = () => {
@@ -76,31 +79,17 @@ const StudentHome = () => {
   async function userFeedbackReq(state) {
     console.log("Submitting:", state);
     try {
-      axios
-        .post(`http://localhost:5050/newAppReview/${user._id}/new`, state)
-        .then((obj) => {
-          console.log(obj);
-          let res = obj?.data;
-          console.log(res);
-          const { message } = res;
-          showSuccessToast(message);
-        })
-        .catch((err) => {
-          console.log(err);
-          let res = err.response;
-          console.log(res);
-          const { message } = res.data;
-          showErrorToast(message);
-        });
-    } catch (err) {
-      console.log(err);
-      let res = err.response;
-      console.log(res);
-      const { message } = res.data;
+      const response = await axios.post(`http://localhost:5050/newAppReview/${user._id}/new`, state);
+      console.log(response);
+      const { message } = response.data;
+      showSuccessToast(message);
+      fetchReviews(); // ✅ Refresh reviews after submitting(added)
+    } catch (error) {
+      console.error(error);
+      const message = error?.response?.data?.message || "An error occurred";//added
       showErrorToast(message);
     }
   }
-  
 
   const showSuccessToast = (message) => {
     toast.success(message, {
@@ -130,7 +119,7 @@ const StudentHome = () => {
 
   const handleWebsiteReviewSubmit = (e) => {
     e.preventDefault();
-    console.log("Comment:", inputState.comment, "Rating:", inputState.rating);
+    console.log("Comment:", inputState.review, "Rating:", inputState.rating);
     userFeedbackReq(inputState);
     inputDispatch({ type: "clear-form" });
   };
@@ -138,6 +127,7 @@ const StudentHome = () => {
   return (
     <div className="p-8 bg-gray-100 md:ml-48">
       <ToastContainer />
+
       {/* Search Section */}
       <div className="flex flex-col md:flex-row items-center gap-4 p-4 bg-white shadow-md rounded-xl">
         <input
@@ -170,146 +160,71 @@ const StudentHome = () => {
           Search
         </button>
       </div>
+
       {/* Card Grid Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
         {filteredHostels.map((hostel, index) => (
-          <div
-            key={index}
-            className="bg-white p-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg"
-          >
-            <img
-              src={hostel.image}
-              alt={hostel.name}
-              className="w-full h-40 object-cover rounded-md"
-            />
+          <div key={index} className="bg-white p-4 rounded-lg shadow-md hover:scale-105 transition duration-300">
+            <img src={hostel.image} alt={hostel.name} className="w-full h-40 object-cover rounded-md" />
             <h3 className="text-lg font-semibold mt-3">{hostel.name}</h3>
             <p className="text-gray-600">{hostel.description}</p>
             <p className="text-gray-600 font-semibold">
               {hostel.roomsAvailable} rooms available
             </p>
-            <Link
-              to="/samplehostel"
-              state={{ hostel }}
-              className="block bg-black text-white mt-3 px-4 py-2 text-center rounded-md hover:bg-gray-700"
-            >
+            <Link to="/samplehostel" state={{ hostel }} className="block bg-black text-white mt-3 px-4 py-2 text-center rounded-md hover:bg-gray-700">
               View Details
             </Link>
           </div>
         ))}
       </div>
+
       {/* Website Reviews Section */}
-      <form action="" onSubmit={handleWebsiteReviewSubmit}>
-        <div className="mt-10 p-6 bg-white shadow-md rounded-xl">
-          <h2 className="text-xl font-semibold mb-4">Website Reviews</h2>
-          <fieldset className="starability-slot mt-3 mb-3">
-            <legend>Rating:</legend>
-
-            <input
-              type="radio"
-              id="first-rate1"
-              name="rating"
-              value="1"
-              checked={inputState.rating === "1"}
-              onChange={(e) =>
-                inputDispatch({ type: "set-rating", payload: e.target.value })
-              }
-            />
-            <label htmlFor="first-rate1" title="Terrible">1 star</label>
-
-            <input
-              type="radio"
-              id="first-rate2"
-              name="rating"
-              value="2"
-              checked={inputState.rating === "2"}
-              onChange={(e) =>
-                inputDispatch({ type: "set-rating", payload: e.target.value })
-              }
-            />
-            <label htmlFor="first-rate2" title="Not good">2 stars</label>
-
-            <input
-              type="radio"
-              id="first-rate3"
-              name="rating"
-              value="3"
-              checked={inputState.rating === "3"}
-              onChange={(e) =>
-                inputDispatch({ type: "set-rating", payload: e.target.value })
-              }
-            />
-            <label htmlFor="first-rate3" title="Average">3 stars</label>
-
-            <input
-              type="radio"
-              id="first-rate4"
-              name="rating"
-              value="4"
-              checked={inputState.rating === "4"}
-              onChange={(e) =>
-                inputDispatch({ type: "set-rating", payload: e.target.value })
-              }
-            />
-            <label htmlFor="first-rate4" title="Very good">4 stars</label>
-
-            <input
-              type="radio"
-              id="first-rate5"
-              name="rating"
-              value="5"
-              checked={inputState.rating === "5"}
-              onChange={(e) =>
-                inputDispatch({ type: "set-rating", payload: e.target.value })
-              }
-            />
-            <label htmlFor="first-rate5" title="Amazing">5 stars</label>
-          </fieldset>
-
-          <input
-            type="text"
-            placeholder="Write a website review..."
-            value={inputState.review}
-            onChange={(e) =>
-              inputDispatch({ type: "set-comment", payload: e.target.value })
-            }
-            className="border border-gray-500 p-2 rounded-md w-full mt-2"
-          />
-          <button
-            type="submit"
-            className="bg-black text-white px-3 py-1 rounded-md mt-2 hover:bg-gray-500"
-          >
-            Submit Review
-          </button>
-        </div>
+      <form onSubmit={handleWebsiteReviewSubmit} className="mt-10 p-6 bg-white shadow-md rounded-xl">
+        <h2 className="text-xl font-semibold mb-4">Website Reviews</h2>
+        <input
+          type="text"
+          placeholder="Write a website review..."
+          value={inputState.review}
+          onChange={(e) =>
+            inputDispatch({ type: "set-comment", payload: e.target.value })
+          }
+          className="border border-gray-500 p-2 rounded-md w-full"
+        />
+        <select
+          value={inputState.rating}
+          onChange={(e) =>
+            inputDispatch({ type: "set-rating", payload: e.target.value })
+          }
+          className="border border-gray-500 p-2 rounded-md w-full mt-2"
+        >
+          <option value="">Select Rating</option>
+          <option value="1">1 - Terrible</option>
+          <option value="2">2 - Not good</option>
+          <option value="3">3 - Average</option>
+          <option value="4">4 - Very good</option>
+          <option value="5">5 - Amazing</option>
+        </select>
+        <button
+          type="submit"
+          className="bg-black text-white px-3 py-1 rounded-md mt-2 hover:bg-gray-500"
+        >
+          Submit Review
+        </button>
       </form>
 
-      {/* Showing website reviews */}
+      {/* Display Reviews */}
       <div className="mt-10 p-6 bg-white shadow-md rounded-xl">
         <h2 className="text-xl font-semibold mb-4">Website Reviews</h2>
-
-        {reviews.length > 0 ? (
-          <div className="space-y-4">
-            {reviews.map((review, index) => (
-              <div
-                key={index}
-                className="p-4 border border-gray-300 rounded-lg bg-gray-50 shadow-sm"
-              >
-                <p className="text-gray-800 font-bold">
-                  @{review?.author?.username}
-                </p>
-                <p className="text-gray-800">
-                  <span className="font-semibold text-black">Comment:</span>{" "}
-                  {review.comment}
-                </p>
-                <p className="text-gray-600 mt-1">
-                  <span className="font-semibold text-black">Rating:</span>{" "}
-                  <span className="text-yellow-500 font-bold">{review.rating} ⭐</span>
-                </p>
-              </div>
-            ))}
-          </div>
+        {reviews?.length > 0 ? (
+          reviews.map((review, index) => (
+            <div key={index} className="p-4 border border-gray-300 rounded-lg bg-gray-50 shadow-sm">
+              <p className="text-gray-800 font-bold">@{review?.author?.username || "Anonymous"}</p>
+              <p className="text-gray-800">{review?.comment || "No comment provided"}</p>
+              <p className="text-gray-600">{review?.rating || "0"} ⭐</p>
+            </div>
+          ))
         ) : (
-          <p className="text-gray-500 text-center">No reviews yet. Be the first to leave a review! 🚀</p>
+          <p>No reviews yet.</p>
         )}
       </div>
     </div>
