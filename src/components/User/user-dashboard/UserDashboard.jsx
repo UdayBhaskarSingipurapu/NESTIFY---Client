@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import userTopContainerImag1 from "../../../assets/userBottomContainerImage1.png";
 import userTopContainerImag2 from "../../../assets/userTopContainerImag2.png";
@@ -17,6 +17,9 @@ import { FaRupeeSign } from "react-icons/fa";
 import userProfile from "../../../assets/userProfile.jpg";
 import MaintanaceForm from "./MaintenanceForm";
 import FeedbackForm from "./FeedbackForm";
+import UserLoginStore from "../../../contexts/UserLoginStore";
+import { userLoginContext } from "../../../contexts/userLoginContext";
+
 
 
 
@@ -61,7 +64,7 @@ const UserHomePage = () => {
       <div className="bg-white w-full p-7 rounded-md max-w-[1700px] m-auto h-full overflow-auto">
         <div className="flex gap-2.5 items-center justify-between">
           <h1 className="text-[#111827] font-bold text-3xl">
-            Welcome back, {user.username}!
+            Welcome back, {user?.username}!
           </h1>
           <img src={user.profileImage?.url} alt="" className="w-14 h-full rounded-full" />
         </div>

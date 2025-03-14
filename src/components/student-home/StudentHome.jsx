@@ -1,21 +1,22 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 import hostels from "../../data/hostelsData";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import './Rating.css'
 
 const initialState = {};
 
 function inputReducer(state, action) {
   switch (action.type) {
     case "set-rating": {
-      return state;
+      return { ...state, rating: action.payload }; // ✅ Update rating properly
     }
     case "set-comment": {
-      return { ...state, review: action.payload };
+      return { ...state, review: action.payload }; // ✅ Ensure 'review' key exists
     }
     case "clear-form": {
-      return { review: "" };
+      return { review: "", rating: "" }; // ✅ Clear both review & rating
     }
     default: {
       return state;
@@ -23,11 +24,27 @@ function inputReducer(state, action) {
   }
 }
 
+
 const StudentHome = () => {
   const [inputState, inputDispatch] = useReducer(inputReducer, initialState);
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
   const [availability, setAvailability] = useState("");
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get("http://localhost:5050/newAppReview/all");
+        console.log(response)
+        setReviews(response.data?.payload); 
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+    fetchReviews();
+  }, []); 
 
   // Filter hostels based on search criteria
   const filterHostels = () => {
@@ -57,15 +74,15 @@ const StudentHome = () => {
   };
 
   async function userFeedbackReq(state) {
-    console.log(state);
+    console.log("Submitting:", state);
     try {
       axios
-        .post(`http://localhost:5050/newAppReview/new`, state)
+        .post(`http://localhost:5050/newAppReview/${user._id}/new`, state)
         .then((obj) => {
           console.log(obj);
-          let res = obj.response;
+          let res = obj?.data;
           console.log(res);
-          const { message } = res.data;
+          const { message } = res;
           showSuccessToast(message);
         })
         .catch((err) => {
@@ -83,6 +100,7 @@ const StudentHome = () => {
       showErrorToast(message);
     }
   }
+  
 
   const showSuccessToast = (message) => {
     toast.success(message, {
@@ -112,7 +130,7 @@ const StudentHome = () => {
 
   const handleWebsiteReviewSubmit = (e) => {
     e.preventDefault();
-    console.log(inputState.comment);
+    console.log("Comment:", inputState.comment, "Rating:", inputState.rating);
     userFeedbackReq(inputState);
     inputDispatch({ type: "clear-form" });
   };
@@ -183,15 +201,76 @@ const StudentHome = () => {
       <form action="" onSubmit={handleWebsiteReviewSubmit}>
         <div className="mt-10 p-6 bg-white shadow-md rounded-xl">
           <h2 className="text-xl font-semibold mb-4">Website Reviews</h2>
+          <fieldset className="starability-slot mt-3 mb-3">
+            <legend>Rating:</legend>
+
+            <input
+              type="radio"
+              id="first-rate1"
+              name="rating"
+              value="1"
+              checked={inputState.rating === "1"}
+              onChange={(e) =>
+                inputDispatch({ type: "set-rating", payload: e.target.value })
+              }
+            />
+            <label htmlFor="first-rate1" title="Terrible">1 star</label>
+
+            <input
+              type="radio"
+              id="first-rate2"
+              name="rating"
+              value="2"
+              checked={inputState.rating === "2"}
+              onChange={(e) =>
+                inputDispatch({ type: "set-rating", payload: e.target.value })
+              }
+            />
+            <label htmlFor="first-rate2" title="Not good">2 stars</label>
+
+            <input
+              type="radio"
+              id="first-rate3"
+              name="rating"
+              value="3"
+              checked={inputState.rating === "3"}
+              onChange={(e) =>
+                inputDispatch({ type: "set-rating", payload: e.target.value })
+              }
+            />
+            <label htmlFor="first-rate3" title="Average">3 stars</label>
+
+            <input
+              type="radio"
+              id="first-rate4"
+              name="rating"
+              value="4"
+              checked={inputState.rating === "4"}
+              onChange={(e) =>
+                inputDispatch({ type: "set-rating", payload: e.target.value })
+              }
+            />
+            <label htmlFor="first-rate4" title="Very good">4 stars</label>
+
+            <input
+              type="radio"
+              id="first-rate5"
+              name="rating"
+              value="5"
+              checked={inputState.rating === "5"}
+              onChange={(e) =>
+                inputDispatch({ type: "set-rating", payload: e.target.value })
+              }
+            />
+            <label htmlFor="first-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+
           <input
             type="text"
             placeholder="Write a website review..."
             value={inputState.review}
             onChange={(e) =>
-              inputDispatch({
-                type: "set-comment",
-                payload: e.target.value,
-              })
+              inputDispatch({ type: "set-comment", payload: e.target.value })
             }
             className="border border-gray-500 p-2 rounded-md w-full mt-2"
           />
@@ -203,6 +282,36 @@ const StudentHome = () => {
           </button>
         </div>
       </form>
+
+      {/* Showing website reviews */}
+      <div className="mt-10 p-6 bg-white shadow-md rounded-xl">
+        <h2 className="text-xl font-semibold mb-4">Website Reviews</h2>
+
+        {reviews.length > 0 ? (
+          <div className="space-y-4">
+            {reviews.map((review, index) => (
+              <div
+                key={index}
+                className="p-4 border border-gray-300 rounded-lg bg-gray-50 shadow-sm"
+              >
+                <p className="text-gray-800 font-bold">
+                  @{review?.author?.username}
+                </p>
+                <p className="text-gray-800">
+                  <span className="font-semibold text-black">Comment:</span>{" "}
+                  {review.comment}
+                </p>
+                <p className="text-gray-600 mt-1">
+                  <span className="font-semibold text-black">Rating:</span>{" "}
+                  <span className="text-yellow-500 font-bold">{review.rating} ⭐</span>
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500 text-center">No reviews yet. Be the first to leave a review! 🚀</p>
+        )}
+      </div>
     </div>
   );
 };
