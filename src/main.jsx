@@ -6,9 +6,9 @@ import UserLoginStore from "./contexts/UserLoginStore.jsx";
 
 // Wrap the entire app with UserLoginStore to provide context
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <UserLoginStore>
       <App />
     </UserLoginStore>
-  </StrictMode>
+  // </StrictMode>
 );

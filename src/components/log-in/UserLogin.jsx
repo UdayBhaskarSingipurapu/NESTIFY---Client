@@ -1,9 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import { userLoginContext } from "../../contexts/userLoginContext";
+import { useContext ,useEffect} from "react";
+import { FaChampagneGlasses } from "react-icons/fa6";
 
 const UserLogin = () => {
   const { userLoginReq, login } = useContext(userLoginContext);
@@ -53,7 +55,10 @@ const UserLogin = () => {
       >
         {/* Username */}
         <div className="sm:w-[500px] w-full">
-          <label htmlFor="username" className="text-[#111827] text-lg font-semibold">
+          <label
+            htmlFor="username"
+            className="text-[#111827] text-lg font-semibold"
+          >
             User Name
             <span className="text-[#ff0011] text-xl font-semibold">*</span>
           </label>

@@ -35,7 +35,7 @@ const AdminLogin = () => {
       }, 2000);
     }
   }
-  console.log(errors);
+  // console.log(errors);
   return (
     <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md">
       {/* admin Login form */}
@@ -50,7 +50,7 @@ const AdminLogin = () => {
             htmlFor="username"
             className="text-[#111827] text-lg font-semibold"
           >
-            Admin Name
+            Admin User Name
             <span className="text-[#ff0011] text-xl font-semibold">*</span>
           </label>
           <input
