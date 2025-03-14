@@ -44,7 +44,7 @@ function UserLoginStore({ children }) {
       const { status, data } = response;
       console.log("User login response:", data);
 
-      if (status === 200 && data.message === "User logged in successfully") {
+      if (status === 200 && data.message === "Owner logged in successfully") {
         setUser(data.payload);
         sessionStorage.setItem("user", JSON.stringify(data.payload));
         setLogin(true);
