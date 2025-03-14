@@ -7,9 +7,10 @@ import { userLoginContext } from "../../contexts/userLoginContext";
 function Footer() {
 
   const { login } = useContext(userLoginContext);
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   return (
-    <footer className={`text-white bg-gray-900  ${login ? "md:ml-48" : ""}`}>
+    <footer className={`text-white bg-gray-900  ${user?.role==="student" ? "md:ml-48" : ""}`}>
       <div className="mx-auto w-full p-4 py-6 lg:py-8 lg:px-25 max-w-[1700px]">
         {/* top container */}
         <div className="md:flex md:justify-between">

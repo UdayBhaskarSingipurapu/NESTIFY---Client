@@ -31,7 +31,7 @@ import EditAdminHostle from "./components/admin/settings/EditAdminHostle";
 import EditAdminPassword from "./components/admin/settings/EditAdminPassword";
 import EditAdminPersonalDetails from "./components/admin/settings/EditAdminPersonalDetails";
 import EditAdminProfilePic from "./components/admin/settings/EditAdminProfilePic";
-import Staff from "./components/staff/Staff"
+
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -184,10 +184,7 @@ function App({ children }) {
           path: '*',
           element: <NotFound/>
         },
-        {
-          path: "staff",
-          element:<Staff/>,
-        }
+        
       ],
     },
   ]);

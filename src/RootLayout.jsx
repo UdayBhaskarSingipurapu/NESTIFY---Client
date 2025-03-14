@@ -26,7 +26,7 @@ function RootLayout() {
   return (
     <div>
       {!user && <Header />}
-      {user && <Sidebar />}
+      {user?.role==="student" && <Sidebar />}
       <div className="min-h-screen">
         {
           true ? <Outlet /> : <div className="flex justify-center items-center h-screen"><h1 className="text-4xl font-bold">You are not allowed to access this page</h1></div>
