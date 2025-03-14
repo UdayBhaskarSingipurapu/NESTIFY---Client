@@ -15,6 +15,9 @@ const AdminHomePage = () => {
   const { logout } = useContext(userLoginContext);
 
   const handleLogout = () => {
+    sessionStorage.removeItem("currHosIdx");
+    sessionStorage.removeItem("currentHostel");
+    sessionStorage.removeItem("hostels");
     logout();
     navigate("/log-in");
   };
