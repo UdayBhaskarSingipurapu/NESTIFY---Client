@@ -17,8 +17,9 @@ const AdminSignUp = () => {
   let navigate = useNavigate();
   let { setError } = useContext(userLoginContext);
 
+
   async function adminSignupReq(userCred) {
-    console.log(userCred)
+    console.log(userCred);
     const formData = new FormData();
 
     // Append text fields
@@ -31,13 +32,18 @@ const AdminSignUp = () => {
     // If you're using react-hook-form, you can set the file like this:
     console.log(userCred.profileImage[0]);
     formData.append("profileImage", userCred.profileImage[0]);
-    console.log(formData)
+    console.log(formData);
     try {
-      let res = await axios.post("http://localhost:5050/owner/signup", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      let res = await axios.post(
+        "http://localhost:5050/owner/signup",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
+      console.log(res);
       if (res.status === 200) {
         if (res.data && res.data.message === "User registered successfully") {
           toast.success(res.data.message, {

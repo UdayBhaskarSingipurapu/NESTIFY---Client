@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-
-function EditAdminHostle(){
+function EditAdminHostle() {
   const [currentHostle, setCurrentHostle] = useState("null");
   const [currentHostleRooms, setCurrentHostleRooms] = useState([]);
   useEffect(() => {
@@ -42,10 +41,9 @@ function EditAdminHostle(){
       )}
     </div>
   );
-};
+}
 
 export default EditAdminHostle;
-
 
 //if no hostle is created then the settings page will be having one button add hostle if cliked it will take to the hostle listing page.
 // top part is the detials to hostles to edit.
