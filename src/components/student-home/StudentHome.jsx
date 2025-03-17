@@ -1,23 +1,29 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 // import hostels from "../../data/hostelsData";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { userLoginContext } from "../../contexts/userLoginContext";
 
+import './Rating.css'
 
-const initialState = {};
+const initialState = {
+  //added
+  comment: "",
+  rating: "",
+};
 
 function inputReducer(state, action) {
   switch (action.type) {
     case "set-rating": {
-      return state;
+      return { ...state, rating: action.payload };
     }
     case "set-comment": {
-      return { ...state, review: action.payload };
+      return { ...state, comment: action.payload };
     }
     case "clear-form": {
-      return { review: "" };
+      return { comment: "", rating: "" };
     }
     default: {
       return state;
@@ -44,6 +50,33 @@ const StudentHome = () => {
   }
   // console.log(hostels);
 
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get("http://localhost:5050/newAppReview/all");
+        console.log(response);
+        setReviews(response.data?.payload || []); // ✅ Ensure reviews is an array(added)
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+    fetchReviews();
+  }, []);
+  useEffect(() => {
+    const fetchHostels = async () => {
+      try {
+        const response = await axios.get("http://localhost:5050/hostel");
+        console.log(response);
+        // setReviews(response.data?.payload || []); // ✅ Ensure reviews is an array(added)
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+    fetchHostels();
+  }, []);
 
   // Filter hostels based on search criteria
 const filterHostels = () => {
@@ -88,29 +121,15 @@ const filteredHostels = filterHostels();
   };
 
   async function userFeedbackReq(state) {
-    console.log(state);
+    console.log("Submitting:", state);
     try {
-      axios
-        .post(`http://localhost:5050/newAppReview/new`, state)
-        .then((obj) => {
-          console.log(obj);
-          let res = obj.response;
-          console.log(res);
-          const { message } = res.data;
-          showSuccessToast(message);
-        })
-        .catch((err) => {
-          console.log(err);
-          let res = err.response;
-          console.log(res);
-          const { message } = res.data;
-          showErrorToast(message);
-        });
-    } catch (err) {
-      console.log(err);
-      let res = err.response;
-      console.log(res);
-      const { message } = res.data;
+      const response = await axios.post(`http://localhost:5050/newAppReview/${user._id}/new`, state);
+      console.log(response);
+      const { message } = response.data;
+      showSuccessToast(message);
+    } catch (error) {
+      console.error(error);
+      const message = error?.response?.data?.message || "An error occurred";//added
       showErrorToast(message);
     }
   }
@@ -152,7 +171,7 @@ const filteredHostels = filterHostels();
 
   const handleWebsiteReviewSubmit = (e) => {
     e.preventDefault();
-    console.log(inputState.comment);
+    console.log("Comment:", inputState.comment, "Rating:", inputState.rating);
     userFeedbackReq(inputState);
     inputDispatch({ type: "clear-form" });
   };
@@ -160,6 +179,7 @@ const filteredHostels = filterHostels();
   return (
     <div className="p-8 bg-gray-100 md:ml-48">
       <ToastContainer />
+
       {/* Search Section */}
       <div className="flex flex-col md:flex-row items-center gap-4 p-4 bg-white shadow-md rounded-xl">
         <input
@@ -192,6 +212,7 @@ const filteredHostels = filterHostels();
           Search
         </button>
       </div>
+
       {/* Card Grid Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
         {filteredHostels.map((hostel, index) => (
@@ -205,6 +226,9 @@ const filteredHostels = filterHostels();
               className="w-full h-40 object-cover rounded-md"
             />
             <h3 className="text-lg font-semibold mt-3">{hostel.hostelname}</h3>
+          <div key={index} className="bg-white p-4 rounded-lg shadow-md hover:scale-105 transition duration-300">
+            <img src={hostel.image} alt={hostel.name} className="w-full h-40 object-cover rounded-md" />
+            <h3 className="text-lg font-semibold mt-3">{hostel.name}</h3>
             <p className="text-gray-600">{hostel.description}</p>
             <p className="text-gray-600 font-semibold">
               {findAvailableRooms(hostel)} rooms available
@@ -217,32 +241,64 @@ const filteredHostels = filterHostels();
               View Details
             </Link>
           </div>
+          </div>
         ))}
       </div>
+
       {/* Website Reviews Section */}
-      <form action="" onSubmit={handleWebsiteReviewSubmit}>
-        <div className="mt-10 p-6 bg-white shadow-md rounded-xl">
-          <h2 className="text-xl font-semibold mb-4">Website Reviews</h2>
-          <input
-            type="text"
-            placeholder="Write a website review..."
-            value={inputState.review}
-            onChange={(e) =>
-              inputDispatch({
-                type: "set-comment",
-                payload: e.target.value,
-              })
-            }
-            className="border border-gray-500 p-2 rounded-md w-full mt-2"
-          />
-          <button
-            type="submit"
-            className="bg-black text-white px-3 py-1 rounded-md mt-2 hover:bg-gray-500"
-          >
-            Submit Review
-          </button>
-        </div>
+      <form onSubmit={handleWebsiteReviewSubmit} className="mt-10 p-6 bg-white shadow-md rounded-xl">
+        <h2 className="text-xl font-semibold mb-4">Website Reviews</h2>
+        <input
+          type="text"
+          placeholder="Write a website review..."
+          value={inputState.comment}
+          onChange={(e) =>
+            inputDispatch({ type: "set-comment", payload: e.target.value })
+          }
+          className="border border-gray-500 p-2 rounded-md w-full"
+        />
+        <fieldset className="starability-slot mt-3 mb-3">
+        <legend>Rating:</legend>
+        {[1, 2, 3, 4, 5].map((num) => (
+          <React.Fragment key={num}>
+            <input
+              type="radio"
+              id={`rate-${num}`}
+              name="review-rating"
+              value={num}
+              checked={inputState.rating === num} // Ensure it's compared as a number
+              onChange={() => inputDispatch({ type: "set-rating", payload: num })} // Store as a number
+            />
+            <label htmlFor={`rate-${num}`} title={`${num} stars`}>
+              {num} stars
+            </label>
+          </React.Fragment>
+        ))}
+      </fieldset>
+
+        <button
+          type="submit"
+          className="bg-black text-white px-3 py-1 rounded-md mt-2 hover:bg-gray-500"
+        >
+          Submit Review
+        </button>
       </form>
+
+      {/* Display Reviews */}
+      <div className="mt-10 p-6 bg-white shadow-md rounded-xl">
+        <h2 className="text-xl font-semibold mb-4">Website Reviews</h2>
+        {reviews?.length > 0 ? (
+          reviews.map((review, index) => (
+            <div key={index} className="p-4 border border-gray-300 rounded-lg bg-gray-50 shadow-sm">
+              <p className="text-gray-800 font-bold">@{review?.author?.username || "Anonymous"}</p>
+              <p className="text-gray-800">{review?.comment || "No comment provided"}</p>
+              <p className="text-gray-600">{review?.rating || "0"} ⭐</p>
+            </div>
+          ))
+        ) : (
+          <p>No reviews yet.</p>
+        )}
+      </div>
     </div>
   );
 };

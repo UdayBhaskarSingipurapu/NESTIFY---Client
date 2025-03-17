@@ -92,6 +92,14 @@ const UserSignUp = () => {
     userSignupReq(userData);
   }
 
+   //google
+  const googleAuth = () => {
+    window.open(
+      `http://localhost:5050/auth/google?scope=email profile openid`,
+      "_self"
+    )
+  };
+
   return (
     <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md">
       <ToastContainer />
@@ -365,6 +373,7 @@ const UserSignUp = () => {
         <button
           type="submit"
           className="sm:w-[400px] w-full p-3 rounded-md font-semibold text-[#111827] border-1 border-[#111827] hover:bg-gray-100 h-12 flex items-center justify-center gap-2 m-auto"
+           onClick={googleAuth}
         >
           <FcGoogle className="mt-1 w-5 h-5" />
           Continue with Google
