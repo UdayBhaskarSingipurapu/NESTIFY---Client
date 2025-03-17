@@ -46,25 +46,47 @@ const UserSignUp = () => {
       );
       if (res.status === 200) {
         if (res.data && res.data.message === "User registered successfully") {
-          toast.success(res.data.message, {
-            position: "top-center",
-            autoClose: 2000,
-            draggable: true,
-          });
+          showSuccessToast(res.data.message);
           setTimeout(() => {
             navigate("/log-in");
           }, 2000);
         } else {
-          setError("Unknown error");
+          showErrorToast("Unknown error");
         }
       } else {
-        setError(data.payload.message);
+        showErrorToast(data.payload.message);
       }
     } catch (err) {
       console.log(err);
-      setError(err.message);
+      showErrorToast(err.message);
     }
   }
+
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000, // Closes after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
 
   async function onSubmit(userData) {
     userSignupReq(userData);

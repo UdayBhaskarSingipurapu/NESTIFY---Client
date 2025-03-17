@@ -31,6 +31,7 @@ import EditAdminHostle from "./components/admin/settings/EditAdminHostle";
 import EditAdminPassword from "./components/admin/settings/EditAdminPassword";
 import EditAdminPersonalDetails from "./components/admin/settings/EditAdminPersonalDetails";
 import EditAdminProfilePic from "./components/admin/settings/EditAdminProfilePic";
+import HostelDetails from "./components/student-home/HostelDetails";
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -45,6 +46,10 @@ function App({ children }) {
         {
           path: "student-home",
           element: <StudentHome />,
+        },
+        {
+          path: "student-home/hostel/:id",
+          element: <HostelDetails />,
         },
         {
           path: "maintenance-form",

@@ -25,7 +25,7 @@ function RootLayout() {
   return (
     <div>
       {!user && <Header />}
-      {/* {user && <Sidebar />} */}
+      {user && <Sidebar />}
       <div className="min-h-screen">
         {true ? (
           <Outlet />

@@ -33,13 +33,13 @@ const AdminHomePage = () => {
   }
 
   function chooseHostel(hostels, idx) {
-    if(idx == -1) {
+    if (idx == -1) {
       // console.log(idx);
       sessionStorage.setItem("currentHostel", JSON.stringify(null));
       sessionStorage.setItem("currHosIdx", JSON.stringify(-1));
       updateDetails();
       return;
-    };
+    }
     console.log("inside choose hostel");
     console.log(hostels);
     console.log(idx);
@@ -93,14 +93,9 @@ const AdminHomePage = () => {
         ) : (
           <div className="flex justify-center items-center h-screen flex-col gap-4">
             <p className="text-3xl font-semibold text-gray-600">
-              Please select a hostel to add rooms in Dashboard
+              Please select a hostel from the menu above to show the dashboard
+              details
             </p>
-            <Link
-              className="bg-gray-500 px-8 py-4 rounded-xl text-white hover:bg-gray-600 hover:shadow-xl text-2xl"
-              to={"/admin/dashboard"}
-            >
-              go to dashboard
-            </Link>
           </div>
         )
       ) : (

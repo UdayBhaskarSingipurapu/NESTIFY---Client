@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { userLoginContext } from "../../contexts/userLoginContext";
 import { useContext } from "react";
 import axios from "axios";
+import { ShowerHead } from "lucide-react";
 
 const AdminSignUp = () => {
   let {
@@ -16,7 +17,6 @@ const AdminSignUp = () => {
   } = useForm();
   let navigate = useNavigate();
   let { setError } = useContext(userLoginContext);
-
 
   async function adminSignupReq(userCred) {
     console.log(userCred);
@@ -46,23 +46,20 @@ const AdminSignUp = () => {
       console.log(res);
       if (res.status === 200) {
         if (res.data && res.data.message === "User registered successfully") {
-          toast.success(res.data.message, {
-            position: "top-center",
-            autoClose: 2000,
-            draggable: true,
-          });
+          showSuccessToast(res.data.message);
           setTimeout(() => {
             navigate("/log-in");
-          }, 2000);
+          }, 4000);
         } else {
-          setError("Unknown error");
+          showErrorToast("Unknown error");
         }
       } else {
-        setError(data.payload.message);
+        showErrorToast(data.payload.message);
       }
     } catch (err) {
       console.log(err);
-      setError(err.response.data.payload.message);
+      // setError(err.response.data.payload.message);
+      showErrorToast(err.message);
     }
   }
 
@@ -70,8 +67,35 @@ const AdminSignUp = () => {
     adminSignupReq(adminData);
   }
 
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000, // Closes after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
   return (
     <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md">
+      <ToastContainer/>
       <form
         action=""
         className="flex flex-col mt-5 gap-5 items-center"

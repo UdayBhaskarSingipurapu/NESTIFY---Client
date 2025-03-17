@@ -7,7 +7,10 @@ import documentManagement from "../../assets/documentManagement.png";
 import smartNotifications from "../../assets/smartNotification.png";
 import hostels from "../../data/hostelsData";
 
+
+
 function Home() {
+  
   return (
     <div className="bg-gray-100">
       <div className="max-w-[1700px] m-auto">

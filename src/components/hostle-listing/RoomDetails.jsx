@@ -44,16 +44,18 @@ const RoomDetails = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
   let { setError } = useContext(userLoginContext);
 
   async function onSave(roomDetails) {
     // console.log(roomDetails);
     setRooms([...rooms, roomDetails]);
-    setSaved(true);
-    setTimeout(() => {
-      setSaved(false);
-    }, 1000);
+    // setSaved(true);
+    // setTimeout(() => {
+    //   setSaved(false);
+    // }, 1000);
+    reset();
   }
   // console.log(hostels[Number(sessionStorage.getItem("currHosIdx"))]);
   // console.log(user._id);
@@ -232,7 +234,7 @@ const RoomDetails = () => {
                   placeholder="Enter Room Number"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("roomNumber")}
-                  {...(saved && { value: "" })}
+                  // {...(saved &&  {value: ""})}
                 />
               </div>
 
@@ -253,7 +255,7 @@ const RoomDetails = () => {
                   placeholder="Enter the number"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("roomCapacity")}
-                  {...(saved && { value: "" })}
+                  // {...(saved && { value: "" })}
                 />
               </div>
 
@@ -266,12 +268,12 @@ const RoomDetails = () => {
                   A/C:
                 </label>
                 <input
-                  type="string"
+                  type="text"
                   id="ac"
                   placeholder="Yes/No"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("airConditioned")}
-                  {...(saved && { value: "" })}
+                  // {...(saved && { value: "" })}
                 />
               </div>
 
@@ -289,7 +291,7 @@ const RoomDetails = () => {
                   placeholder="Enter fee per month"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("fees")}
-                  {...(saved && { value: "" })}
+                  // {...(saved && { value: "" })}
                 />
               </div>
             </div>

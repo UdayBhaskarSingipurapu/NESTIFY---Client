@@ -1,8 +1,10 @@
-import React, { useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
-import hostels from "../../data/hostelsData";
+// import hostels from "../../data/hostelsData";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { userLoginContext } from "../../contexts/userLoginContext";
+
 
 const initialState = {};
 
@@ -28,29 +30,58 @@ const StudentHome = () => {
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
   const [availability, setAvailability] = useState("");
+  const [hostels, setHostels] = useState([]);
+  const [hostelRequests, setHostelRequests] = useState([]);
+
+
+  useEffect(() => {
+    updateData();
+  }, []);
+
+  function updateData() {
+    setHostels(JSON.parse(sessionStorage.getItem("hostels")));
+    setHostelRequests(JSON.parse(sessionStorage.getItem("hostelRequests")));
+  }
+  // console.log(hostels);
+
 
   // Filter hostels based on search criteria
-  const filterHostels = () => {
-    return hostels.filter((hostel) => {
-      const matchesQuery =
-        hostel.name.toLowerCase().includes(query.toLowerCase()) ||
-        hostel.description.toLowerCase().includes(query.toLowerCase());
+const filterHostels = () => {
+  return hostels.filter((hostel) => {
+    const matchesQuery = hostel.hostelname
+      .toLowerCase()
+      .includes(query.toLowerCase());
 
-      const matchesLocation = location
-        ? hostel.address.toLowerCase().includes(location.toLowerCase())
-        : true;
+    const matchesLocation = location
+      ? hostel.addressLine.city
+          .toLowerCase()
+          .includes(location.toLowerCase()) ||
+        hostel.addressLine.state
+          .toLowerCase()
+          .includes(location.toLowerCase()) ||
+        hostel.addressLine.street
+          .toLowerCase()
+          .includes(location.toLowerCase()) ||
+        hostel.addressLine.doorNo.toLowerCase().includes(location.toLowerCase())
+      : true;
 
-      const matchesAvailability = availability
-        ? availability === "Available"
-          ? hostel.roomsAvailable > 0
-          : hostel.roomsAvailable === 0
-        : true;
+    const matchesAvailability = availability
+      ? availability === "Available"
+        ? hostel.rooms.length > 0
+        : hostel.rooms.length === 0
+      : true;
 
-      return matchesQuery && matchesLocation && matchesAvailability;
-    });
-  };
+    return matchesQuery && matchesLocation && matchesAvailability;
+  });
+};
 
-  const filteredHostels = filterHostels();
+const filteredHostels = filterHostels();
+// for (let hostel of filteredHostels) {
+//   console.log(hostel);
+// }
+// filteredHostels.map(function(hostel) {
+//   console.log(hostel.hostelimage.url);
+// });
 
   const handleSearch = () => {
     console.log({ query, location, availability });
@@ -82,6 +113,15 @@ const StudentHome = () => {
       const { message } = res.data;
       showErrorToast(message);
     }
+  }
+
+  function findAvailableRooms(hostel) {
+    let availableRooms = 0;
+    hostel.rooms.forEach((room) => {
+      (room.roomCapacity > room.occupied) && availableRooms++;
+    });
+    return availableRooms;
+
   }
 
   const showSuccessToast = (message) => {
@@ -160,17 +200,17 @@ const StudentHome = () => {
             className="bg-white p-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg"
           >
             <img
-              src={hostel.image}
-              alt={hostel.name}
+              src={hostel.hostelimage.url}
+              alt={hostel.hostelname}
               className="w-full h-40 object-cover rounded-md"
             />
-            <h3 className="text-lg font-semibold mt-3">{hostel.name}</h3>
+            <h3 className="text-lg font-semibold mt-3">{hostel.hostelname}</h3>
             <p className="text-gray-600">{hostel.description}</p>
             <p className="text-gray-600 font-semibold">
-              {hostel.roomsAvailable} rooms available
+              {findAvailableRooms(hostel)} rooms available
             </p>
             <Link
-              to="/samplehostel"
+              to={`/student-home/hostel/${index}`}
               state={{ hostel }}
               className="block bg-black text-white mt-3 px-4 py-2 text-center rounded-md hover:bg-gray-700"
             >

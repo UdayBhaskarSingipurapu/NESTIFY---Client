@@ -7,13 +7,6 @@ const Login = () => {
   const [isUserActive, setIsUserActive] = useState(true);
   const { Error, setError } = useContext(userLoginContext);
 
-  //4 sec delay
-  function timedelay() {
-    setTimeout(() => {
-      setError(null);
-    }, 4000);
-  }
-
   return (
     <div className="min-h-screen flex justify-center bg-white flex-wrap">
       <div className="mt-5 h-fit p-5 rounded-md w-full min-w-[250px] sm:max-w-[700px] ">
@@ -21,13 +14,6 @@ const Login = () => {
         <h1 className="text-[#111827] text-2xl font-bold text-center">
           LOGIN TO AN ACCOUNT
         </h1>
-        {/* handiling Error message */}
-        {Error !== null && (
-          <div className=" mt-4 text-red-500 w-full font-bold text-2xl text-center">
-            {Error}
-            {timedelay()}
-          </div>
-        )}
         {/* Login form */}
         <div className="border-1 border-gray-200 shadow-xl bg-gray-100 p-4 mt-10 rounded-md">
           {/* nav bar */}

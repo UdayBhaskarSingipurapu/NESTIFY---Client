@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { userLoginContext } from "../../contexts/userLoginContext";
 import { useContext } from "react";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const AdminLogin = () => {
   let {
@@ -13,35 +13,61 @@ const AdminLogin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { adminLoginReq, login, user } = useContext(userLoginContext);
+  const { adminLoginReq, login, user, Error, setError } =
+    useContext(userLoginContext);
   let navigate = useNavigate();
 
   useEffect(() => {
     if (login) {
-      navigate("/admin/dashboard");
-    }
-  }, [login, navigate]);
-
-  async function onSubmit(adminData) {
-    adminLoginReq(adminData);
-    if (login) {
-      toast.success("admin Login Successfully:)", {
-        position: "top-center",
-        autoClose: 2000,
-        draggable: true,
-      });
+      showSuccessToast("Admin login successful");
       setTimeout(() => {
-        navigate("/admin_homepage");
-      }, 2000);
+        navigate("/admin/dashboard");
+      }, 4000);
+    } else {
+      if (Error) {
+        showErrorToast(Error);
+        setTimeout(() => {
+          setError(null);
+        }, 4000);
+      }
     }
+  }, [login, Error]);
+
+  function onSubmit(adminData) {
+    adminLoginReq(adminData);
   }
-  // console.log(errors);
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000, // Closes after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
   return (
     <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md">
+      <ToastContainer />
       {/* admin Login form */}
       <form
         action=""
-        className="flex flex-col mt-5 gap-5 items-center"
+        className="flex flex-col  gap-5 items-center"
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* Admin Name */}
@@ -56,11 +82,7 @@ const AdminLogin = () => {
           <input
             type="text"
             id="username"
-            {...register("username", {
-              required: true,
-              minLength: 3,
-              maxLength: 20,
-            })}
+            {...register("username")}
             placeholder="Enter your username"
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
@@ -77,12 +99,7 @@ const AdminLogin = () => {
           <input
             type="password"
             placeholder="Enter your password"
-            {...register("password", {
-              required: true,
-              minLength: 8,
-              pattern:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            })}
+            {...register("password")}
             className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
           />
         </div>

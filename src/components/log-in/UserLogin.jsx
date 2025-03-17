@@ -8,7 +8,9 @@ import { toast, ToastContainer } from "react-toastify";
 import { FaChampagneGlasses } from "react-icons/fa6";
 
 const UserLogin = () => {
-  const { userLoginReq, login, user } = useContext(userLoginContext);
+  const { userLoginReq, login, user, Error, setError } = useContext(userLoginContext);
+  // console.log(userLoginReq);
+  // console.log("hi");
   let {
     register,
     handleSubmit,
@@ -19,27 +21,56 @@ const UserLogin = () => {
 
   useEffect(() => {
     if (login) {
-      navigate("/student-home");
+      showSuccessToast("user login successfully");
+      setTimeout(() => {
+        navigate("/student-home");
+      }, 4000);
+    } else {
+      if(Error) {
+        showErrorToast(Error);
+        setTimeout(() => {
+          setError(null);
+        }, 4000);
+      }
     }
-  }, [login, navigate]);
+  }, [login, Error]);
 
-  async function onSubmit(userData) {
-    await userLoginReq(userData);
-    if (login) {
-      toast.success("user login successfully", {
-        position: "top-center",
-        autoClose: 2000,
-        draggable: true,
-      });
-      navigate("/student-home");
-    }
+  function onSubmit(userData) {
+    userLoginReq(userData);
   }
+
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000, // Closes after 3 seconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
   return (
     <div className="flex flex-col p-5 gap-5 bg-white rounded-bl-md rounded-br-md">
+      <ToastContainer />
       {/* user Login form */}
       <form
         action=""
-        className="flex flex-col mt-5 gap-5 items-center"
+        className="flex flex-col gap-5 items-center"
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* userName */}
