@@ -48,7 +48,7 @@ function UserLoginStore({ children }) {
     console.log("Fetching hostels...");
     try {
       await axios
-        .get("https://nestify-backend.vercel.app/hostel/")
+        .get("https://nestify-backend.vercel.app/hostel")
         .then((res) => {
           // console.log(res);
           // sessionStorage.setItem("hostels", JSON.stringify(res.data.payload));

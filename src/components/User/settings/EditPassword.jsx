@@ -47,7 +47,7 @@ const EditPassword = () => {
       });
       axios
         .put(
-          `http://localhost:5050/user/edit/${user._id}/password`,
+          `https://nestify-backend.vercel.app/user/edit/${user._id}/password`,
           passwordState
         )
         .then((obj) => {

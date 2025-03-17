@@ -33,7 +33,7 @@ const FeedbackForm = () => {
     console.log(state);
     try {
       axios
-        .post(`http://localhost:5050/hostel/review/${user._id}/new`, state)
+        .post(`https://nestify-backend.vercel.app/hostel/review/${user._id}/new`, state)
         .then((obj) => {
           console.log(obj);
           let res = obj.response;
