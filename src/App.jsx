@@ -31,6 +31,7 @@ import EditAdminHostle from "./components/admin/settings/EditAdminHostle";
 import EditAdminPassword from "./components/admin/settings/EditAdminPassword";
 import EditAdminPersonalDetails from "./components/admin/settings/EditAdminPersonalDetails";
 import EditAdminProfilePic from "./components/admin/settings/EditAdminProfilePic";
+import AuthRedirect from "./components/googleAuth/AuthRedirect";
 
 function App({ children }) {
   const browserRouter = createBrowserRouter([
@@ -178,6 +179,10 @@ function App({ children }) {
         {
           path: "edit-password",
           element: <EditPassword />,
+        },
+        {
+          path : "log-in/success",
+          element : <AuthRedirect />
         },
         {
           path: "*",

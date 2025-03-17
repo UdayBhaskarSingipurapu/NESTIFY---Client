@@ -7,7 +7,7 @@ import './Rating.css'
 
 const initialState = {
   //added
-  review: "",
+  comment: "",
   rating: "",
 };
 
@@ -17,10 +17,10 @@ function inputReducer(state, action) {
       return { ...state, rating: action.payload };
     }
     case "set-comment": {
-      return { ...state, review: action.payload };
+      return { ...state, comment: action.payload };
     }
     case "clear-form": {
-      return { review: "", rating: "" };
+      return { comment: "", rating: "" };
     }
     default: {
       return state;
@@ -47,6 +47,18 @@ const StudentHome = () => {
       }
     };
     fetchReviews();
+  }, []);
+  useEffect(() => {
+    const fetchHostels = async () => {
+      try {
+        const response = await axios.get("http://localhost:5050/hostel");
+        console.log(response);
+        // setReviews(response.data?.payload || []); // ✅ Ensure reviews is an array(added)
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+    fetchHostels();
   }, []);
 
   // Filter hostels based on search criteria
@@ -83,7 +95,6 @@ const StudentHome = () => {
       console.log(response);
       const { message } = response.data;
       showSuccessToast(message);
-      fetchReviews(); // ✅ Refresh reviews after submitting(added)
     } catch (error) {
       console.error(error);
       const message = error?.response?.data?.message || "An error occurred";//added
@@ -119,7 +130,7 @@ const StudentHome = () => {
 
   const handleWebsiteReviewSubmit = (e) => {
     e.preventDefault();
-    console.log("Comment:", inputState.review, "Rating:", inputState.rating);
+    console.log("Comment:", inputState.comment, "Rating:", inputState.rating);
     userFeedbackReq(inputState);
     inputDispatch({ type: "clear-form" });
   };
@@ -184,26 +195,31 @@ const StudentHome = () => {
         <input
           type="text"
           placeholder="Write a website review..."
-          value={inputState.review}
+          value={inputState.comment}
           onChange={(e) =>
             inputDispatch({ type: "set-comment", payload: e.target.value })
           }
           className="border border-gray-500 p-2 rounded-md w-full"
         />
-        <select
-          value={inputState.rating}
-          onChange={(e) =>
-            inputDispatch({ type: "set-rating", payload: e.target.value })
-          }
-          className="border border-gray-500 p-2 rounded-md w-full mt-2"
-        >
-          <option value="">Select Rating</option>
-          <option value="1">1 - Terrible</option>
-          <option value="2">2 - Not good</option>
-          <option value="3">3 - Average</option>
-          <option value="4">4 - Very good</option>
-          <option value="5">5 - Amazing</option>
-        </select>
+        <fieldset className="starability-slot mt-3 mb-3">
+        <legend>Rating:</legend>
+        {[1, 2, 3, 4, 5].map((num) => (
+          <React.Fragment key={num}>
+            <input
+              type="radio"
+              id={`rate-${num}`}
+              name="review-rating"
+              value={num}
+              checked={inputState.rating === num} // Ensure it's compared as a number
+              onChange={() => inputDispatch({ type: "set-rating", payload: num })} // Store as a number
+            />
+            <label htmlFor={`rate-${num}`} title={`${num} stars`}>
+              {num} stars
+            </label>
+          </React.Fragment>
+        ))}
+      </fieldset>
+
         <button
           type="submit"
           className="bg-black text-white px-3 py-1 rounded-md mt-2 hover:bg-gray-500"

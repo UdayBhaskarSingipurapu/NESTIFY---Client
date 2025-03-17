@@ -84,7 +84,7 @@ const hostels = [
       },
     ],
   },
-   {
+  {
     id: 1,
     name: "Sunrise Hostel",
     description: "Modern facilities with 24/7 security and high-speed internet",
