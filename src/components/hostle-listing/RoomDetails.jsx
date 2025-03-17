@@ -66,7 +66,7 @@ const RoomDetails = () => {
     // console.log(`http://localhost:5050/hostel/owner/${user._id}`);
     try {
       await axios
-        .get(`http://localhost:5050/hostel/owner/${user._id}`)
+        .get(`https://nestify-backend.vercel.app/hostel/owner/${user._id}`)
         .then((res) => {
           // console.log(res);
           sessionStorage.setItem(
@@ -107,7 +107,7 @@ const RoomDetails = () => {
       // console.log(currentHostel._id);
 
       await axios
-        .post(`http://localhost:5050/room/${currentHostel._id}/add`, rooms)
+        .post(`https://nestify-backend.vercel.app/room/${currentHostel._id}/add`, rooms)
         .then((res) => {
           // console.log(res);
           const result = renderChanges();

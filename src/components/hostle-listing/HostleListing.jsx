@@ -48,7 +48,7 @@ const HostleListing = () => {
     console.log(formData);
     try {
       let res = await axios.post(
-        `http://localhost:5050/hostel/createhostel/${user._id}`,
+        `https://nestify-backend.vercel.app/hostel/createhostel/${user._id}`,
         formData,
         {
           headers: {

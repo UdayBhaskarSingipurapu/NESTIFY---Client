@@ -26,7 +26,7 @@ function UserLoginStore({ children }) {
   async function fetchHostel(hostel) { //fetch the hostel details for the user in which he is in
     try {
       await axios
-        .get(`http://localhost:5050/hostel/${hostel}`)
+        .get(`https://nestify-backend.vercel.app/hostel/${hostel}`)
         .then((res) => {
           console.log(res);
           // setCurrentHostel(res.data.payload);
@@ -48,7 +48,7 @@ function UserLoginStore({ children }) {
     console.log("Fetching hostels...");
     try {
       await axios
-        .get("http://localhost:5050/hostel/")
+        .get("https://nestify-backend.vercel.app/hostel/")
         .then((res) => {
           // console.log(res);
           // sessionStorage.setItem("hostels", JSON.stringify(res.data.payload));
@@ -84,7 +84,7 @@ function UserLoginStore({ children }) {
     console.log(userCredentials);
     try {
       await axios
-        .post("http://localhost:5050/user/login", userCredentials)
+        .post("https://nestify-backend.vercel.app/user/login", userCredentials)
         .then((res) => {
           console.log(res);
           setUser(res.data.payload);
@@ -118,7 +118,7 @@ function UserLoginStore({ children }) {
     console.log(adminCred);
     try {
       const response = await axios.post(
-        "http://localhost:5050/owner/login",
+        "https://nestify-backend.vercel.app/owner/login",
         adminCred,
         {
           withCredentials: true,
