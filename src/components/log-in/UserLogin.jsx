@@ -18,6 +18,10 @@ const UserLogin = () => {
   } = useForm();
   const navigate = useNavigate();
 
+  const googleAuth = () => {
+    window.open("http://localhost:5050/auth/google?scope=email profile openid", "_self");
+  };
+
   useEffect(() => {
     if (login) {
       showSuccessToast("user login successfully");
