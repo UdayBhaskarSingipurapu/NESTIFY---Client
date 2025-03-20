@@ -19,7 +19,7 @@ const UserLogin = () => {
   const navigate = useNavigate();
 
   const googleAuth = () => {
-    window.open("http://localhost:5050/auth/google?scope=email profile openid", "_self");
+    window.open("https://nestify-backend.vercel.app/auth/google?scope=email profile openid", "_self");
   };
 
   useEffect(() => {

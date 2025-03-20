@@ -38,7 +38,7 @@ const MaintenanceForm = () => {
     try {
       axios
         .post(
-          `http://localhost:5050/hostel/maintainance/${user._id}/new`,
+          `https://nestify-backend.vercel.app/hostel/maintainance/${user._id}/new`,
           state
         )
         .then((obj) => {

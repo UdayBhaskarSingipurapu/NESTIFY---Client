@@ -35,7 +35,7 @@ const AdminSignUp = () => {
     console.log(formData);
     try {
       let res = await axios.post(
-        "http://localhost:5050/owner/signup",
+        "https://nestify-backend.vercel.app/owner/signup",
         formData,
         {
           headers: {

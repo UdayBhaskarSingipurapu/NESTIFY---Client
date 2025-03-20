@@ -58,7 +58,7 @@ function EditProfilePic() {
     try {
       axios
         .put(
-          `http://localhost:5050/user/edit/${user._id}/profileImage`,
+          `https://nestify-backend.vercel.app/user/edit/${user._id}/profileImage`,
           formData,
           {
             headers: {

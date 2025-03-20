@@ -36,7 +36,7 @@ const UserSignUp = () => {
     console.log(formData);
     try {
       let res = await axios.post(
-        "http://localhost:5050/user/signup",
+        "https://nestify-backend.vercel.app/user/signup",
         formData,
         {
           headers: {
@@ -95,7 +95,7 @@ const UserSignUp = () => {
    //google
   const googleAuth = () => {
     window.open(
-      `http://localhost:5050/auth/google?scope=email profile openid`,
+      `https://nestify-backend.vercel.app/auth/google?scope=email profile openid`,
       "_self"
     )
   };

@@ -59,11 +59,11 @@ const HostelDetails = () => {
     // console.log("Booking confirmed for room:", selectedRoom);
     // console.log(currentHostel);
     console.log(
-      `http://localhost:5050/joinHostel/${user._id}/${currentHostel._id}`
+      `https://nestify-backend.vercel.app/joinHostel/${user._id}/${currentHostel._id}`
     );
     console.log(user);
     await axios
-      .post(`http://localhost:5050/joinHostel/${user._id}/${currentHostel._id}`)
+      .post(`https://nestify-backend.vercel.app/joinHostel/${user._id}/${currentHostel._id}`)
       .then((res) => {
         console.log(res);
         //add res.data.payload as to the hostelRequests

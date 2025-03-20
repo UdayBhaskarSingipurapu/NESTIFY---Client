@@ -60,7 +60,7 @@ const EditForm = () => {
     // console.log(userCred);
     try {
       axios
-        .put(`http://localhost:5050/user/edit/${user._id}/personal`, userCred)
+        .put(`https://nestify-backend.vercel.app/user/edit/${user._id}/personal`, userCred)
         .then((obj) => {
           const { message, payload } = obj.data;
           // console.log(payload);

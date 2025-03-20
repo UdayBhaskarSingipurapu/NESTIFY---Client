@@ -53,7 +53,7 @@ const StudentHome = () => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5050/newAppReview/all"
+          "https://nestify-backend.vercel.app/newAppReview/all"
         );
         // console.log(response);
         setReviews(response.data?.payload || []); // ✅ Ensure reviews is an array
@@ -67,8 +67,8 @@ const StudentHome = () => {
   useEffect(() => {
     const fetchHostels = async () => {
       try {
-        const response = await axios.get("http://localhost:5050/hostel");
-        // console.log(response);
+        const response = await axios.get("https://nestify-backend.vercel.app/hostel");
+        console.log(response);
         setHostels(response.data?.payload || []); // ✅ Ensure hostels is an array
       } catch (error) {
         console.error("Error fetching hostels:", error);
@@ -121,7 +121,7 @@ const StudentHome = () => {
     console.log("Submitting:", state);
     try {
       const response = await axios.post(
-        `http://localhost:5050/newAppReview/${user._id}/new`,
+        `https://nestify-backend.vercel.app/newAppReview/${user._id}/new`,
         state
       );
       console.log(response);
