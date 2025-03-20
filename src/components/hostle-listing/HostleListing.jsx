@@ -48,7 +48,7 @@ const HostleListing = () => {
     console.log(formData);
     try {
       let res = await axios.post(
-        `http://localhost:5050/hostel/createhostel/${user._id}`,
+        "http://localhost:5050/hostel/createhostel/${user._id}",
         formData,
         {
           headers: {
@@ -130,8 +130,15 @@ const HostleListing = () => {
                   id="hostlename"
                   placeholder="Enter Hostle Name"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("hostelname")}
+                  {...register("hostelname", {
+                    required: "Hostel name is required",
+                    minLength: { value: 3, message: "Hostel name must be atleast 3 characters" },
+                    maxLength:{value:50,message:"Hostel name cannot exceed 50 characters"}
+                  })}
                 />
+                {errors.hostelname && (
+                  <span className="text-red-500">{errors.hostelname.message}</span>
+                )}
               </div>
               {/* Hostle address - Dno */}
               <div className="w-full">
@@ -142,12 +149,19 @@ const HostleListing = () => {
                   Hostle Door-No:
                 </label>
                 <input
-                  type=""
+                  type="text"
                   id="hostleaddressdno"
-                  placeholder="D-No"
+                  placeholder="Enter Door No"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("hosteldno")}
+                  {...register("hosteldno", {
+                    required: "Door No is required",
+                    pattern: { value: /^[A-Za-z0-9-]+$/, message: "Invalid format" },
+                    maxLength: { value: 10, message: "Cannot exceed 10 characters" },
+                  })}
                 />
+                {errors.hosteldno && (
+                <span className="text-red-500">{errors.hosteldno.message}</span> // added
+              )}
               </div>
               {/* Hostle address - Street */}
               <div className="w-full">
@@ -158,12 +172,15 @@ const HostleListing = () => {
                   Hostle Street:
                 </label>
                 <input
-                  type=""
+                  type="text"
                   id="hostleaddressStreet"
-                  placeholder="Street"
+                  placeholder="Enter Street"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("hostelstreet")}
+                  {...register("hostelstreet", { required: "Street is required" })}
                 />
+                {errors.hostelstreet && (
+                <span className="text-red-500">{errors.hostelstreet.message}</span> // added
+              )}
               </div>
               {/* Hostle address - city */}
               <div className="w-full">
@@ -174,12 +191,19 @@ const HostleListing = () => {
                   City:
                 </label>
                 <input
-                  type=""
+                  type="text"
                   id="hostleaddressCity"
-                  placeholder="City"
+                  placeholder="Enter City"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("hostelcity")}
+                  {...register("hostelcity", {
+                    required: "City is required",
+                    minLength: { value: 2, message: "City must be at least 2 characters" },
+                    maxLength: { value: 30, message: "City cannot exceed 30 characters" },
+                  })}
                 />
+                {errors.hostelcity && (
+                <span className="text-red-500">{errors.hostelcity.message}</span> // added
+              )}
               </div>
               {/* Hostle address - state */}
               <div className="w-full">
@@ -190,12 +214,15 @@ const HostleListing = () => {
                   State:
                 </label>
                 <input
-                  type=""
+                  type="text"
                   id="hostleaddressState"
-                  placeholder="State"
+                  placeholder="Enter State"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("hostelstate")}
+                   {...register("hostelstate", { required: "State is required" })}
                 />
+                {errors.hostelstate && (
+                <span className="text-red-500">{errors.hostelstate.message}</span> // added
+              )}
               </div>
               {/* Hostle image ->  */}
               <div className="w-full">
@@ -209,10 +236,27 @@ const HostleListing = () => {
                   <input
                     type="file"
                     id="hostleimage"
-                    accept="image/jpeg, image/png, image/gif, image/bmp, image/jpg"
+                    accept="image/jpeg, image/png,image/jpg"
                     className="rounded-md text-center bg-[#a2a5a9] text-white shadow-lg shadow-[#515356] px-3 cursor-pointer w-full"
-                    {...register("hostelimg")}
+                    {...register("hostelimg",
+                      {
+                        required: "Hostel image is required",
+                        validate: (value) => {
+                        const file = value?.[0];
+                        if (!file) return "File is required";
+                        if (!["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {
+                        return "Only JPEG, JPG, and PNG files are allowed";
+                        }
+                        if (file.size > 2 * 1024 * 1024) {
+                           return "File size must be under 2MB";
+                        }
+                        return true;
+                        },
+                      })}
                   />
+                   {errors.hostelimg && (
+                <span className="text-red-500">{errors.hostelimg.message}</span> // added
+              )}
                 </div>
               </div>
             </div>

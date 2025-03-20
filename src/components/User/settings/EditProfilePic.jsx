@@ -1,22 +1,27 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { userLoginContext } from "../../../contexts/userLoginContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { div, s } from "framer-motion/client";
 
 const initialState = {};
 
 function profileReducer(state, action) {
   switch (action.type) {
     case "update-profilePic": {
-      return { ...state, profilePic: action.payload };
+      console.log(action.payload);
+      return { ...state, profilePic: action.payload};
     }
     case "initialize": {
       return {
         ...state,
-        profilePic: action.payload.profileImage,
+        profilePic: action.payload,
       };
+    }
+    case "clear-form": {
+      return { profilePic: "" };
     }
     default: {
       return state;
@@ -29,17 +34,28 @@ function EditProfilePic() {
     profileReducer,
     initialState
   );
+  const[user, setUser] = useState(null);
   const navigate = useNavigate();
-  const { user, setUser, Error, setError } = useContext(userLoginContext);
+
+  function update() {
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
+    setUser(storedUser);
+    profileDispatch({ type: "initialize", payload: storedUser.profileImage.url});
+  }
+
+  console.log(profileState);
+
   useEffect(() => {
-    profileDispatch({ type: "initialize", payload: user });
+    update();
+    // profileDispatch({ type: "initialize", payload: user });
   }, []);
-  console.log(profileState.profilePic);
+  // console.log(profileState.profilePic);
 
   async function userEditReq(profileState) {
+    console.log(profileState);
     const formData = new FormData();
+    formData.append("profileImage", profileState.profilePic);
     try {
-      formData.append("profileImage", profileState.profilePic);
       axios
         .put(
           `http://localhost:5050/user/edit/${user._id}/profileImage`,
@@ -52,34 +68,22 @@ function EditProfilePic() {
         )
         .then((obj) => {
           console.log(obj);
-          const { message, user } = obj.data;
-          // console.log(user);
-          if (message === "Profile image updated successfully") {
-            profileDispatch({
-              type: "update-profilePic",
-              payload: user.profileImage,
-            });
-            sessionStorage.setItem("user", JSON.stringify(user));
-            setUser(user);
-            showSuccessToast(message);
-            setTimeout(() => {
-              navigate("/student-home");
-            }, 4000);
-          } else {
-            console.log(message);
-            setError(message);
-            showErrorToast(Error);
-          }
+          const { message, payload } = obj.data;
+          console.log(payload);
+        sessionStorage.setItem("user", JSON.stringify(payload));
+          update();
+          showSuccessToast(message);
+          setTimeout(() => {
+            navigate("/student-home");
+          }, 4000);
         })
         .catch((err) => {
           console.log(err.message);
-          setError(err.message);
-          showErrorToast(Error);
+          showErrorToast(err.message);
         });
     } catch (err) {
       console.log(err.message);
-      setError(err.message);
-      showErrorToast(Error);
+      showErrorToast(err.message);
     }
   }
 
@@ -123,8 +127,9 @@ function EditProfilePic() {
         <h1 className="text-2xl font-bold text-[#111827]">Profile Picture:</h1>
         <div className="bg-white border-2 border-gray-200 rounded-2xl p-3 w-fit m-auto mt-4 hover:shadow-2xl hover:scale-110 hover:duration-500 hover:ease-in-out duration-500">
           <img
-            src={user.profileImage.url}
-            alt="profilePic"
+            // {...console.log(profileState)}
+            src={profileState.profilePic}  
+            alt="loading......."
             className="w-70 h-auto rounded-full"
           />
         </div>
@@ -168,6 +173,9 @@ function EditProfilePic() {
         </form>
       </div>
     </div>
+    // <div className="min-h-screen bg-amber-100">
+
+    // </div>
   );
 }
 

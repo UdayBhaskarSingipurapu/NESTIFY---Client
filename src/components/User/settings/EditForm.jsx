@@ -42,9 +42,16 @@ function inputReducer(state, action) {
 const EditForm = () => {
   let { user, setError, Error, setUser } = useContext(userLoginContext);
   const [inputState, inputDispatch] = useReducer(inputReducer, initialState);
-  let navigate = useNavigate();
+  let navigate = useNavigate(); 
+
+  function update() {
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
+    setUser(storedUser);
+    inputDispatch({ type: "initialize", payload: storedUser });
+  }
+
   useEffect(() => {
-    inputDispatch({ type: "initialize", payload: user });
+    update();
   }, []);
   // console.log(inputState);
   // console.log(user);
@@ -65,19 +72,19 @@ const EditForm = () => {
               navigate("/student-home");
             }, 4000);
           } else {
-            setError(message);
-            showErrorToast(Error);
+            // setError(message);
+            showErrorToast(err.message);
           }
         })
         .catch((err) => {
           console.log(err.message);
-          setError(err.message);
-          showErrorToast(Error);
+          // setError(err.message);
+          showErrorToast(err.nessage);
         });
     } catch (err) {
       console.log(err.message);
-      setError(err.message);
-      showErrorToast(Error);
+      // setError(err.message);
+      showErrorToast(err.message);
     }
   }
 
@@ -135,7 +142,7 @@ const EditForm = () => {
               type="text"
               id="username"
               placeholder="Enter your username"
-              value={inputState.username}
+              value={inputState.username || " "}
               onChange={(e) => {
                 inputDispatch({
                   type: "update-username",
@@ -162,7 +169,7 @@ const EditForm = () => {
               type="email"
               id="email"
               placeholder="Enter your email"
-              value={inputState.email}
+              value={inputState.email || " "}
               onChange={(e) => {
                 inputDispatch({
                   type: "update-email",
@@ -188,7 +195,7 @@ const EditForm = () => {
               type="tel"
               id="contact"
               placeholder="Enter your phone number"
-              value={inputState.contact}
+              value={inputState.contact || " "}
               onChange={(e) => {
                 inputDispatch({
                   type: "update-contact",
@@ -216,7 +223,7 @@ const EditForm = () => {
               type="text"
               id="parentName"
               placeholder="Enter your parent/gardian name"
-              value={inputState.parentName}
+              value={inputState.parentName || " "}
               onChange={(e) => {
                 inputDispatch({
                   type: "update-parentName",
@@ -243,7 +250,7 @@ const EditForm = () => {
               type="tel"
               id="parentContact"
               placeholder="Enter your parent/gardian phone number"
-              value={inputState.parentContact}
+              value={inputState.parentContact || " "}
               onChange={(e) => {
                 inputDispatch({
                   type: "update-parentContact",

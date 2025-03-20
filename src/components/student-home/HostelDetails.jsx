@@ -3,13 +3,13 @@ import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion"; // For animations
 import { FaStar } from "react-icons/fa"; // For star ratings
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const HostelDetails = () => {
   const [currentHostel, setCurrentHostel] = useState(null);
   const [rooms, setRooms] = useState([]);
   const location = useLocation();
   const [alreadyStudent, setAlreadyStudent] = useState(false);
-  // const [joinRequests, setJoinRequests] = useState(false);
   const [hostelRequests, setHostelRequests] = useState([]);
   const [currentRoom, setCurrentRoom] = useState(null);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
@@ -18,15 +18,31 @@ const HostelDetails = () => {
   const [user, setUser] = useState(null);
 
   function updateFunction() {
-    setCurrentHostel(location.state.hostel);
-    setRooms(location.state.hostel.rooms);
-    setHostelRequests(JSON.parse(sessionStorage.getItem("hostelRequests")));
-    setCurrentRoom(JSON.parse(sessionStorage.getItem("currentRoom")));
-    setUser(JSON.parse(sessionStorage.getItem("user")));
-    if (currentRoom || hostelRequests.length > 0) {
+    const storedHostelRequests = JSON.parse(sessionStorage.getItem("hostelRequests"));
+    const storedCurrentRoom = JSON.parse(sessionStorage.getItem("currentRoom"));
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
+
+    setCurrentHostel(location.state?.hostel || null);
+    setRooms(location.state?.hostel?.rooms || []);
+    setHostelRequests(storedHostelRequests);
+    setCurrentRoom(storedCurrentRoom);
+    setUser(storedUser);
+
+    console.log("hostelRequests:", storedHostelRequests);
+    console.log("currentRoom:", storedCurrentRoom);
+
+    // Check if the user is already a student
+    console.log(storedCurrentRoom);
+    console.log(storedHostelRequests);
+    // console.log((JSON.parse(storedHostelRequests).length > 0));
+    if (storedCurrentRoom || storedHostelRequests.length > 0) {
+      console.log("User is already a student.");
       setAlreadyStudent(true);
+    } else {
+      console.log("User is not a student.");
     }
-    setIsLoading(false); // Data has been loaded
+
+    setIsLoading(false);
   }
 
   function handleRoomBooking(room) {
@@ -53,6 +69,13 @@ const HostelDetails = () => {
         //add res.data.payload as to the hostelRequests
         //add that to the session storage
         //call the updateFunction() to update the hostelRequests
+        sessionStorage.setItem(
+          "hostelRequests",
+          JSON.stringify([...hostelRequests, res.data.payload])
+        );
+        showSuccessToast(res.data.message);
+        updateFunction();
+
       })
       .catch((err) => {
         console.log(err);
@@ -63,6 +86,33 @@ const HostelDetails = () => {
   useEffect(() => {
     updateFunction();
   }, []);
+
+    const showSuccessToast = (message) => {
+      toast.success(message, {
+        position: "top-right",
+        autoClose: 3000, // Closes after 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    };
+  
+    const showErrorToast = (message) => {
+      toast.error(message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    };
+  
 
   if (isLoading) {
     console.log("Loading...");
@@ -75,6 +125,7 @@ const HostelDetails = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen py-8 px-4 sm:px-6 lg:px-8 md:ml-48">
+      <ToastContainer />
       <div
         className={`max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden ${
           isBookingModalOpen ? "blur-md" : ""

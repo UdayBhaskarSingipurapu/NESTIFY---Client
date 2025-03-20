@@ -44,18 +44,17 @@ const RoomDetails = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
   let { setError } = useContext(userLoginContext);
 
   async function onSave(roomDetails) {
     // console.log(roomDetails);
     setRooms([...rooms, roomDetails]);
-    // setSaved(true);
-    // setTimeout(() => {
-    //   setSaved(false);
-    // }, 1000);
-    reset();
+    setSaved(true);
+    setTimeout(() => {
+      setSaved(false);
+    }, 1000);
+    reset(); //added
   }
   // console.log(hostels[Number(sessionStorage.getItem("currHosIdx"))]);
   // console.log(user._id);
@@ -63,10 +62,10 @@ const RoomDetails = () => {
   // console.log();
   async function renderChanges() {
     // console.log(user._id);
-    // console.log(`http://localhost:5050/hostel/owner/${user._id}`);
+    // console.log(http://localhost:5050/hostel/owner/${user._id});
     try {
       await axios
-        .get(`http://localhost:5050/hostel/owner/${user._id}`)
+        .get("http://localhost:5050/hostel/owner/${user._id}")
         .then((res) => {
           // console.log(res);
           sessionStorage.setItem(
@@ -107,7 +106,7 @@ const RoomDetails = () => {
       // console.log(currentHostel._id);
 
       await axios
-        .post(`http://localhost:5050/room/${currentHostel._id}/add`, rooms)
+        .post("http://localhost:5050/room/${currentHostel._id}/add", rooms)
         .then((res) => {
           // console.log(res);
           const result = renderChanges();
@@ -233,9 +232,12 @@ const RoomDetails = () => {
                   id="roomnumber"
                   placeholder="Enter Room Number"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("roomNumber")}
-                  // {...(saved &&  {value: ""})}
-                />
+                    {...register("roomNumber", { required: "Room number is required" })} 
+                  {...(saved && { value: "" })}
+                  />
+                  {errors.roomNumber && (
+                  <p className="text-red-500 text-sm">{errors.roomNumber.message}</p>
+                  )}
               </div>
 
               {/* Hostle capacity */}
@@ -254,9 +256,16 @@ const RoomDetails = () => {
                   id="roomcapacity"
                   placeholder="Enter the number"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("roomCapacity")}
-                  // {...(saved && { value: "" })}
-                />
+                    {...register("roomCapacity", {
+                    required: "Room capacity is required",
+                    min: { value: 1, message: "Capacity must be at least 1" },
+                  })}
+                  {...(saved && { value: "" })}
+                  />
+                  {errors.roomCapacity && (
+                  <p className="text-red-500 text-sm">{errors.roomCapacity.message}</p>
+                  )}
+                  
               </div>
 
               {/* A/c  */}
@@ -267,14 +276,17 @@ const RoomDetails = () => {
                 >
                   A/C:
                 </label>
-                <input
-                  type="text"
+                <select
+                  type="string"
                   id="ac"
                   placeholder="Yes/No"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
                   {...register("airConditioned")}
-                  // {...(saved && { value: "" })}
-                />
+                    {...(saved && { value: "" })}
+                  >
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>  
+                  </select>
               </div>
 
               {/* Fees  */}
@@ -290,9 +302,16 @@ const RoomDetails = () => {
                   id="fees"
                   placeholder="Enter fee per month"
                   className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-                  {...register("fees")}
-                  // {...(saved && { value: "" })}
-                />
+                    {...register("fees", {
+                    required: "Fees are required",
+                    min: { value: 0, message: "Fees cannot be negative" },
+                  })}
+                  {...(saved && { value: "" })}
+                  />
+                   {errors.fees && (
+                  <p className="text-red-500 text-sm">{errors.fees.message}</p>
+                  )}
+                  
               </div>
             </div>
             {/* Save */}

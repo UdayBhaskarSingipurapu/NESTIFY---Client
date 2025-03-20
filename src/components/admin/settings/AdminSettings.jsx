@@ -21,7 +21,7 @@ import { LuBlocks } from "react-icons/lu";
 const AdminSettings = () => {
   return (
     <div>
-      <div className="bg-gray-200 p-7 md:ml-48 min-h-screen">
+      <div className="bg-gray-200 p-7 min-h-screen">
         <div className="max-w-[1700px] m-auto h-full overflow-auto">
           <h1 className="text-2xl font-bold text-[#111827]">Settings</h1>
 

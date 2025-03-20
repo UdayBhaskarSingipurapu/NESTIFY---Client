@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { FaCircle } from "react-icons/fa6";
@@ -31,12 +31,25 @@ function passwordReducer(state, action) {
 
 const EditPassword = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState();
   const [passwordState, passwordDispatch] = useReducer(
     passwordReducer,
     initialState
   );
-  const { user, setUser, Error, setError } = useContext(userLoginContext);
+  // const { user, setUser, Error, setError } = useContext(userLoginContext);
   // console.log(user);
+
+  // console.log(user);
+
+  function update() {
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
+    setUser(storedUser);
+    // passwordDispatch({ type: "initialize", payload: storedUser });
+  }
+
+  useEffect(() => {
+    update();
+  }, []);
 
   async function userEditReq(passwordState) {
     // console.log(passwordState);
@@ -51,8 +64,9 @@ const EditPassword = () => {
           passwordState
         )
         .then((obj) => {
-          //  console.log(obj);
+           console.log(obj);
           const { message, payload } = obj.data;
+          console.log(payload);
           // console.log(obj);
           // console.log(payload);
           if (message === "Password updated successfully") {
@@ -64,19 +78,19 @@ const EditPassword = () => {
             }, 4000);
           } else {
             // console.log(message);
-            setError(message);
-            showErrorToast(Error);
+            // setError(message);
+            showErrorToast("Something went wrong");
           }
         })
         .catch((err) => {
           // console.log(err.message);
-          setError(err.message);
-          showErrorToast(Error);
+          // setError(err.message);
+          showErrorToast(err.message);
         });
     } catch (err) {
       // console.log(err.message);
-      setError(err.message);
-      showErrorToast(Error);
+      // setError(err.message);
+      showErrorToast(err.message);
     }
   }
 
@@ -86,7 +100,7 @@ const EditPassword = () => {
       userEditReq(passwordState);
     } else 
     showErrorToast("Passwords do not match");
-    passwordDispatch({type:"clear-form"})
+    // passwordDispatch({type:"clear-form"})
     console.log(passwordState);
   }
 
@@ -167,7 +181,7 @@ const EditPassword = () => {
               type="password"
               placeholder="Enter your password"
               className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-              value={passwordState.newPassword}
+              value={passwordState.newPassword || ""}
               onChange={(e) => {
                 passwordDispatch({
                   type: "new-password",
@@ -192,7 +206,7 @@ const EditPassword = () => {
               type="password"
               placeholder="Enter your password"
               className="block p-2 border-2 border-[#6B7280] text-xl rounded-md w-full"
-              value={passwordState.confirmPassword}
+              value={passwordState.confirmPassword || ""}
               onChange={(e) => {
                 passwordDispatch({
                   type: "confirm-password",

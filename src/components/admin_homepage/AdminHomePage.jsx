@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import userTopContainerImag1 from "../../assets/userTopContainerImag1.png";
 import userTopContainerImag2 from "../../assets/userTopContainerImag2.png";
@@ -14,12 +14,25 @@ import userBottomContainerImage4 from "../../assets/userBottomContainerImage4.pn
 import userBottomContainerImage5 from "../../assets/userBottomContainerImage5.png";
 import userBottomContainerImage6 from "../../assets/userBottomContainerImage6.png";
 import { set } from "react-hook-form";
+import { userLoginContext } from "../../contexts/userLoginContext";
+import RoomDetails from "../hostle-listing/RoomDetails";
 
 const AdminHomePage = () => {
   const [hostels, setHostels] = useState([]);
   const [users, setUsers] = useState();
   const [currentHostel, setCurrentHostel] = useState();
   const [currHosIdx, setCurrHosIdx] = useState(-1);
+
+  const { logout } = useContext(userLoginContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("currHosIdx");
+    sessionStorage.removeItem("currentHostel");
+    sessionStorage.removeItem("hostels");
+    logout();
+    navigate("/");
+  };
 
   useEffect(() => {
     updateDetails();
@@ -51,13 +64,19 @@ const AdminHomePage = () => {
   return (
     <div className="bg-gray-200 p-7">
       {/* navbar */}
-      <div className="flex justify-between w-full h-15 bg-gray-700 rounded-2xl items-center p-7 text-white text-lg">
+      <div className="flex justify-between w-full h-20 bg-gray-800 rounded-2xl items-center px-8 py-4 text-white text-lg shadow-lg">
         <div className="">
-          <label htmlFor="">Select An Hostel</label>
+          <label
+            htmlFor="hostel-select"
+            className="mb-1 text-sm font-semibold "
+          >
+            Select An Hostel
+          </label>
           <select
             name=""
             id=""
             onChange={(e) => chooseHostel(hostels, Number(e.target.value))}
+            className="bg-gray-700 text-white border border-gray-600 rounded-md m-2 px-4 py-2 outline-none  "
           >
             <option value="-1">--Select--</option>
             {hostels.length == 0 ? (
@@ -74,6 +93,24 @@ const AdminHomePage = () => {
             )}
           </select>
         </div>
+        <Link
+          to={'/admin/hostel-listing'}
+          className="nav-link flex items-center gap-2 p-2 hover:bg-gray-300 hover:text-black rounded-md"
+        >
+          Add Hostel
+        </Link>
+        <Link
+          to={'/admin/room-details'}
+          className="nav-link flex items-center gap-2 p-2 hover:bg-gray-300 hover:text-black rounded-md"
+        >
+          Add Room
+        </Link>
+        <button
+          onClick={handleLogout}
+          className="nav-link flex items-center gap-2 p-2 hover:bg-gray-300 hover:text-black rounded-md"
+        >
+          Logout
+        </button>
       </div>
       {currHosIdx === -1 || currentHostel === null ? (
         hostels.length === 0 ? (
@@ -93,9 +130,14 @@ const AdminHomePage = () => {
         ) : (
           <div className="flex justify-center items-center h-screen flex-col gap-4">
             <p className="text-3xl font-semibold text-gray-600">
-              Please select a hostel from the menu above to show the dashboard
-              details
+              Please select a hostel to add rooms in Dashboard
             </p>
+            <Link
+              className="bg-gray-500 px-8 py-4 rounded-xl text-white hover:bg-gray-600 hover:shadow-xl text-2xl"
+              to={"/admin/dashboard"}
+            >
+              go to dashboard
+            </Link>
           </div>
         )
       ) : (
@@ -190,7 +232,12 @@ const AdminHomePage = () => {
                     alt="Settings"
                     className="w-[15px] h-auto"
                   />
-                  <p className="text-[#6B7280] font-semibold">Settings</p>
+                  <Link
+                    to="/admin/settings"
+                    className="text-[#6B7280] font-semibold"
+                  >
+                    Settings
+                  </Link>
                 </div>
               </div>
             </div>

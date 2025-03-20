@@ -55,7 +55,7 @@ const StudentHome = () => {
         const response = await axios.get(
           "http://localhost:5050/newAppReview/all"
         );
-        console.log(response);
+        // console.log(response);
         setReviews(response.data?.payload || []); // ✅ Ensure reviews is an array
       } catch (error) {
         console.error("Error fetching reviews:", error);
@@ -68,7 +68,7 @@ const StudentHome = () => {
     const fetchHostels = async () => {
       try {
         const response = await axios.get("http://localhost:5050/hostel");
-        console.log(response);
+        // console.log(response);
         setHostels(response.data?.payload || []); // ✅ Ensure hostels is an array
       } catch (error) {
         console.error("Error fetching hostels:", error);

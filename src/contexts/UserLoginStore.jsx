@@ -50,9 +50,9 @@ function UserLoginStore({ children }) {
       await axios
         .get("http://localhost:5050/hostel/")
         .then((res) => {
-          // console.log(res);
+          console.log(res);
           // sessionStorage.setItem("hostels", JSON.stringify(res.data.payload));
-          sessionStorage.setItem("hostels", JSON.stringify(res.data));
+          sessionStorage.setItem("hostels", JSON.stringify(res.data.payload));
         })
         .catch((err) => {
           setError(
